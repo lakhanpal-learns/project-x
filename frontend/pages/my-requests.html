@@ -357,6 +357,15 @@
       Api.showToast("Tracking status refreshed", "success");
     });
 
+    const escapeHtmlValue = (value) =>
+      String(value ?? "").replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      })[character]);
+
     async function loadRequests() {
       const loading = document.getElementById("loading");
       const container = document.getElementById("trackingContainer");
@@ -395,7 +404,8 @@
         month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"
       });
 
-      const badgeClass = `status-${status.toLowerCase().replace(" ", "-")}`;
+      const badgeClasses = { Pending: "status-pending", Approved: "status-approved", "In Progress": "status-in-progress", Completed: "status-completed", Rejected: "status-rejected" };
+      const badgeClass = badgeClasses[status] || "status-pending";
 
       return `
         <div class="tracking-card">
@@ -404,17 +414,17 @@
               <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">
                 Request #${r.id} &bull; Booked ${formattedCreated}
               </div>
-              <h3>${r.service_name || 'Car Care Package'}</h3>
+              <h3>${escapeHtmlValue(r.service_name || "Car Care Package")}</h3>
               <div class="tracking-meta">
-                <span>Vehicle: <strong>${r.vehicle_details}</strong></span>
-                <span>Scheduled Date: <strong>${r.preferred_date}</strong></span>
-                <span>Time Slot: <strong>${r.preferred_time}</strong></span>
+                <span>Vehicle: <strong>${escapeHtmlValue(r.vehicle_details)}</strong></span>
+                <span>Scheduled Date: <strong>${escapeHtmlValue(r.preferred_date)}</strong></span>
+                <span>Time Slot: <strong>${escapeHtmlValue(r.preferred_time)}</strong></span>
                 ${r.service_price ? `<span>Price: <strong>$${parseFloat(r.service_price).toFixed(2)}</strong></span>` : '<span>Price: <strong>Custom Quote</strong></span>'}
               </div>
             </div>
             <div>
               <span class="status-badge ${badgeClass}">
-                <span>&bull;</span> ${status}
+                <span>&bull;</span> ${escapeHtmlValue(status)}
               </span>
             </div>
           </div>
@@ -455,7 +465,7 @@
 
           ${r.message ? `
             <div style="margin-top:16px;padding:12px 16px;background:#f8fafc;border-radius:8px;font-size:0.84rem;color:#475569;">
-              <strong style="color:#1e293b;">Special Instructions:</strong> ${r.message}
+              <strong style="color:#1e293b;">Special Instructions:</strong> ${escapeHtmlValue(r.message)}
             </div>
           ` : ''}
         </div>
