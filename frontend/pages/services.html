@@ -248,8 +248,8 @@
           return `
             <article class="service-item-card" data-service-id="${service.id}">
               <img
-                src="${imageUrl}"
-                alt="${service.name}"
+                src="${escapeHtml(imageUrl)}"
+                alt="${escapeHtml(service.name)}"
                 class="service-item-img"
                 loading="lazy"
                 onerror="this.onerror=null; this.src='/assets/images/hero-black-car.jpg';"
