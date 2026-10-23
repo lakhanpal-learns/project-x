@@ -2,6 +2,15 @@
  * MrShine Authentication, Session Guards & User Profile System
  */
 
+const escapeHtml = (value) =>
+  String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  })[character]);
+
 const Auth = {
   getToken() {
     return (
@@ -98,11 +107,11 @@ const Auth = {
         <button id="closeProfileModal" style="position: absolute; right: 18px; top: 16px; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #888;">&times;</button>
         <div style="text-align: center; margin-bottom: 20px;">
           <div style="width: 56px; height: 56px; border-radius: 50%; background: #111; color: white; display: grid; place-items: center; font-size: 1.4rem; font-weight: 800; margin: 0 auto 10px;">
-            ${(user.name || "U")[0].toUpperCase()}
+            ${escapeHtml((user.name || "U").charAt(0).toUpperCase())}
           </div>
-          <h2 style="font-family: 'Manrope', sans-serif; font-size: 1.3rem; margin: 0 0 4px;">${user.name || "My Profile"}</h2>
+          <h2 style="font-family: 'Manrope', sans-serif; font-size: 1.3rem; margin: 0 0 4px;">${escapeHtml(user.name || "My Profile")}</h2>
           <span style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; background: ${user.role === 'admin' ? '#fee2e2' : '#e0f2fe'}; color: ${user.role === 'admin' ? '#991b1b' : '#0369a1'}; padding: 3px 10px; border-radius: 20px; font-weight: 700;">
-            ${user.role || 'customer'}
+            ${escapeHtml(user.role || "customer")}
           </span>
         </div>
 
@@ -111,15 +120,15 @@ const Auth = {
         <form id="profileForm">
           <div style="margin-bottom: 14px;">
             <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">Email Address</label>
-            <input type="text" value="${user.email || ''}" disabled style="width:100%; height:40px; border:1px solid #ddd; border-radius:6px; padding:0 12px; background:#f5f5f5; color:#777; font-size:0.9rem;">
+            <input type="text" value="${escapeHtml(user.email || "")}" disabled style="width:100%; height:40px; border:1px solid #ddd; border-radius:6px; padding:0 12px; background:#f5f5f5; color:#777; font-size:0.9rem;">
           </div>
           <div style="margin-bottom: 14px;">
             <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">Full Name</label>
-            <input id="profName" type="text" value="${user.name || ''}" required style="width:100%; height:40px; border:1px solid #ddd; border-radius:6px; padding:0 12px; font-size:0.9rem;">
+            <input id="profName" type="text" value="${escapeHtml(user.name || "")}" required style="width:100%; height:40px; border:1px solid #ddd; border-radius:6px; padding:0 12px; font-size:0.9rem;">
           </div>
           <div style="margin-bottom: 20px;">
             <label style="display:block; font-size:0.8rem; font-weight:700; margin-bottom:5px;">Phone Number</label>
-            <input id="profPhone" type="tel" value="${user.phone || ''}" placeholder="e.g. +1 (555) 019-2834" style="width:100%; height:40px; border:1px solid #ddd; border-radius:6px; padding:0 12px; font-size:0.9rem;">
+            <input id="profPhone" type="tel" value="${escapeHtml(user.phone || "")}" placeholder="e.g. +1 (555) 019-2834" style="width:100%; height:40px; border:1px solid #ddd; border-radius:6px; padding:0 12px; font-size:0.9rem;">
           </div>
           <button type="submit" id="saveProfBtn" style="width:100%; height:42px; background:#111; color:white; border:none; border-radius:6px; font-weight:700; cursor:pointer;">Save Changes</button>
         </form>
@@ -184,7 +193,7 @@ const Auth = {
       authContainer.innerHTML = `
         <button id="headerProfileBtn" class="btn btn-outline" style="min-height:36px;padding:0 12px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px;">
           <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;"></span>
-          ${user.name.split(" ")[0]}
+          ${escapeHtml((user.name || "User").split(" ")[0])}
         </button>
         ${
           isAdmin

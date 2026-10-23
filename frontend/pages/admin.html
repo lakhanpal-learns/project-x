@@ -475,6 +475,30 @@
       }
     }
 
+    const escapeHtmlValue = (value) =>
+      String(value ?? "").replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      })[character]);
+
+    const safeServiceImageUrl = (value) => {
+      const fallback = "/assets/images/exterior-wash.jpg";
+      if (!value) return fallback;
+      try {
+        const url = new URL(value, window.location.origin);
+        if (url.origin === window.location.origin && url.pathname.startsWith("/assets/")) {
+          return url.pathname + url.search + url.hash;
+        }
+        if (url.protocol === "https:") return url.href;
+      } catch {
+        // Fall back to a known local image for invalid URLs.
+      }
+      return fallback;
+    };
+
     async function initDashboard() {
       await Promise.all([loadStats(), loadRequests()]);
     }
@@ -502,31 +526,32 @@
 
         tbody.innerHTML = requests.map(r => {
           const status = r.status || "Pending";
-          const badgeClass = `status-${status.toLowerCase().replace(" ", "-")}`;
+          const badgeClasses = { Pending: "status-pending", Approved: "status-approved", "In Progress": "status-in-progress", Completed: "status-completed", Rejected: "status-rejected" };
+          const badgeClass = badgeClasses[status] || "status-pending";
 
           return `
             <tr>
               <td><strong>#${r.id}</strong></td>
               <td>
-                <div style="font-weight:700;">${r.customer_name}</div>
-                <div style="font-size:0.78rem;color:#64748b;">${r.customer_email}</div>
-                ${r.customer_phone ? `<div style="font-size:0.75rem;color:#94a3b8;">${r.customer_phone}</div>` : ''}
+                <div style="font-weight:700;">${escapeHtmlValue(r.customer_name)}</div>
+                <div style="font-size:0.78rem;color:#64748b;">${escapeHtmlValue(r.customer_email)}</div>
+                ${r.customer_phone ? `<div style="font-size:0.75rem;color:#94a3b8;">${escapeHtmlValue(r.customer_phone)}</div>` : ''}
               </td>
               <td>
-                <div style="font-weight:700;">${r.service_name}</div>
+                <div style="font-weight:700;">${escapeHtmlValue(r.service_name)}</div>
                 ${r.service_price ? `<div style="font-size:0.78rem;color:#64748b;">$${parseFloat(r.service_price).toFixed(2)}</div>` : '<div style="font-size:0.75rem;color:#2563eb;font-weight:700;">Custom Quote</div>'}
               </td>
               <td>
-                <div>${r.vehicle_details}</div>
-                ${r.message ? `<div style="font-size:0.76rem;color:#64748b;margin-top:2px;"><em>"${r.message}"</em></div>` : ''}
+                <div>${escapeHtmlValue(r.vehicle_details)}</div>
+                ${r.message ? `<div style="font-size:0.76rem;color:#64748b;margin-top:2px;"><em>"${escapeHtmlValue(r.message)}"</em></div>` : ''}
               </td>
               <td>
-                <div>${r.preferred_date}</div>
-                <div style="font-size:0.78rem;color:#64748b;">${r.preferred_time}</div>
+                <div>${escapeHtmlValue(r.preferred_date)}</div>
+                <div style="font-size:0.78rem;color:#64748b;">${escapeHtmlValue(r.preferred_time)}</div>
               </td>
               <td>
                 <span class="status-badge ${badgeClass}">
-                  <span>&bull;</span> ${status}
+                  <span>&bull;</span> ${escapeHtmlValue(status)}
                 </span>
               </td>
               <td>
@@ -569,16 +594,16 @@
           <tr>
             <td><strong>#${s.id}</strong></td>
             <td>
-              <img src="${s.image_url || '/assets/images/exterior-wash.jpg'}" alt="" style="width:48px;height:36px;object-fit:cover;border-radius:4px;border:1px solid #ddd;" onerror="this.src='/assets/images/exterior-wash.jpg'">
+              <img src="${escapeHtmlValue(safeServiceImageUrl(s.image_url))}" alt="" style="width:48px;height:36px;object-fit:cover;border-radius:4px;border:1px solid #ddd;" onerror="this.src='/assets/images/exterior-wash.jpg'">
             </td>
-            <td><strong>${s.name}</strong></td>
+            <td><strong>${escapeHtmlValue(s.name)}</strong></td>
             <td>$${parseFloat(s.price).toFixed(2)}</td>
             <td>${s.duration_minutes} mins</td>
-            <td style="max-width:280px;font-size:0.8rem;color:#64748b;">${s.description || '—'}</td>
+            <td style="max-width:280px;font-size:0.8rem;color:#64748b;">${escapeHtmlValue(s.description || "—")}</td>
             <td>
               <div style="display:flex;gap:6px;">
                 <button class="act-btn btn-approve" style="padding:4px 8px;" onclick="openEditModal(${s.id})">Edit</button>
-                <button class="act-btn btn-reject" style="padding:4px 8px;" onclick="deleteServicePkg(${s.id}, '${s.name.replace(/'/g, "\\'")}')">Delete</button>
+                <button class="act-btn btn-reject" style="padding:4px 8px;" onclick="deleteServicePkg(${s.id}, this.closest('tr').querySelector('td:nth-child(3)').textContent)">Delete</button>
               </div>
             </td>
           </tr>

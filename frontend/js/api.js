@@ -44,8 +44,17 @@ function showToast(message, type = "error") {
     gap: 12px;
     animation: fadeIn 0.3s ease;
   `;
-  toast.innerHTML = `<span>${message}</span><button style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:inherit;" onclick="this.parentElement.remove()">&times;</button>`;
+  const toastMessage = document.createElement("span");
+  toastMessage.textContent = String(message ?? "");
 
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.setAttribute("aria-label", "Dismiss notification");
+  closeButton.textContent = "×";
+  closeButton.style.cssText = "background:none;border:none;cursor:pointer;font-size:1.1rem;color:inherit;";
+  closeButton.addEventListener("click", () => toast.remove());
+
+  toast.append(toastMessage, closeButton);
   toastContainer.appendChild(toast);
   setTimeout(() => {
     if (toast.parentElement) toast.remove();

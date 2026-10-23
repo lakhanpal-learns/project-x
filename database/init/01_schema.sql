@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS services (
 CREATE TABLE IF NOT EXISTS requests (
     id SERIAL PRIMARY KEY,
     customer_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    service_id INTEGER NOT NULL REFERENCES services(id) ON DELETE RESTRICT,
+    service_id INTEGER REFERENCES services(id) ON DELETE SET NULL,
+    custom_service VARCHAR(100),
     vehicle_details VARCHAR(255) NOT NULL,
     preferred_date VARCHAR(50) NOT NULL,
     preferred_time VARCHAR(50) NOT NULL,
