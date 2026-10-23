@@ -34,6 +34,8 @@ class Settings(BaseSettings):
     EMAILS_FROM_EMAIL: str = "notifications@mrshine.com"
     EMAILS_FROM_NAME: str = "MrShine Car Wash"
     ADMIN_EMAIL: str = "admin@mrshine.com"
+    # Set only as a deployment secret when a production admin must be bootstrapped.
+    ADMIN_INITIAL_PASSWORD: str = ""
 
     # Password policy
     MIN_PASSWORD_LENGTH: int = 8
