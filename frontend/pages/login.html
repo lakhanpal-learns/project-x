@@ -51,7 +51,7 @@
         </svg>
         <span><span class="brand-name">MrShine</span><span class="brand-sub">CAR WASH & DETAILING</span></span>
       </a>
-      <div class="nav-right"><a href="/">Back to home</a><span>New here? <a href="register.html">Sign up</a></span></div>
+      <div class="nav-right"><a href="/">Back to home</a><span>New here? <a href="/pages/register.html">Sign up</a></span></div>
     </nav>
   </header>
   <main>
@@ -78,7 +78,7 @@
             <button class="submit" id="submitButton" type="submit">Sign in <span aria-hidden="true">&rarr;</span></button>
           </form>
           <div class="divider">MRSHINE ACCOUNT</div>
-          <p class="register-note">Don't have an account? <a href="register.html">Create one</a></p>
+          <p class="register-note">Don't have an account? <a href="/pages/register.html">Create one</a></p>
           <div class="security-note"><span aria-hidden="true">&#128274;</span> Your account details are sent securely over HTTPS when deployed.</div>
         </section>
       </div>
@@ -170,7 +170,7 @@
         }
         showMessage("Signed in successfully.", "success");
         const next = new URLSearchParams(window.location.search).get("next");
-        window.setTimeout(() => { window.location.href = next === "request" ? "request-service.html" : "my-requests.html"; }, 600);
+        window.setTimeout(() => { window.location.href = next === "request" ? "/pages/request-service.html" : "/pages/my-requests.html"; }, 600);
       } catch (error) {
         showMessage("Can't reach the server. Check that the MrShine backend is running and try again.");
       } finally {
