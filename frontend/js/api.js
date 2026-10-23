@@ -155,14 +155,43 @@ const Api = {
   showToast,
   getServices: () => apiRequest("/api/v1/services"),
   createRequest: (data) => apiRequest("/api/v1/requests", { method: "POST", body: JSON.stringify(data) }),
-  getMyRequests: () => apiRequest("/api/v1/requests/my"),
+  getMyRequests: (params = {}) => {
+    const q = new URLSearchParams();
+    if (params.start_date) q.append("start_date", params.start_date);
+    if (params.end_date) q.append("end_date", params.end_date);
+    if (params.status) q.append("status", params.status);
+    if (params.search) q.append("search", params.search);
+    const qs = q.toString();
+    return apiRequest(`/api/v1/requests/my${qs ? "?" + qs : ""}`);
+  },
   submitFeedback: (data) => apiRequest("/api/v1/feedback", { method: "POST", body: JSON.stringify(data) }),
   getAdminStats: () => apiRequest("/api/v1/admin/stats"),
-  getAdminRequests: () => apiRequest("/api/v1/admin/requests"),
-  updateRequestStatus: (id, status, admin_notes = null) =>
+  getAdminRequests: (params = {}) => {
+    const q = new URLSearchParams();
+    if (params.page) q.append("page", params.page);
+    if (params.per_page) q.append("per_page", params.per_page);
+    if (params.search) q.append("search", params.search);
+    if (params.status) q.append("status", params.status);
+    if (params.start_date) q.append("start_date", params.start_date);
+    if (params.end_date) q.append("end_date", params.end_date);
+    if (params.time_slot) q.append("time_slot", params.time_slot);
+    if (params.customer_id) q.append("customer_id", params.customer_id);
+    const qs = q.toString();
+    return apiRequest(`/api/v1/admin/requests${qs ? "?" + qs : ""}`);
+  },
+  getAdminCustomers: (params = {}) => {
+    const q = new URLSearchParams();
+    if (params.page) q.append("page", params.page);
+    if (params.per_page) q.append("per_page", params.per_page);
+    if (params.search) q.append("search", params.search);
+    const qs = q.toString();
+    return apiRequest(`/api/v1/admin/customers${qs ? "?" + qs : ""}`);
+  },
+  cleanupDummyData: () => apiRequest("/api/v1/admin/cleanup-dummy-data", { method: "DELETE" }),
+  updateRequestStatus: (id, status, admin_notes = null, scheduled_date = null, scheduled_time = null) =>
     apiRequest(`/api/v1/admin/requests/${id}/status`, {
       method: "PATCH",
-      body: JSON.stringify({ status, admin_notes }),
+      body: JSON.stringify({ status, admin_notes, scheduled_date, scheduled_time }),
     }),
   createService: (data) => apiRequest("/api/v1/admin/services", { method: "POST", body: JSON.stringify(data) }),
   updateService: (id, data) => apiRequest(`/api/v1/admin/services/${id}`, { method: "PUT", body: JSON.stringify(data) }),

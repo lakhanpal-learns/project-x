@@ -14,6 +14,10 @@ from app.schemas.schemas import (
     FeedbackCreate,
     FeedbackResponse,
     AdminStatsResponse,
+    PaginatedRequestsResponse,
+    CustomerHistorySummary,
+    CustomerWithHistoryResponse,
+    PaginatedCustomersResponse,
 )
 
 __all__ = [
@@ -32,4 +36,8 @@ __all__ = [
     "FeedbackCreate",
     "FeedbackResponse",
     "AdminStatsResponse",
+    "PaginatedRequestsResponse",
+    "CustomerHistorySummary",
+    "CustomerWithHistoryResponse",
+    "PaginatedCustomersResponse",
 ]

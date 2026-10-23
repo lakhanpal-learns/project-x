@@ -36,14 +36,14 @@ const Auth = {
 
   logout() {
     this.clearSession();
-    window.location.href = "/pages/login.html";
+    window.location.href = "/login";
   },
 
   requireAuth(redirectUrl = null) {
     const token = this.getToken();
     if (!token) {
       const target = redirectUrl || window.location.pathname;
-      window.location.href = `/pages/login.html?next=${encodeURIComponent(target)}`;
+      window.location.href = `/login?next=${encodeURIComponent(target)}`;
       return false;
     }
     return true;
@@ -53,7 +53,7 @@ const Auth = {
     if (!this.requireAuth()) return false;
     const user = this.getUser();
     if (!user || user.role !== "admin") {
-      window.location.href = "/pages/my-requests.html";
+      window.location.href = "/my-requests";
       return false;
     }
     return true;
@@ -65,9 +65,9 @@ const Auth = {
     if (token && (path.endsWith("login.html") || path.endsWith("register.html"))) {
       const user = this.getUser();
       if (user && user.role === "admin") {
-        window.location.replace("/pages/admin.html");
+        window.location.replace("/admin");
       } else {
-        window.location.replace("/pages/my-requests.html");
+        window.location.replace("/my-requests");
       }
     }
   },
@@ -188,8 +188,8 @@ const Auth = {
         </button>
         ${
           isAdmin
-            ? '<a href="/pages/admin.html" class="btn btn-outline" style="min-height:36px;padding:0 14px;font-size:0.82rem;">Admin Panel</a>'
-            : '<a href="/pages/my-requests.html" class="btn btn-outline" style="min-height:36px;padding:0 14px;font-size:0.82rem;">Track Requests</a>'
+            ? '<a href="/admin" class="btn btn-outline" style="min-height:36px;padding:0 14px;font-size:0.82rem;">Admin Panel</a>'
+            : '<a href="/my-requests" class="btn btn-outline" style="min-height:36px;padding:0 14px;font-size:0.82rem;">Track Requests</a>'
         }
         <button id="logoutBtn" class="btn btn-outline" style="min-height:36px;padding:0 12px;font-size:0.82rem;">Logout</button>
       `;
@@ -197,8 +197,8 @@ const Auth = {
       document.getElementById("headerProfileBtn").addEventListener("click", () => this.openProfileModal());
     } else {
       authContainer.innerHTML = `
-        <a href="/login.html" class="btn btn-outline" style="min-height:36px;padding:0 14px;font-size:0.82rem;">Sign in</a>
-        <a href="/register.html" class="btn" style="min-height:36px;padding:0 14px;font-size:0.82rem;">Register</a>
+        <a href="/login" class="btn btn-outline" style="min-height:36px;padding:0 14px;font-size:0.82rem;">Sign in</a>
+        <a href="/register" class="btn" style="min-height:36px;padding:0 14px;font-size:0.82rem;">Register</a>
       `;
     }
   },
@@ -234,7 +234,7 @@ window.auth = {
   },
   logout: (redirectUrl) => {
     Auth.clearSession();
-    window.location.href = redirectUrl || "/pages/login.html";
+    window.location.href = redirectUrl || "/login";
   },
 };
 

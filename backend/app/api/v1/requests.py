@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
-from typing import List
-from fastapi import APIRouter, BackgroundTasks, Depends, status
-from sqlalchemy import select
+from typing import List, Optional
+from fastapi import APIRouter, BackgroundTasks, Depends, Query, status
+from sqlalchemy import or_, select
 from sqlalchemy.orm import Session, joinedload
 
 from app.core.errors import NotFoundError, raise_error
@@ -81,6 +81,7 @@ def create_service_request(
         preferred_date=req.preferred_date,
         preferred_time=req.preferred_time,
         message=req.message,
+        admin_notes=req.admin_notes,
         status=req.status,
         created_at=req.created_at,
         decided_at=req.decided_at,
@@ -94,16 +95,41 @@ def create_service_request(
 
 @router.get("/my", response_model=List[ServiceRequestResponse])
 def get_my_requests(
+    start_date: Optional[str] = Query(None, description="Filter from date (YYYY-MM-DD)"),
+    end_date: Optional[str] = Query(None, description="Filter to date (YYYY-MM-DD)"),
+    status: Optional[str] = Query(None, description="Filter by status"),
+    search: Optional[str] = Query(None, description="Search vehicle or service"),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Retrieve all requests created by the authenticated customer."""
-    stmt = (
+    """Retrieve all requests created by the authenticated customer with optional date/status filters."""
+    query = (
         select(ServiceRequest)
+        .outerjoin(ServiceRequest.service)
         .options(joinedload(ServiceRequest.service))
         .where(ServiceRequest.customer_id == current_user.id)
-        .order_by(ServiceRequest.created_at.desc())
     )
+
+    if status and status.strip():
+        query = query.where(ServiceRequest.status == status.strip())
+
+    if start_date and start_date.strip():
+        query = query.where(ServiceRequest.preferred_date >= start_date.strip())
+
+    if end_date and end_date.strip():
+        query = query.where(ServiceRequest.preferred_date <= end_date.strip())
+
+    if search and search.strip():
+        term = f"%{search.strip()}%"
+        query = query.where(
+            or_(
+                ServiceRequest.vehicle_details.ilike(term),
+                ServiceRequest.custom_service.ilike(term),
+                Service.name.ilike(term),
+            )
+        )
+
+    stmt = query.order_by(ServiceRequest.created_at.desc())
     requests = db.scalars(stmt).all()
 
     results = []
@@ -120,6 +146,7 @@ def get_my_requests(
                 preferred_date=r.preferred_date,
                 preferred_time=r.preferred_time,
                 message=r.message,
+                admin_notes=r.admin_notes,
                 status=r.status,
                 created_at=r.created_at,
                 decided_at=r.decided_at,

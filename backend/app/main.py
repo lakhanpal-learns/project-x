@@ -69,32 +69,45 @@ if FRONTEND_DIR.exists():
     app.mount("/pages", StaticFiles(directory=FRONTEND_DIR / "pages"), name="pages")
 
 
-# HTML Page Routes
+# Clean Browser Routing (supports both clean URLs e.g. /admin and legacy .html URLs)
 @app.get("/", include_in_schema=False)
 def home_page():
     return FileResponse(FRONTEND_DIR / "index.html")
 
 
+@app.get("/login", include_in_schema=False)
 @app.get("/login.html", include_in_schema=False)
 def login_page():
     return FileResponse(FRONTEND_DIR / "pages" / "login.html")
 
 
+@app.get("/register", include_in_schema=False)
 @app.get("/register.html", include_in_schema=False)
 def register_page():
     return FileResponse(FRONTEND_DIR / "pages" / "register.html")
 
 
+@app.get("/services", include_in_schema=False)
+@app.get("/services.html", include_in_schema=False)
+def services_page():
+    return FileResponse(FRONTEND_DIR / "pages" / "services.html")
+
+
+@app.get("/request-service", include_in_schema=False)
+@app.get("/book", include_in_schema=False)
 @app.get("/request-service.html", include_in_schema=False)
 def request_service_page():
     return FileResponse(FRONTEND_DIR / "pages" / "request-service.html")
 
 
+@app.get("/my-requests", include_in_schema=False)
+@app.get("/tracking", include_in_schema=False)
 @app.get("/my-requests.html", include_in_schema=False)
 def my_requests_page():
     return FileResponse(FRONTEND_DIR / "pages" / "my-requests.html")
 
 
+@app.get("/admin", include_in_schema=False)
 @app.get("/admin.html", include_in_schema=False)
 def admin_page():
     return FileResponse(FRONTEND_DIR / "pages" / "admin.html")

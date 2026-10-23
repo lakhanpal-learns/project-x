@@ -8,7 +8,8 @@
   <title>Services & Pricing | MrShine Car Wash & Detailing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>* { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important; }</style>
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/responsive.css" />
 </head>
@@ -27,14 +28,14 @@
       <button class="mobile-toggle" id="mobileToggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
       <div class="nav-links" id="navLinks">
         <a href="/">Home</a>
-        <a href="/pages/services.html" class="active">Services</a>
-        <a href="/pages/request-service.html">Request Service</a>
+        <a href="/services" class="active">Services</a>
+        <a href="/request-service">Request Service</a>
         <a href="/#about">About</a>
         <a href="/#contact">Contact</a>
       </div>
       <div class="nav-actions">
-        <a class="btn btn-outline" href="/pages/login.html">Login</a>
-        <a class="btn" href="/pages/register.html">Sign Up</a>
+        <a class="btn btn-outline" href="/login">Login</a>
+        <a class="btn" href="/register">Sign Up</a>
       </div>
     </nav>
   </header>
@@ -49,7 +50,7 @@
           <p>Carefully formulated treatments designed to clean, restore, and protect every surface of your vehicle.</p>
         </div>
         <div>
-          <a href="/pages/request-service.html" class="btn">
+          <a href="/request-service" class="btn">
             Custom Booking Request &rarr;
           </a>
         </div>
@@ -144,8 +145,8 @@
         <h2 style="margin-bottom: 16px;">Schedule Your Car Care Today</h2>
         <p style="color: var(--muted); margin-bottom: 28px;">Select a package or request custom detailing for your vehicle. Fast booking with real-time status updates.</p>
         <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-          <a href="/pages/request-service.html" class="btn">Book a Service Now &rarr;</a>
-          <a href="/pages/request-service.html#feedbackTab" class="btn btn-outline">Ask a Question</a>
+          <a href="/request-service" class="btn">Book a Service Now &rarr;</a>
+          <a href="/request-service#feedbackTab" class="btn btn-outline">Ask a Question</a>
         </div>
       </div>
     </section>
@@ -172,34 +173,34 @@
           <h4>Navigation</h4>
           <div class="footer-links">
             <a href="/">Home</a>
-            <a href="/pages/services.html">Services</a>
-            <a href="/pages/request-service.html">Book Service</a>
-            <a href="/pages/my-requests.html">My Requests</a>
+            <a href="/services">Services</a>
+            <a href="/request-service">Book Service</a>
+            <a href="/my-requests">My Requests</a>
           </div>
         </div>
         <div>
           <h4>Services</h4>
           <div class="footer-links">
-            <a href="/pages/request-service.html?service_id=1">Exterior Car Wash</a>
-            <a href="/pages/request-service.html?service_id=2">Interior Cleaning</a>
-            <a href="/pages/request-service.html?service_id=3">Complete Cleaning</a>
-            <a href="/pages/request-service.html?service_id=4">Premium Detailing</a>
+            <a href="/request-service?service_id=1">Exterior Car Wash</a>
+            <a href="/request-service?service_id=2">Interior Cleaning</a>
+            <a href="/request-service?service_id=3">Complete Cleaning</a>
+            <a href="/request-service?service_id=4">Premium Detailing</a>
           </div>
         </div>
         <div>
           <h4>Account</h4>
           <div class="footer-links">
-            <a href="/pages/login.html">Sign In</a>
-            <a href="/pages/register.html">Create Account</a>
-            <a href="/pages/admin.html">Admin Portal</a>
+            <a href="/login">Sign In</a>
+            <a href="/register">Create Account</a>
+            <a href="/admin">Admin Portal</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
         <span>&copy; <span id="year"></span> MrShine Car Wash &amp; Detailing. All rights reserved.</span>
         <div style="display: flex; gap: 18px;">
-          <a href="/pages/privacy.html">Privacy</a>
-          <a href="/pages/terms.html">Terms</a>
+          <a href="/#privacy">Privacy</a>
+          <a href="/#terms">Terms</a>
         </div>
       </div>
     </div>
@@ -228,7 +229,7 @@
               <div class="empty-state-icon">&#128712;</div>
               <h3>No Services Available</h3>
               <p>Services are currently being updated. Please check back shortly or submit a custom inquiry.</p>
-              <a href="/pages/request-service.html" class="btn btn-outline">Submit Custom Request</a>
+              <a href="/request-service" class="btn btn-outline">Submit Custom Request</a>
             </div>
           `;
           return;
@@ -264,7 +265,7 @@
                     <span class="service-item-price">${priceFormatted}</span>
                   </div>
                   <a
-                    href="/pages/request-service.html?service_id=${service.id}"
+                    href="/request-service?service_id=${service.id}"
                     class="btn btn-sm"
                     aria-label="Book ${escapeHtml(service.name)}"
                   >
@@ -293,7 +294,7 @@
               <p class="service-item-desc">Thorough hand wash, wheel shine, rinse, and microfiber drying for a crystal clear finish.</p>
               <div class="service-item-bottom">
                 <span class="service-item-price">$25.00</span>
-                <a href="/pages/request-service.html?service_id=1" class="btn btn-sm">Book Service &rarr;</a>
+                <a href="/request-service?service_id=1" class="btn btn-sm">Book Service &rarr;</a>
               </div>
             </div>
           </article>
@@ -305,7 +306,7 @@
               <p class="service-item-desc">Deep vacuuming, dashboard restoration, window streak cleaning, and fabric upholstery refresh.</p>
               <div class="service-item-bottom">
                 <span class="service-item-price">$45.00</span>
-                <a href="/pages/request-service.html?service_id=2" class="btn btn-sm">Book Service &rarr;</a>
+                <a href="/request-service?service_id=2" class="btn btn-sm">Book Service &rarr;</a>
               </div>
             </div>
           </article>
@@ -317,7 +318,7 @@
               <p class="service-item-desc">Full exterior wash combined with complete interior detailing for comprehensive care.</p>
               <div class="service-item-bottom">
                 <span class="service-item-price">$65.00</span>
-                <a href="/pages/request-service.html?service_id=3" class="btn btn-sm">Book Service &rarr;</a>
+                <a href="/request-service?service_id=3" class="btn btn-sm">Book Service &rarr;</a>
               </div>
             </div>
           </article>
@@ -329,7 +330,7 @@
               <p class="service-item-desc">Paint decontamination, hand paste wax, ceramic protection spray, and leather conditioning.</p>
               <div class="service-item-bottom">
                 <span class="service-item-price">$110.00</span>
-                <a href="/pages/request-service.html?service_id=4" class="btn btn-sm">Book Service &rarr;</a>
+                <a href="/request-service?service_id=4" class="btn btn-sm">Book Service &rarr;</a>
               </div>
             </div>
           </article>

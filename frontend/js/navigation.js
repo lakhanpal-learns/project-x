@@ -77,7 +77,7 @@
       // Ensure "My Requests" exists
       if (!navLinks.querySelector('a[href*="my-requests"]')) {
         const reqLink = document.createElement("a");
-        reqLink.href = "/pages/my-requests.html";
+        reqLink.href = "/my-requests";
         reqLink.textContent = "My Requests";
         if (currentPath.includes("my-requests")) reqLink.classList.add("active");
         navLinks.appendChild(reqLink);
@@ -86,7 +86,7 @@
       // If admin, ensure "Admin Portal" link exists
       if (user.role === "admin" && !navLinks.querySelector('a[href*="admin"]')) {
         const adminLink = document.createElement("a");
-        adminLink.href = "/pages/admin.html";
+        adminLink.href = "/admin";
         adminLink.textContent = "Admin Portal";
         if (currentPath.includes("admin")) adminLink.classList.add("active");
         navLinks.appendChild(adminLink);
@@ -124,7 +124,7 @@
     logoutBtn.className = "btn btn-outline btn-sm";
     logoutBtn.textContent = "Logout";
     logoutBtn.addEventListener("click", () => {
-      window.auth.logout("/pages/login.html");
+      window.auth.logout("/login");
     });
 
     userMenu.appendChild(badge);

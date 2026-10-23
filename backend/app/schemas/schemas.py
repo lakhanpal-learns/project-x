@@ -1,6 +1,6 @@
 from datetime import datetime
 from decimal import Decimal
-from typing import Optional
+from typing import List, Optional
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
@@ -79,7 +79,7 @@ class ServiceResponse(BaseModel):
 # Service Request Schemas
 class ServiceRequestCreate(BaseModel):
     service_id: Optional[int] = None
-    custom_service: Optional[str] = Field(None, max_length=100)
+    custom_service: Optional[str] = Field(None, max_length=500)
     vehicle_details: str = Field(..., min_length=2, max_length=255)
     preferred_date: str = Field(..., min_length=4, max_length=50)
     preferred_time: str = Field(..., min_length=2, max_length=50)
@@ -90,6 +90,8 @@ class ServiceRequestCreate(BaseModel):
 class ServiceRequestStatusUpdate(BaseModel):
     status: str = Field(..., pattern="^(Pending|Approved|In Progress|Completed|Rejected)$")
     admin_notes: Optional[str] = None
+    scheduled_date: Optional[str] = None
+    scheduled_time: Optional[str] = None
 
 
 class ServiceRequestResponse(BaseModel):
@@ -101,6 +103,7 @@ class ServiceRequestResponse(BaseModel):
     preferred_date: str
     preferred_time: str
     message: Optional[str]
+    admin_notes: Optional[str] = None
     status: str
     created_at: datetime
     decided_at: Optional[datetime] = None
@@ -142,3 +145,44 @@ class AdminStatsResponse(BaseModel):
     completed_requests: int
     rejected_requests: int
     total_customers: int
+
+
+# Paginated Responses
+class PaginatedRequestsResponse(BaseModel):
+    items: List[ServiceRequestResponse]
+    total: int
+    page: int
+    per_page: int
+    total_pages: int
+
+
+class CustomerHistorySummary(BaseModel):
+    total_bookings: int
+    completed: int
+    pending: int
+    in_progress: int
+    approved: int
+    rejected: int
+
+
+class CustomerWithHistoryResponse(BaseModel):
+    id: int
+    name: str
+    email: str
+    phone: Optional[str] = None
+    role: str
+    is_active: bool
+    created_at: datetime
+    summary: CustomerHistorySummary
+    recent_requests: List[ServiceRequestResponse] = []
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class PaginatedCustomersResponse(BaseModel):
+    items: List[CustomerWithHistoryResponse]
+    total: int
+    page: int
+    per_page: int
+    total_pages: int
+

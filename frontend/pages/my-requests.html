@@ -3,44 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Service Tracker | MrShine Car Wash</title>
+  <title>Live Service Tracker &amp; Booking History | MrShine Car Wash</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --black: #101010;
       --ink: #181818;
-      --muted: #666;
-      --line: #e5e7eb;
-      --soft: #f9fafb;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --soft: #f8fafc;
       --white: #fff;
       --radius: 14px;
       --primary: #2563eb;
     }
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important; }
     body {
-      margin: 0;
       color: var(--ink);
       background: #f8fafc;
-      font-family: "DM Sans", sans-serif;
+      font-family: "Poppins", -apple-system, BlinkMacSystemFont, sans-serif !important;
       line-height: 1.55;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
     a { color: inherit; text-decoration: none; }
-    button { font: inherit; }
-    .container { width: min(1080px, calc(100% - 32px)); margin-inline: auto; }
+    button, input, select { font: inherit; }
+    .container { width: min(1140px, calc(100% - 32px)); margin-inline: auto; }
 
     /* Header */
     .header {
-      border-bottom: 1px solid rgba(0,0,0,.07);
-      background: rgba(255,255,255,.95);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.98);
       backdrop-filter: blur(14px);
       position: sticky;
       top: 0;
       z-index: 50;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
     .nav {
       min-height: 72px;
@@ -63,18 +63,20 @@
       font-weight: 700;
       letter-spacing: .12em;
       display: block;
+      color: var(--muted);
       margin-top: 4px;
     }
-    .nav-links { display: flex; align-items: center; gap: 20px; font-size: .88rem; }
+    .nav-links { display: flex; align-items: center; gap: 20px; font-size: .88rem; font-weight: 600; }
+    .nav-links a:hover { color: #2563eb; }
 
-    main { flex: 1; padding: 36px 0 60px; }
+    main { flex: 1; padding: 32px 0 60px; }
 
     /* Top Bar */
     .top-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
       gap: 16px;
     }
@@ -83,15 +85,16 @@
       font-size: 2rem;
       letter-spacing: -.03em;
       margin: 0;
+      color: #0f172a;
     }
 
     .btn {
       display: inline-flex;
-      min-height: 42px;
+      min-height: 40px;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 0 20px;
+      padding: 0 18px;
       border: 1px solid var(--black);
       border-radius: 8px;
       background: var(--black);
@@ -99,11 +102,11 @@
       font-size: .88rem;
       font-weight: 700;
       cursor: pointer;
-      transition: transform .2s, background .2s;
+      transition: all .2s;
     }
-    .btn:hover { background: #333; transform: translateY(-1px); }
-    .btn-outline { background: transparent; color: var(--black); }
-    .btn-outline:hover { background: var(--black); color: white; }
+    .btn:hover { background: #334155; }
+    .btn-outline { background: transparent; color: var(--black); border-color: #cbd5e1; }
+    .btn-outline:hover { background: #f1f5f9; }
 
     /* Live Tracking Indicator */
     .live-indicator {
@@ -131,23 +134,91 @@
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
     }
 
+    /* Filter Bar */
+    .filter-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .search-wrap {
+      flex: 1 1 240px;
+      position: relative;
+    }
+    .filter-input {
+      width: 100%;
+      height: 38px;
+      padding: 0 12px 0 32px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      outline: none;
+    }
+    .filter-input:focus { border-color: #0f172a; }
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      pointer-events: none;
+    }
+    .filter-select, .filter-date {
+      height: 38px;
+      padding: 0 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      background: #ffffff;
+      outline: none;
+    }
+    .date-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-clear {
+      height: 38px;
+      padding: 0 12px;
+      background: transparent;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .btn-clear:hover { background: #f1f5f9; color: var(--ink); }
+
     /* Tracking Card */
     .tracking-card {
       background: white;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 28px;
-      margin-bottom: 24px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-      transition: border-color .2s;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+      transition: all .2s;
+    }
+    .tracking-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     }
     .tracking-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
     }
     .tracking-title h3 {
       font-family: "Manrope", sans-serif;
@@ -155,22 +226,23 @@
       font-weight: 800;
       margin: 0 0 6px;
       letter-spacing: -.02em;
+      color: #0f172a;
     }
     .tracking-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
-      font-size: 0.88rem;
-      color: #555;
+      gap: 14px 20px;
+      font-size: 0.86rem;
+      color: #475569;
     }
-    .tracking-meta span strong { color: var(--ink); }
+    .tracking-meta span strong { color: #0f172a; }
 
     /* Stepper */
     .stepper {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       position: relative;
-      margin: 32px 0 20px;
+      margin: 28px 0 16px;
       gap: 8px;
     }
     .stepper::before {
@@ -214,7 +286,6 @@
       margin-top: 3px;
     }
 
-    /* Completed / Active Step States */
     .step-item.completed .step-circle {
       background: #10b981;
       border-color: #10b981;
@@ -249,57 +320,74 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 20px;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 700;
     }
+    .status-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
     .status-pending { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .status-pending::before { background: #d97706; }
     .status-approved { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
-    .status-in-progress { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .status-approved::before { background: #2563eb; }
+    .status-in-progress { background: #ede9fe; color: #5b21b6; border: 1px solid #ddd6fe; }
+    .status-in-progress::before { background: #7c3aed; }
     .status-completed { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .status-completed::before { background: #16a34a; }
     .status-rejected { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+    .status-rejected::before { background: #dc2626; }
 
     .empty-state {
-      text-align: center;
-      padding: 64px 24px;
       background: white;
-      border: 1px dashed #cbd5e1;
+      border: 1px solid var(--line);
       border-radius: var(--radius);
+      padding: 60px 20px;
+      text-align: center;
     }
 
     footer {
       padding: 24px 0;
       border-top: 1px solid var(--line);
-      color: #777;
+      color: var(--muted);
       font-size: 0.82rem;
       text-align: center;
       background: white;
     }
-
-    @media (max-width: 680px) {
-      .stepper { grid-template-columns: 1fr; gap: 20px; text-align: left; }
-      .stepper::before { display: none; }
-      .step-item { display: flex; align-items: center; gap: 14px; }
-      .step-circle { margin: 0; }
+  
+    /* Shimmer Skeleton Loading */
+    @keyframes shimmerAnim {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
     }
-  </style>
+    .skeleton {
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      animation: shimmerAnim 1.5s infinite;
+      border-radius: 6px;
+      display: inline-block;
+    }
+</style>
 </head>
 <body>
   <header class="header">
     <div class="container nav">
-      <a class="brand" href="/">
+      <a class="brand" href="/" aria-label="MrShine Home">
         <svg class="brand-mark" viewBox="0 0 90 42" fill="none" aria-hidden="true">
           <path d="M7 27h7l5-11c1-3 4-5 8-5h31c5 0 8 2 12 7l8 9h5c3 0 5 2 5 5v3H6v-4c0-2 0-4 1-4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
           <path d="m23 14-4 13h48L56 14M14 28h61" stroke="currentColor" stroke-width="2"/>
           <circle cx="23" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/><circle cx="67" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/>
         </svg>
-        <span><span class="brand-name">MrShine</span><span class="brand-sub">CAR WASH & DETAILING</span></span>
+        <span><span class="brand-name">MrShine</span><span class="brand-sub">CAR WASH &amp; DETAILING</span></span>
       </a>
       <div class="nav-links">
         <a href="/">Home</a>
-        <a href="/pages/services.html">Services</a>
-        <a href="/pages/request-service.html">Book Service</a>
+        <a href="/services">Services</a>
+        <a href="/request-service">Book Service</a>
       </div>
       <div id="headerAuthActions" style="display:flex;align-items:center;gap:10px;"></div>
     </div>
@@ -310,35 +398,74 @@
       <div class="top-bar">
         <div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
-            <h1>My Service Requests</h1>
-            <span class="live-indicator"><span class="live-dot"></span> Live Tracking</span>
+            <h1>My Service Requests &amp; Live Tracking</h1>
+            <span class="live-indicator"><span class="live-dot"></span> Live Sync Active</span>
           </div>
           <p style="margin:0;color:var(--muted);font-size:.9rem;">
-            Follow your vehicle's live appointment status from arrival to completed shine.
+            Follow your vehicle's live appointment status from arrival to completed showroom shine.
           </p>
         </div>
         <div style="display:flex;gap:10px;">
-          <button id="manualRefreshBtn" class="btn btn-outline" style="min-height:38px;padding:0 14px;font-size:0.82rem;">&#x21bb; Refresh</button>
-          <a href="/pages/request-service.html" class="btn" style="min-height:38px;padding:0 18px;font-size:0.85rem;">+ New Request</a>
+          <button id="manualRefreshBtn" class="btn btn-outline">&#x21bb; Refresh</button>
+          <a href="/request-service" class="btn">+ New Booking</a>
         </div>
       </div>
 
-      <div id="loading" style="text-align:center;padding:60px 20px;color:#64748b;">
-        Connecting to live service tracker…
+      <!-- Customer Side-by-side Filter Bar -->
+      <div class="filter-card">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><circle cx="8.5" cy="8.5" r="5.5"/><line x1="13" y1="13" x2="17" y2="17"/></svg>
+          <input id="custSearchInput" class="filter-input" type="text" placeholder="Search by vehicle, service, or #ID..." />
+        </div>
+
+        <select id="custStatusFilter" class="filter-select">
+          <option value="">All Statuses</option>
+          <option value="Pending">1. Pending Review</option>
+          <option value="Approved">2. Bay Reserved</option>
+          <option value="In Progress">3. Washing In Progress</option>
+          <option value="Completed">4. Quality Finished</option>
+          <option value="Rejected">5. Declined</option>
+        </select>
+
+        <div class="date-label">
+          <span>From</span>
+          <input id="custStartDate" class="filter-date" type="date" />
+        </div>
+
+        <div class="date-label">
+          <span>To</span>
+          <input id="custEndDate" class="filter-date" type="date" />
+        </div>
+
+        <button id="custResetBtn" class="btn-clear">✕ Reset</button>
+      </div>
+
+      <div id="loading" style="margin-bottom:20px;">
+        <div class="tracking-card">
+          <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
+            <div style="width:60%;">
+              <div class="skeleton" style="height:14px;width:120px;margin-bottom:8px;"></div>
+              <div class="skeleton" style="height:22px;width:240px;margin-bottom:8px;"></div>
+              <div class="skeleton" style="height:16px;width:300px;"></div>
+            </div>
+            <div class="skeleton" style="height:24px;width:80px;border-radius:20px;"></div>
+          </div>
+          <div class="skeleton" style="height:60px;width:100%;border-radius:8px;"></div>
+        </div>
       </div>
 
       <div id="trackingContainer" style="display:none;"></div>
 
       <div id="emptyState" class="empty-state" style="display:none;">
-        <h2 style="font-family:'Manrope',sans-serif;margin:0 0 8px;">No Active Requests</h2>
-        <p style="color:var(--muted);margin:0 0 20px;font-size:0.95rem;">You haven't booked any car wash or custom detailing appointments yet.</p>
-        <a href="/pages/request-service.html" class="btn">Book Your First Service &rarr;</a>
+        <h2 style="font-family:'Manrope',sans-serif;margin:0 0 8px;font-size:1.4rem;">No Requests Found</h2>
+        <p style="color:var(--muted);margin:0 0 20px;font-size:0.92rem;">No appointments matched your search or date filter.</p>
+        <a href="/request-service" class="btn">Book a Car Care Package &rarr;</a>
       </div>
     </div>
   </main>
 
   <footer>
-    <div class="container">&copy; <span id="year"></span> MrShine Car Wash & Detailing. Live Service Tracking System.</div>
+    <div class="container">&copy; <span id="year"></span> MrShine Car Wash &amp; Detailing. Live Service Tracking System.</div>
   </footer>
 
   <script src="/js/api.js"></script>
@@ -346,24 +473,58 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
+    let searchTimer = null;
+
     if (Auth.requireAuth()) {
+      setupFilters();
       loadRequests();
       // Auto-poll live status every 10 seconds so customer sees real-time changes
       setInterval(loadRequests, 10000);
     }
 
-    document.getElementById("manualRefreshBtn").addEventListener("click", () => {
-      loadRequests();
-      Api.showToast("Tracking status refreshed", "success");
-    });
+    function setupFilters() {
+      const searchInput = document.getElementById("custSearchInput");
+      searchInput.addEventListener("input", () => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(loadRequests, 300);
+      });
+
+      document.getElementById("custStatusFilter").addEventListener("change", loadRequests);
+      document.getElementById("custStartDate").addEventListener("change", loadRequests);
+      document.getElementById("custEndDate").addEventListener("change", loadRequests);
+
+      document.getElementById("custResetBtn").addEventListener("click", () => {
+        document.getElementById("custSearchInput").value = "";
+        document.getElementById("custStatusFilter").value = "";
+        document.getElementById("custStartDate").value = "";
+        document.getElementById("custEndDate").value = "";
+        loadRequests();
+      });
+
+      document.getElementById("manualRefreshBtn").addEventListener("click", () => {
+        loadRequests();
+        Api.showToast("Tracking status refreshed", "success");
+      });
+    }
 
     async function loadRequests() {
       const loading = document.getElementById("loading");
       const container = document.getElementById("trackingContainer");
       const empty = document.getElementById("emptyState");
 
+      const search = document.getElementById("custSearchInput").value.trim();
+      const status = document.getElementById("custStatusFilter").value;
+      const startDate = document.getElementById("custStartDate").value;
+      const endDate = document.getElementById("custEndDate").value;
+
       try {
-        const requests = await Api.getMyRequests();
+        const requests = await Api.getMyRequests({
+          search: search || null,
+          status: status || null,
+          start_date: startDate || null,
+          end_date: endDate || null
+        });
+
         loading.style.display = "none";
 
         if (!requests || requests.length === 0) {
@@ -401,20 +562,20 @@
         <div class="tracking-card">
           <div class="tracking-header">
             <div class="tracking-title">
-              <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">
+              <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;font-weight:700;">
                 Request #${r.id} &bull; Booked ${formattedCreated}
               </div>
-              <h3>${r.service_name || 'Car Care Package'}</h3>
+              <h3>${escapeHtml(r.service_name || 'Car Care Package')}</h3>
               <div class="tracking-meta">
-                <span>Vehicle: <strong>${r.vehicle_details}</strong></span>
-                <span>Scheduled Date: <strong>${r.preferred_date}</strong></span>
-                <span>Time Slot: <strong>${r.preferred_time}</strong></span>
+                <span>Vehicle: <strong>${escapeHtml(r.vehicle_details)}</strong></span>
+                <span>Scheduled Date: <strong>📅 ${r.preferred_date}</strong></span>
+                <span>Time Slot: <strong>⏰ ${r.preferred_time}</strong></span>
                 ${r.service_price ? `<span>Price: <strong>$${parseFloat(r.service_price).toFixed(2)}</strong></span>` : '<span>Price: <strong>Custom Quote</strong></span>'}
               </div>
             </div>
             <div>
               <span class="status-badge ${badgeClass}">
-                <span>&bull;</span> ${status}
+                ${status}
               </span>
             </div>
           </div>
@@ -424,7 +585,7 @@
               <span style="font-size:1.3rem;">&#9888;</span>
               <div>
                 <strong>Appointment Request Declined</strong>
-                <div style="font-size:0.84rem;margin-top:2px;">Our team was unable to accommodate this schedule slot. Please contact our support team or book an alternative date.</div>
+                <div style="font-size:0.84rem;margin-top:2px;">Our team was unable to accommodate this schedule slot. Please contact our shop or submit an alternative booking date.</div>
               </div>
             </div>
           ` : `
@@ -453,13 +614,29 @@
             </div>
           `}
 
+          ${r.admin_notes ? `
+            <div style="margin-top:16px;padding:12px 16px;background:#eff6ff;border-left:4px solid #3b82f6;border-radius:6px;font-size:0.84rem;color:#1e40af;">
+              <strong style="color:#1d4ed8;">Shop Admin Note / Scheduling Update:</strong> ${escapeHtml(r.admin_notes)}
+            </div>
+          ` : ''}
+
           ${r.message ? `
-            <div style="margin-top:16px;padding:12px 16px;background:#f8fafc;border-radius:8px;font-size:0.84rem;color:#475569;">
-              <strong style="color:#1e293b;">Special Instructions:</strong> ${r.message}
+            <div style="margin-top:12px;padding:10px 14px;background:#f8fafc;border-radius:6px;font-size:0.82rem;color:#475569;">
+              <strong>Your Instructions:</strong> "${escapeHtml(r.message)}"
             </div>
           ` : ''}
         </div>
       `;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
   </script>
 </body>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap');
+
 /* ==========================================================================
    MrShine Car Wash & Detailing - Master Stylesheet
    Typography: DM Sans (Body) & Manrope (Headings)
@@ -19,8 +21,8 @@
   --radius-lg: 18px;
   --max: 1180px;
 
-  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-heading: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Poppins", "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Status Tokens */
   --status-pending: #b54708;
@@ -766,7 +768,7 @@ textarea.input-control {
   width: 100%;
   height: 180px;
   object-fit: cover;
-  filter: grayscale(100%);
+  /* filter: grayscale(0%); */
   transition: filter 0.3s;
 }
 

@@ -4,44 +4,221 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#ffffff" />
-  <meta name="description" content="Book a car wash or detailing service with MrShine, or submit feedback and inquiries." />
-  <title>Request Service &amp; Feedback | MrShine Car Wash</title>
+  <meta name="description" content="Book car wash or premium detailing services with MrShine. Select multiple treatments, schedule dates, or send feedback." />
+  <title>Book Service &amp; Inquiries | MrShine Car Wash &amp; Detailing</title>
+  <!-- Google Fonts: Poppins (Primary Font) and Manrope -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/responsive.css" />
   <style>
+    * {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    }
+    body {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    
     .booking-grid {
       display: grid;
-      grid-template-columns: 1.35fr 0.85fr;
+      grid-template-columns: 1.4fr 0.85fr;
       gap: 32px;
       align-items: start;
     }
 
+    /* Multi-service card styling */
+    .services-selection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+    .service-card-select {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+    .service-card-select:hover {
+      border-color: #94a3b8;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      transform: translateY(-2px);
+    }
+    .service-card-select.selected {
+      border-color: #0f172a;
+      background: #f8fafc;
+      box-shadow: 0 0 0 1.5px #0f172a, 0 4px 16px rgba(15,23,42,0.08);
+    }
+    .svc-check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .svc-checkbox {
+      width: 20px;
+      height: 20px;
+      accent-color: #0f172a;
+      cursor: pointer;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .svc-info {
+      flex: 1;
+    }
+    .svc-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+      line-height: 1.25;
+    }
+    .svc-desc {
+      font-size: 0.78rem;
+      color: #64748b;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .svc-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid #f1f5f9;
+      margin-top: auto;
+    }
+    .svc-price {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .svc-dur {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #475569;
+      background: #f1f5f9;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .service-card-select.selected .svc-dur {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /* Custom service expandable area */
+    .custom-service-card {
+      grid-column: 1 / -1;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 16px;
+      background: #fafbfc;
+      transition: all 0.2s;
+    }
+    .custom-service-card.active {
+      border-color: #0f172a;
+      background: #ffffff;
+    }
+
+    /* Summary Sidebar */
     .summary-card {
       position: sticky;
       top: 100px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #fafafa;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      background: #ffffff;
       padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     }
-
+    .summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .summary-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .selected-count-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .selected-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+      max-height: 240px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .selected-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #f1f5f9;
+    }
+    .selected-item-row .item-remove {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      margin-left: 8px;
+      padding: 2px 4px;
+    }
+    .selected-item-row .item-remove:hover {
+      color: #ef4444;
+    }
     .summary-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-      font-size: 0.88rem;
+      margin-bottom: 10px;
+      font-size: 0.86rem;
+      color: #475569;
     }
-
     .summary-item.total {
       padding-top: 14px;
-      border-top: 1px solid var(--line);
+      border-top: 2px solid #0f172a;
       margin-top: 14px;
       font-weight: 800;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
+      color: #0f172a;
+    }
+
+    /* Shimmer Skeleton */
+    @keyframes shimmerAnim {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .shimmer-box {
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      animation: shimmerAnim 1.5s infinite;
+      border-radius: 10px;
     }
 
     .auth-prompt-banner {
@@ -50,20 +227,21 @@
       justify-content: space-between;
       gap: 16px;
       padding: 14px 18px;
-      background: #fff8f0;
-      border: 1px solid #fedf89;
-      border-radius: var(--radius-sm);
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
       margin-bottom: 24px;
       font-size: 0.88rem;
-      color: #7a3a00;
+      color: #1e40af;
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 900px) {
       .booking-grid {
         grid-template-columns: 1fr;
       }
       .summary-card {
         position: static;
+        margin-top: 24px;
       }
     }
   </style>
@@ -83,25 +261,25 @@
       <button class="mobile-toggle" id="mobileToggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
       <div class="nav-links" id="navLinks">
         <a href="/">Home</a>
-        <a href="/pages/services.html">Services</a>
-        <a href="/pages/request-service.html" class="active">Request Service</a>
-        <a href="/pages/my-requests.html">My Requests</a>
+        <a href="/services">Services</a>
+        <a href="/request-service" class="active">Book Service</a>
+        <a href="/my-requests">My Requests</a>
       </div>
-      <div class="nav-actions">
-        <a class="btn btn-outline" href="/pages/login.html">Login</a>
-        <a class="btn" href="/pages/register.html">Sign Up</a>
+      <div class="nav-actions" id="headerAuthNav">
+        <a class="btn btn-outline" href="/login">Login</a>
+        <a class="btn" href="/register">Sign Up</a>
       </div>
     </nav>
   </header>
 
   <main style="padding-bottom: 72px;">
-    <!-- Hero Banner -->
+    <!-- Page Hero -->
     <section class="page-hero">
       <div class="container page-hero-inner">
         <div>
-          <p class="eyebrow">Online Booking &amp; Inquiries</p>
-          <h1>Request a Service</h1>
-          <p>Schedule your vehicle's car wash or send us feedback and special requests.</p>
+          <p class="eyebrow">Professional Booking &amp; Care Packages</p>
+          <h1>Book Service &amp; Inquiries</h1>
+          <p>Select multiple treatments for a comprehensive clean or describe a custom care package.</p>
         </div>
       </div>
     </section>
@@ -110,10 +288,10 @@
       <!-- Tab Navigation -->
       <div class="tabs-nav" role="tablist">
         <button class="tab-btn active" id="tabBookingBtn" type="button" role="tab" aria-selected="true" aria-controls="tabBooking">
-          &#128663; Book Service Request
+          &#128663; Multi-Service Booking
         </button>
         <button class="tab-btn" id="tabFeedbackBtn" type="button" role="tab" aria-selected="false" aria-controls="tabFeedback">
-          &#9733; Feedback &amp; Inquiries
+          &#9733; Customer Feedback &amp; Reviews
         </button>
       </div>
 
@@ -122,67 +300,61 @@
         <!-- Guest Auth Warning (hidden if authenticated) -->
         <div id="authPromptBanner" class="auth-prompt-banner" style="display: none;">
           <div>
-            <strong>Notice:</strong> You are currently browsing as a guest. Please sign in to submit your service booking.
+            <strong>Guest Notice:</strong> Please sign in to confirm and save your booking to your dashboard.
           </div>
-          <a href="/pages/login.html?next=/pages/request-service.html" class="btn btn-sm">Sign In Now</a>
+          <a href="/login?next=/request-service" class="btn btn-sm">Sign In Now</a>
         </div>
 
         <div id="bookingAlert" class="alert-banner" role="alert"></div>
 
         <div class="booking-grid">
-          <!-- Request Form -->
+          <!-- Main Form Card -->
           <div class="card">
             <div class="card-header">
               <div>
-                <h2 style="font-size: 1.3rem; margin: 0;">Vehicle &amp; Appointment Details</h2>
-                <p style="color: var(--muted); font-size: 0.82rem; margin: 4px 0 0;">Fill out the fields below to schedule your care package.</p>
+                <h2 style="font-size: 1.3rem; margin: 0; font-weight: 700;">1. Choose Services &amp; Packages</h2>
+                <p style="color: #64748b; font-size: 0.82rem; margin: 4px 0 0;">
+                  Click any card to select one or combine multiple services (exterior, interior, detailing).
+                </p>
               </div>
             </div>
 
             <div class="card-body">
-              <form id="serviceRequestForm" novalidate>
-                <!-- Service Selection -->
-                <div class="form-group">
-                  <label for="serviceSelect">Selected Package / Treatment <span style="color:#b42318">*</span></label>
-                  <select id="serviceSelect" class="input-control" required>
-                    <option value="" disabled selected>Loading available services...</option>
-                  </select>
-                  <div class="hint">Prices include comprehensive exterior or interior hand care.</div>
-                  
-                  <!-- Custom Service Description (Shown when customer selects custom) -->
-                  <div id="customServiceGroup" style="display:none; margin-top:12px; padding:14px; background:#f9fafb; border:1px dashed #d1d5db; border-radius:8px;">
-                    <label for="customServiceName" style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:6px;">
-                      Describe Custom Service / What do you need done? <span style="color:#b42318">*</span>
-                    </label>
-                    <input
-                      id="customServiceName"
-                      type="text"
-                      class="input-control"
-                      placeholder="e.g. Paint Correction + Scratch Removal + Engine Bay Degrease"
-                    />
-                    <div class="hint" style="margin-top:4px;">Our specialists will evaluate your requirements and provide a customized quote upon arrival.</div>
-                  </div>
-                </div>
+              <!-- Services List Shimmer Skeleton (initial loading state) -->
+              <div id="servicesShimmer" class="services-selection-grid">
+                <div class="shimmer-box" style="height: 140px;"></div>
+                <div class="shimmer-box" style="height: 140px;"></div>
+                <div class="shimmer-box" style="height: 140px;"></div>
+                <div class="shimmer-box" style="height: 140px;"></div>
+              </div>
+
+              <!-- Interactive Multi-Service Selection Grid -->
+              <div id="servicesListContainer" class="services-selection-grid" style="display: none;"></div>
+
+              <form id="serviceRequestForm" novalidate style="margin-top: 24px;">
+                <h3 style="font-size: 1.15rem; font-weight: 700; margin: 24px 0 16px; padding-top: 18px; border-top: 1px solid #e2e8f0;">
+                  2. Vehicle &amp; Appointment Schedule
+                </h3>
 
                 <!-- Vehicle Details -->
                 <div class="form-grid-2">
                   <div class="form-group">
-                    <label for="vehicleMakeModel">Vehicle Make &amp; Model <span style="color:#b42318">*</span></label>
+                    <label for="vehicleMakeModel">Vehicle Make &amp; Model <span style="color:#ef4444">*</span></label>
                     <input
                       id="vehicleMakeModel"
                       type="text"
                       class="input-control"
-                      placeholder="e.g. BMW 330i or Ford F-150"
+                      placeholder="e.g. BMW 330i, Tesla Model 3, Ford F-150"
                       required
                     />
                   </div>
                   <div class="form-group">
-                    <label for="vehicleYearPlate">Year &amp; Color <span style="color: var(--muted); font-weight: normal;">(Optional)</span></label>
+                    <label for="vehicleYearPlate">Year &amp; Color <span style="color: #64748b; font-weight: normal;">(Optional)</span></label>
                     <input
                       id="vehicleYearPlate"
                       type="text"
                       class="input-control"
-                      placeholder="e.g. 2023, Metallic Black"
+                      placeholder="e.g. 2024, Metallic Black"
                     />
                   </div>
                 </div>
@@ -190,7 +362,7 @@
                 <!-- Date & Time -->
                 <div class="form-grid-2">
                   <div class="form-group">
-                    <label for="preferredDate">Preferred Date <span style="color:#b42318">*</span></label>
+                    <label for="preferredDate">Preferred Date <span style="color:#ef4444">*</span></label>
                     <input
                       id="preferredDate"
                       type="date"
@@ -199,66 +371,75 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="preferredTime">Preferred Time Slot <span style="color:#b42318">*</span></label>
+                    <label for="preferredTime">Preferred Time Window <span style="color:#ef4444">*</span></label>
                     <select id="preferredTime" class="input-control" required>
                       <option value="" disabled selected>Select time window</option>
-                      <option value="08:30 AM - 09:30 AM">08:30 AM - 09:30 AM</option>
-                      <option value="10:00 AM - 11:30 AM">10:00 AM - 11:30 AM</option>
-                      <option value="11:30 AM - 01:00 PM">11:30 AM - 01:00 PM</option>
-                      <option value="02:00 PM - 03:30 PM">02:00 PM - 03:30 PM</option>
-                      <option value="03:30 PM - 05:00 PM">03:30 PM - 05:00 PM</option>
-                      <option value="05:00 PM - 06:30 PM">05:00 PM - 06:30 PM</option>
+                      <option value="08:30 AM - 09:30 AM">08:30 AM - 09:30 AM (Early Bird)</option>
+                      <option value="10:00 AM - 11:30 AM">10:00 AM - 11:30 AM (Morning)</option>
+                      <option value="11:30 AM - 01:00 PM">11:30 AM - 01:00 PM (Midday)</option>
+                      <option value="02:00 PM - 03:30 PM">02:00 PM - 03:30 PM (Afternoon)</option>
+                      <option value="03:30 PM - 05:00 PM">03:30 PM - 05:00 PM (Late Afternoon)</option>
+                      <option value="05:00 PM - 06:30 PM">05:00 PM - 06:30 PM (Evening)</option>
                     </select>
                   </div>
                 </div>
 
-                <!-- Special Message -->
+                <!-- Special Notes -->
                 <div class="form-group">
-                  <label for="bookingMessage">Special Notes or Requests <span style="color: var(--muted); font-weight: normal;">(Optional)</span></label>
+                  <label for="bookingMessage">Special Notes or Instructions <span style="color: #64748b; font-weight: normal;">(Optional)</span></label>
                   <textarea
                     id="bookingMessage"
                     class="input-control"
-                    placeholder="Tell us about specific stains, leather care preferences, or any specific concerns..."
+                    placeholder="Specific stain concerns, pet hair removal, delicate matte finish, or arrival preferences..."
                     rows="3"
                   ></textarea>
                 </div>
 
-                <button type="submit" id="submitBookingBtn" class="btn" style="width: 100%;">
-                  Confirm Service Request &rarr;
+                <button type="submit" id="submitBookingBtn" class="btn" style="width: 100%; height: 50px; font-size: 0.95rem; font-weight: 700;">
+                  Confirm Multi-Service Booking &rarr;
                 </button>
               </form>
             </div>
           </div>
 
-          <!-- Summary Sidebar -->
+          <!-- Sticky Booking Summary Sidebar -->
           <aside class="summary-card">
-            <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Booking Summary</h3>
-            <div id="summaryServiceDetails">
-              <div class="summary-item">
-                <span style="color: var(--muted);">Service:</span>
-                <strong id="summaryServiceName">Select a package</strong>
-              </div>
-              <div class="summary-item">
-                <span style="color: var(--muted);">Est. Duration:</span>
-                <span id="summaryServiceDuration">—</span>
-              </div>
-              <div class="summary-item">
-                <span style="color: var(--muted);">Selected Date:</span>
-                <span id="summaryDate">—</span>
-              </div>
-              <div class="summary-item">
-                <span style="color: var(--muted);">Time Window:</span>
-                <span id="summaryTime">—</span>
-              </div>
-              <div class="summary-item total">
-                <span>Estimated Price:</span>
-                <span id="summaryPrice" style="color: var(--black);">$0.00</span>
+            <div class="summary-header">
+              <h3 class="summary-title">Booking Summary</h3>
+              <span id="selectedCountBadge" class="selected-count-pill">0 selected</span>
+            </div>
+
+            <div id="selectedItemsContainer" class="selected-items-list">
+              <div style="font-size: 0.84rem; color: #94a3b8; text-align: center; padding: 18px 0;">
+                No services selected yet.<br />Select one or more packages above.
               </div>
             </div>
 
-            <div style="margin-top: 22px; padding-top: 18px; border-top: 1px dashed var(--line); font-size: 0.8rem; color: #666; line-height: 1.45;">
-              &#10003; <strong>Zero Prepayment Required:</strong> Payment is collected on-site after service inspection.<br />
-              &#10003; <strong>Instant Tracking:</strong> Manage and monitor request status directly from your dashboard.
+            <div class="summary-item">
+              <span>Total Est. Time:</span>
+              <strong id="summaryTotalDuration" style="color: #0f172a;">0 mins</strong>
+            </div>
+            <div class="summary-item">
+              <span>Appointment Date:</span>
+              <span id="summaryDate">—</span>
+            </div>
+            <div class="summary-item">
+              <span>Time Slot:</span>
+              <span id="summaryTime">—</span>
+            </div>
+            <div class="summary-item">
+              <span>Vehicle:</span>
+              <span id="summaryVehicle">—</span>
+            </div>
+
+            <div class="summary-item total">
+              <span>Estimated Total:</span>
+              <span id="summaryTotalPrice" style="color: #0f172a;">$0.00</span>
+            </div>
+
+            <div style="margin-top: 22px; padding-top: 18px; border-top: 1px dashed #e2e8f0; font-size: 0.8rem; color: #64748b; line-height: 1.5;">
+              &#10003; <strong>Zero Advance Deposit:</strong> Pay securely on-site after service inspection.<br />
+              &#10003; <strong>Real-Time Tracking:</strong> Follow live service progress in your customer dashboard.
             </div>
           </aside>
         </div>
@@ -271,8 +452,8 @@
         <div class="card" style="max-width: 680px; margin: 0 auto;">
           <div class="card-header">
             <div>
-              <h2 style="font-size: 1.3rem; margin: 0;">We Value Your Feedback</h2>
-              <p style="color: var(--muted); font-size: 0.84rem; margin: 4px 0 0;">
+              <h2 style="font-size: 1.3rem; margin: 0; font-weight: 700;">Customer Experience &amp; Inquiries</h2>
+              <p style="color: #64748b; font-size: 0.84rem; margin: 4px 0 0;">
                 Share your car wash experience or ask general questions about our detailing services.
               </p>
             </div>
@@ -282,23 +463,23 @@
             <form id="feedbackForm" novalidate>
               <div class="form-grid-2">
                 <div class="form-group">
-                  <label for="fbName">Full Name <span style="color:#b42318">*</span></label>
+                  <label for="fbName">Full Name <span style="color:#ef4444">*</span></label>
                   <input id="fbName" type="text" class="input-control" placeholder="Your full name" required />
                 </div>
                 <div class="form-group">
-                  <label for="fbEmail">Email Address <span style="color:#b42318">*</span></label>
+                  <label for="fbEmail">Email Address <span style="color:#ef4444">*</span></label>
                   <input id="fbEmail" type="email" class="input-control" placeholder="you@example.com" required />
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="fbPhone">Phone Number <span style="color: var(--muted); font-weight: normal;">(Optional)</span></label>
+                <label for="fbPhone">Phone Number <span style="color: #64748b; font-weight: normal;">(Optional)</span></label>
                 <input id="fbPhone" type="tel" class="input-control" placeholder="Your phone number" />
               </div>
 
               <!-- 5-Star Rating Selector -->
               <div class="form-group">
-                <label>Overall Experience Rating <span style="color:#b42318">*</span></label>
+                <label>Overall Experience Rating <span style="color:#ef4444">*</span></label>
                 <div class="star-rating" role="radiogroup" aria-label="Rating out of 5 stars">
                   <input type="radio" id="star5" name="rating" value="5" checked />
                   <label for="star5" title="5 stars">&#9733;</label>
@@ -319,7 +500,7 @@
               </div>
 
               <div class="form-group">
-                <label for="fbMessage">Your Message or Review <span style="color:#b42318">*</span></label>
+                <label for="fbMessage">Your Review / Message <span style="color:#ef4444">*</span></label>
                 <textarea
                   id="fbMessage"
                   class="input-control"
@@ -329,7 +510,7 @@
                 ></textarea>
               </div>
 
-              <button type="submit" id="submitFeedbackBtn" class="btn" style="width: 100%;">
+              <button type="submit" id="submitFeedbackBtn" class="btn" style="width: 100%; height: 48px; font-weight: 700;">
                 Submit Feedback &rarr;
               </button>
             </form>
@@ -345,9 +526,9 @@
       <div class="footer-bottom">
         <span>&copy; <span id="year"></span> MrShine Car Wash &amp; Detailing. All rights reserved.</span>
         <div style="display: flex; gap: 18px;">
-          <a href="/pages/services.html">Services</a>
-          <a href="/pages/privacy.html">Privacy</a>
-          <a href="/pages/terms.html">Terms</a>
+          <a href="/services">Services</a>
+          <a href="/request-service">Book Now</a>
+          <a href="/my-requests">Tracking</a>
         </div>
       </div>
     </div>
@@ -360,6 +541,8 @@
   <script src="/js/main.js"></script>
   <script>
     let servicesCache = [];
+    let selectedServiceIds = new Set();
+    let isCustomSelected = false;
     let currentUser = null;
 
     document.addEventListener("DOMContentLoaded", async () => {
@@ -369,16 +552,22 @@
       if (dateInput) {
         dateInput.min = todayStr;
         dateInput.value = todayStr;
-        updateSummary();
       }
 
-      // 2. Check Auth State
+      // 2. Auth state check
       currentUser = await window.auth.getCurrentUser();
       const authBanner = document.getElementById("authPromptBanner");
+      const authNav = document.getElementById("headerAuthNav");
       if (!currentUser && authBanner) {
         authBanner.style.display = "flex";
       } else if (currentUser) {
-        // Pre-fill feedback form if user logged in
+        if (authNav) {
+          authNav.innerHTML = `
+            <a href="/my-requests" class="btn btn-outline" style="font-size:0.82rem;padding:6px 14px;">My Tracker</a>
+            <button onclick="window.auth.logout()" class="btn btn-outline" style="font-size:0.82rem;padding:6px 12px;">Sign Out</button>
+          `;
+        }
+        // Pre-fill feedback
         const fbName = document.getElementById("fbName");
         const fbEmail = document.getElementById("fbEmail");
         const fbPhone = document.getElementById("fbPhone");
@@ -387,13 +576,16 @@
         if (fbPhone && !fbPhone.value) fbPhone.value = currentUser.phone || "";
       }
 
-      // 3. Tab switching logic
+      // 3. Tab switching
       initTabs();
 
-      // 4. Load services from backend
-      await loadServicesDropdown();
+      // 4. Load Services
+      await loadServicesList();
 
-      // 5. Form listeners
+      // 5. Setup live summary listeners
+      setupSummaryListeners();
+
+      // 6. Setup form submissions
       setupForms();
     });
 
@@ -409,7 +601,6 @@
           tabBookingBtn.setAttribute("aria-selected", "false");
           tabFeedbackBtn.classList.add("active");
           tabFeedbackBtn.setAttribute("aria-selected", "true");
-
           tabBooking.classList.remove("active");
           tabFeedback.classList.add("active");
         } else {
@@ -417,7 +608,6 @@
           tabFeedbackBtn.setAttribute("aria-selected", "false");
           tabBookingBtn.classList.add("active");
           tabBookingBtn.setAttribute("aria-selected", "true");
-
           tabFeedback.classList.remove("active");
           tabBooking.classList.add("active");
         }
@@ -426,91 +616,220 @@
       tabBookingBtn.addEventListener("click", () => activateTab("booking"));
       tabFeedbackBtn.addEventListener("click", () => activateTab("feedback"));
 
-      // Check URL hash or query param
       if (window.location.hash === "#feedbackTab" || window.location.search.includes("tab=feedback")) {
         activateTab("feedback");
       }
     }
 
-    async function loadServicesDropdown() {
-      const select = document.getElementById("serviceSelect");
+    async function loadServicesList() {
+      const shimmer = document.getElementById("servicesShimmer");
+      const container = document.getElementById("servicesListContainer");
       const urlParams = new URLSearchParams(window.location.search);
       const preselectedId = urlParams.get("service_id");
 
       try {
         const services = await window.api.get("/services");
         servicesCache = services || [];
-
-        if (servicesCache.length === 0) {
-          select.innerHTML = '<option value="" disabled>No services currently available</option>';
-          return;
-        }
-
-        select.innerHTML = '<option value="" disabled>-- Select a Car Care Package --</option>' +
-          servicesCache.map(s => {
-            const isSelected = preselectedId && String(s.id) === String(preselectedId);
-            return `<option value="${s.id}" ${isSelected ? "selected" : ""}>${escapeHtml(s.name)} - $${parseFloat(s.price).toFixed(2)} (${s.duration_minutes}m)</option>`;
-          }).join("") +
-          '<option value="custom">&#10024; Custom Service / Specialized Request</option>';
-
-        // If preselected was found or defaulted
-        if (!select.value && servicesCache.length > 0) {
-          select.selectedIndex = 1;
-        }
-
-        updateSummary();
-
       } catch (err) {
-        select.innerHTML = `
-          <option value="1">Exterior Car Wash - $25.00</option>
-          <option value="2">Interior Cleaning - $45.00</option>
-          <option value="3">Complete Cleaning - $65.00</option>
-          <option value="4">Premium Detailing - $110.00</option>
-          <option value="custom">&#10024; Custom Service / Specialized Request</option>
-        `;
         servicesCache = [
-          { id: 1, name: "Exterior Car Wash", price: 25.00, duration_minutes: 30 },
-          { id: 2, name: "Interior Cleaning", price: 45.00, duration_minutes: 45 },
-          { id: 3, name: "Complete Cleaning", price: 65.00, duration_minutes: 75 },
-          { id: 4, name: "Premium Detailing", price: 110.00, duration_minutes: 120 }
+          { id: 1, name: "Exterior Car Wash", price: 25.00, duration_minutes: 30, description: "Foam cannon soak, two-bucket gentle hand wash, spot-free rinse, wheel cleaning & tire dressing." },
+          { id: 2, name: "Interior Deep Clean", price: 45.00, duration_minutes: 45, description: "Complete vacuuming, steam disinfection, interior windows, dash & console detailing." },
+          { id: 3, name: "Complete Wash & Interior", price: 65.00, duration_minutes: 75, description: "Our most popular combo: comprehensive exterior hand wash + complete interior detailing." },
+          { id: 4, name: "Showroom Detailing & Wax", price: 110.00, duration_minutes: 120, description: "Clay bar treatment, synthetic sealant polish, leather conditioning & engine bay wipe-down." }
         ];
-        updateSummary();
       }
 
-      select.addEventListener("change", updateSummary);
-      document.getElementById("preferredDate").addEventListener("input", updateSummary);
-      document.getElementById("preferredTime").addEventListener("change", updateSummary);
+      if (shimmer) shimmer.style.display = "none";
+      if (container) container.style.display = "grid";
+
+      // Pre-select service if passed in URL
+      if (preselectedId) {
+        const numId = parseInt(preselectedId, 10);
+        if (servicesCache.some(s => s.id === numId)) {
+          selectedServiceIds.add(numId);
+        }
+      } else if (servicesCache.length > 0 && selectedServiceIds.size === 0) {
+        selectedServiceIds.add(servicesCache[0].id);
+      }
+
+      renderServicesCards();
+      updateSummary();
+    }
+
+    function renderServicesCards() {
+      const container = document.getElementById("servicesListContainer");
+      if (!container) return;
+
+      let html = servicesCache.map(s => {
+        const isChecked = selectedServiceIds.has(s.id);
+        return `
+          <div class="service-card-select ${isChecked ? 'selected' : ''}" data-id="${s.id}" onclick="toggleService(${s.id})">
+            <div class="svc-check-row">
+              <input type="checkbox" class="svc-checkbox" ${isChecked ? 'checked' : ''} onclick="event.stopPropagation(); toggleService(${s.id})" />
+              <div class="svc-info">
+                <div class="svc-name">${escapeHtml(s.name)}</div>
+                <div class="svc-desc">${escapeHtml(s.description || 'Professional grade car care')}</div>
+              </div>
+            </div>
+            <div class="svc-bottom">
+              <div class="svc-dur">&#x23F1; ${s.duration_minutes} mins</div>
+              <div class="svc-price">$${parseFloat(s.price).toFixed(2)}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // Add Custom Service card
+      html += `
+        <div class="custom-service-card ${isCustomSelected ? 'active' : ''}" id="customCard">
+          <div class="svc-check-row">
+            <input type="checkbox" id="customCheck" class="svc-checkbox" ${isCustomSelected ? 'checked' : ''} onclick="toggleCustomService(this.checked)" />
+            <div class="svc-info">
+              <div class="svc-name">&#10024; Custom Treatment / Specialized Request</div>
+              <div class="svc-desc">Need headlight restoration, ceramic coating, leather recoloring, or custom care?</div>
+            </div>
+          </div>
+          <div id="customInputWrap" style="display: ${isCustomSelected ? 'block' : 'none'}; margin-top: 12px;">
+            <input
+              id="customServiceText"
+              type="text"
+              class="input-control"
+              placeholder="e.g. Paint Correction + Scratch Buffing + Engine Bay Clean"
+              oninput="updateSummary()"
+            />
+            <div class="hint" style="margin-top: 4px; font-size: 0.74rem; color: #64748b;">
+              Our master detailer will inspect and provide an itemized quote upon arrival.
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function toggleService(id) {
+      if (selectedServiceIds.has(id)) {
+        selectedServiceIds.delete(id);
+      } else {
+        selectedServiceIds.add(id);
+      }
+      renderServicesCards();
+      updateSummary();
+    }
+
+    function toggleCustomService(checked) {
+      isCustomSelected = checked;
+      const wrap = document.getElementById("customInputWrap");
+      const card = document.getElementById("customCard");
+      if (wrap) wrap.style.display = isCustomSelected ? "block" : "none";
+      if (card) {
+        if (isCustomSelected) card.classList.add("active");
+        else card.classList.remove("active");
+      }
+      updateSummary();
+    }
+
+    function setupSummaryListeners() {
+      const vehInput = document.getElementById("vehicleMakeModel");
+      const dateInput = document.getElementById("preferredDate");
+      const timeSelect = document.getElementById("preferredTime");
+
+      let timer = null;
+      vehInput.addEventListener("input", () => {
+        clearTimeout(timer);
+        timer = setTimeout(updateSummary, 250);
+      });
+      dateInput.addEventListener("change", updateSummary);
+      timeSelect.addEventListener("change", updateSummary);
     }
 
     function updateSummary() {
-      const select = document.getElementById("serviceSelect");
+      const itemsContainer = document.getElementById("selectedItemsContainer");
+      const countBadge = document.getElementById("selectedCountBadge");
+      const durationEl = document.getElementById("summaryTotalDuration");
+      const priceEl = document.getElementById("summaryTotalPrice");
+      const dateEl = document.getElementById("summaryDate");
+      const timeEl = document.getElementById("summaryTime");
+      const vehicleEl = document.getElementById("summaryVehicle");
+
+      const vehInput = document.getElementById("vehicleMakeModel");
       const dateInput = document.getElementById("preferredDate");
       const timeSelect = document.getElementById("preferredTime");
-      const customGroup = document.getElementById("customServiceGroup");
+      const customInput = document.getElementById("customServiceText");
 
-      if (select && select.value === "custom") {
-        if (customGroup) customGroup.style.display = "block";
-        document.getElementById("summaryServiceName").textContent = "Custom Treatment";
-        document.getElementById("summaryServiceDuration").textContent = "On Inspection";
-        document.getElementById("summaryPrice").textContent = "Custom Quote";
-      } else {
-        if (customGroup) customGroup.style.display = "none";
-        const selectedId = select ? parseInt(select.value, 10) : null;
-        const service = servicesCache.find(s => s.id === selectedId);
+      let totalDuration = 0;
+      let totalPrice = 0;
+      let count = 0;
+      let rowsHtml = "";
 
-        if (service) {
-          document.getElementById("summaryServiceName").textContent = service.name;
-          document.getElementById("summaryServiceDuration").textContent = `${service.duration_minutes} minutes`;
-          document.getElementById("summaryPrice").textContent = `$${parseFloat(service.price).toFixed(2)}`;
-        } else {
-          document.getElementById("summaryServiceName").textContent = "None selected";
-          document.getElementById("summaryServiceDuration").textContent = "—";
-          document.getElementById("summaryPrice").textContent = "$0.00";
+      selectedServiceIds.forEach(id => {
+        const s = servicesCache.find(x => x.id === id);
+        if (s) {
+          count++;
+          totalDuration += s.duration_minutes || 0;
+          totalPrice += parseFloat(s.price) || 0;
+          rowsHtml += `
+            <div class="selected-item-row">
+              <div>
+                <strong>${escapeHtml(s.name)}</strong>
+                <div style="font-size: 0.74rem; color: #64748b;">${s.duration_minutes}m</div>
+              </div>
+              <div style="display:flex;align-items:center;">
+                <span style="font-weight:700;">$${parseFloat(s.price).toFixed(2)}</span>
+                <button type="button" class="item-remove" onclick="toggleService(${s.id})" title="Remove item">&times;</button>
+              </div>
+            </div>
+          `;
         }
+      });
+
+      if (isCustomSelected) {
+        count++;
+        const customText = customInput && customInput.value.trim() ? customInput.value.trim() : "Custom Detailing";
+        rowsHtml += `
+          <div class="selected-item-row" style="border-left: 3px solid #2563eb;">
+            <div>
+              <strong>&#10024; ${escapeHtml(customText)}</strong>
+              <div style="font-size: 0.74rem; color: #2563eb;">Custom Package</div>
+            </div>
+            <div style="font-weight:700; color: #2563eb;">Quote on site</div>
+          </div>
+        `;
       }
 
-      document.getElementById("summaryDate").textContent = dateInput && dateInput.value ? dateInput.value : "—";
-      document.getElementById("summaryTime").textContent = timeSelect && timeSelect.value ? timeSelect.value : "—";
+      if (count === 0) {
+        itemsContainer.innerHTML = `
+          <div style="font-size: 0.84rem; color: #94a3b8; text-align: center; padding: 18px 0;">
+            No services selected yet.<br />Select one or more packages above.
+          </div>
+        `;
+        countBadge.textContent = "0 selected";
+        durationEl.textContent = "0 mins";
+        priceEl.textContent = "$0.00";
+      } else {
+        itemsContainer.innerHTML = rowsHtml;
+        countBadge.textContent = `${count} selected`;
+        
+        let durStr = "";
+        if (totalDuration >= 60) {
+          const hrs = Math.floor(totalDuration / 60);
+          const mins = totalDuration % 60;
+          durStr = mins > 0 ? `${hrs}h ${mins}m` : `${hrs} hrs`;
+        } else {
+          durStr = `${totalDuration} mins`;
+        }
+        if (isCustomSelected) durStr += " + inspection";
+        durationEl.textContent = durStr;
+
+        let prStr = `$${totalPrice.toFixed(2)}`;
+        if (isCustomSelected && totalPrice > 0) prStr += " + Custom Quote";
+        else if (isCustomSelected) prStr = "Custom Quote";
+        priceEl.textContent = prStr;
+      }
+
+      vehicleEl.textContent = vehInput && vehInput.value.trim() ? vehInput.value.trim() : "—";
+      dateEl.textContent = dateInput && dateInput.value ? dateInput.value : "—";
+      timeEl.textContent = timeSelect && timeSelect.value ? timeSelect.value : "—";
     }
 
     function setupForms() {
@@ -523,44 +842,39 @@
         e.preventDefault();
         window.showAlert(bookingAlert, "");
 
-        // Verify authentication
         const token = window.auth ? window.auth.getStoredToken() : (localStorage.getItem("mrshine_access_token") || sessionStorage.getItem("mrshine_access_token"));
         if (!token) {
           window.showAlert(
             bookingAlert,
-            "Please sign in or create an account to finalize your booking.",
+            "Please sign in or create an account to finalize and save your booking.",
             "error"
           );
-          if (window.showToast) window.showToast("Authentication required to submit a booking.", "warning");
+          if (window.showToast) window.showToast("Sign in required to book an appointment.", "warning");
           window.setTimeout(() => {
-            window.location.href = `/pages/login.html?next=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+            window.location.href = `/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`;
           }, 1200);
           return;
         }
 
-        const selectVal = document.getElementById("serviceSelect").value;
-        const isCustom = selectVal === "custom";
-        const customNameInput = document.getElementById("customServiceName");
-        const customName = customNameInput ? customNameInput.value.trim() : "";
-        const serviceId = isCustom ? null : parseInt(selectVal, 10);
+        if (selectedServiceIds.size === 0 && !isCustomSelected) {
+          window.showAlert(bookingAlert, "Please select at least one service package or choose custom treatment.");
+          window.scrollTo({ top: 150, behavior: "smooth" });
+          return;
+        }
+
+        const customInput = document.getElementById("customServiceText");
+        const customText = customInput ? customInput.value.trim() : "";
+        if (isCustomSelected && !customText && selectedServiceIds.size === 0) {
+          window.showAlert(bookingAlert, "Please describe the custom service or treatment you need.");
+          customInput.focus();
+          return;
+        }
 
         const makeModel = document.getElementById("vehicleMakeModel").value.trim();
         const yearPlate = document.getElementById("vehicleYearPlate").value.trim();
         const prefDate = document.getElementById("preferredDate").value.trim();
         const prefTime = document.getElementById("preferredTime").value.trim();
         const message = document.getElementById("bookingMessage").value.trim();
-
-        if (isCustom && !customName) {
-          window.showAlert(bookingAlert, "Please describe the custom service or care you need.");
-          customNameInput.focus();
-          return;
-        }
-
-        if (!isCustom && !serviceId) {
-          window.showAlert(bookingAlert, "Please choose a car care package.");
-          document.getElementById("serviceSelect").focus();
-          return;
-        }
 
         if (makeModel.length < 2) {
           window.showAlert(bookingAlert, "Please enter your vehicle make and model.");
@@ -569,7 +883,7 @@
         }
 
         if (!prefDate) {
-          window.showAlert(bookingAlert, "Please specify a preferred appointment date.");
+          window.showAlert(bookingAlert, "Please specify an appointment date.");
           document.getElementById("preferredDate").focus();
           return;
         }
@@ -580,11 +894,31 @@
           return;
         }
 
+        // Prepare combined payload
         const vehicleDetails = yearPlate ? `${makeModel} (${yearPlate})` : makeModel;
+        
+        let finalServiceId = null;
+        let finalCustomService = null;
+        const selectedServices = servicesCache.filter(s => selectedServiceIds.has(s.id));
+
+        if (selectedServices.length === 1 && !isCustomSelected) {
+          finalServiceId = selectedServices[0].id;
+        } else if (selectedServices.length > 0 && !isCustomSelected) {
+          finalServiceId = selectedServices[0].id;
+          const names = selectedServices.map(s => s.name).join(" + ");
+          const totalCost = selectedServices.reduce((acc, s) => acc + parseFloat(s.price), 0);
+          finalCustomService = `Multi-Service (${selectedServices.length}): ${names} [Total: $${totalCost.toFixed(2)}]`;
+        } else if (isCustomSelected && selectedServices.length > 0) {
+          finalServiceId = selectedServices[0].id;
+          const names = selectedServices.map(s => s.name).join(" + ");
+          finalCustomService = `Multi-Service: ${names} + Custom: ${customText}`;
+        } else if (isCustomSelected) {
+          finalCustomService = customText;
+        }
 
         const payload = {
-          service_id: isCustom ? null : serviceId,
-          custom_service: isCustom ? customName : null,
+          service_id: finalServiceId,
+          custom_service: finalCustomService,
           vehicle_details: vehicleDetails,
           preferred_date: prefDate,
           preferred_time: prefTime,
@@ -592,36 +926,38 @@
         };
 
         submitBookingBtn.disabled = true;
-        submitBookingBtn.textContent = "Submitting Booking Request...";
+        submitBookingBtn.textContent = "Scheduling Multi-Service Request...";
 
         try {
           const result = await window.api.post("/requests", payload);
 
           window.showAlert(
             bookingAlert,
-            `Your request for ${result.service_name || "service"} has been submitted! Reference ID: #${result.id}. We have notified our team.`,
+            `Booking confirmed! Reference #${result.id} for ${result.service_name || "service"}. Our detailing team has reserved your bay.`,
             "success"
           );
-          window.showToast("Service request created successfully!", "success");
+          if (window.showToast) window.showToast("Service request confirmed!", "success");
 
           bookingForm.reset();
-          document.getElementById("preferredDate").value = new Date().toISOString().split("T")[0];
+          selectedServiceIds.clear();
+          isCustomSelected = false;
+          renderServicesCards();
           updateSummary();
 
           window.setTimeout(() => {
-            window.location.href = "/pages/my-requests.html";
+            window.location.href = "/my-requests";
           }, 1500);
 
         } catch (err) {
           window.showAlert(
             bookingAlert,
-            err.message || "Unable to submit service request. Please try again.",
+            err.message || "Unable to confirm booking. Please review your entries and try again.",
             "error"
           );
-          window.showToast(err.message || "Failed to create booking.", "error");
+          if (window.showToast) window.showToast(err.message || "Booking failed.", "error");
         } finally {
           submitBookingBtn.disabled = false;
-          submitBookingBtn.innerHTML = "Confirm Service Request &rarr;";
+          submitBookingBtn.innerHTML = "Confirm Multi-Service Booking &rarr;";
         }
       });
 
@@ -669,22 +1005,21 @@
         };
 
         submitFeedbackBtn.disabled = true;
-        submitFeedbackBtn.textContent = "Sending Feedback...";
+        submitFeedbackBtn.textContent = "Submitting Review...";
 
         try {
           await window.api.post("/feedback", payload);
 
           window.showAlert(
             feedbackAlert,
-            "Thank you! Your feedback has been received and our management team has been notified.",
+            "Thank you! Your review has been submitted and shared with our team.",
             "success"
           );
-          window.showToast("Feedback submitted successfully. Thank you!", "success");
+          if (window.showToast) window.showToast("Review submitted successfully!", "success");
 
           feedbackForm.reset();
           document.getElementById("star5").checked = true;
 
-          // Re-populate user info if logged in
           if (currentUser) {
             document.getElementById("fbName").value = currentUser.name || "";
             document.getElementById("fbEmail").value = currentUser.email || "";
@@ -697,7 +1032,7 @@
             err.message || "Failed to submit feedback. Please try again.",
             "error"
           );
-          window.showToast(err.message || "Feedback submission failed.", "error");
+          if (window.showToast) window.showToast(err.message || "Feedback failed.", "error");
         } finally {
           submitFeedbackBtn.disabled = false;
           submitFeedbackBtn.innerHTML = "Submit Feedback &rarr;";
