@@ -36,14 +36,14 @@ const Auth = {
 
   logout() {
     this.clearSession();
-    window.location.href = "/login.html";
+    window.location.href = "/pages/login.html";
   },
 
   requireAuth(redirectUrl = null) {
     const token = this.getToken();
     if (!token) {
       const target = redirectUrl || window.location.pathname;
-      window.location.href = `/login.html?next=${encodeURIComponent(target)}`;
+      window.location.href = `/pages/login.html?next=${encodeURIComponent(target)}`;
       return false;
     }
     return true;
@@ -209,3 +209,47 @@ document.addEventListener("DOMContentLoaded", () => {
   Auth.redirectIfAuthenticated();
   Auth.updateHeaderUI();
 });
+
+// Global aliases for compatibility with navigation.js and inline scripts
+window.auth = {
+  getStoredToken: () => Auth.getToken(),
+  getCurrentUser: async () => {
+    // Try to get user from storage first (fast path)
+    const stored = Auth.getUser();
+    if (stored) return stored;
+    // If token exists but no user data, fetch from API
+    const token = Auth.getToken();
+    if (!token) return null;
+    try {
+      const data = await fetch("/api/v1/auth/me", {
+        headers: { "Authorization": `Bearer ${token}` }
+      }).then(r => r.ok ? r.json() : null);
+      if (data) {
+        const storage = localStorage.getItem("mrshine_access_token") ? localStorage : sessionStorage;
+        storage.setItem("mrshine_user", JSON.stringify(data));
+        return data;
+      }
+    } catch {}
+    return null;
+  },
+  logout: (redirectUrl) => {
+    Auth.clearSession();
+    window.location.href = redirectUrl || "/pages/login.html";
+  },
+};
+
+// window.api shim for request-service.html inline script compatibility
+window.api = {
+  get: (path) => fetch(`/api/v1${path}`).then(r => r.json()),
+  post: async (path, body) => {
+    const token = Auth.getToken();
+    const csrf = await (typeof getCsrfToken !== "undefined" ? getCsrfToken() : fetch("/api/v1/auth/csrf-token").then(r => r.json()).then(d => d.csrf_token).catch(() => ""));
+    const headers = { "Content-Type": "application/json" };
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+    if (csrf) headers["X-CSRF-Token"] = csrf;
+    const resp = await fetch(`/api/v1${path}`, { method: "POST", headers, body: JSON.stringify(body) });
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok) throw new Error(data.detail || data.message || "Request failed");
+    return data;
+  }
+};

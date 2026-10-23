@@ -116,6 +116,39 @@ async function apiRequest(endpoint, options = {}) {
   }
 }
 
+/**
+ * Show an inline alert banner in the UI (not console.log)
+ * @param {HTMLElement} el - The banner element
+ * @param {string} message - Message text (empty string = hide)
+ * @param {string} type - "success" | "error" | "warning"
+ */
+function showAlert(el, message, type = "error") {
+  if (!el) return;
+  if (!message) {
+    el.style.display = "none";
+    el.textContent = "";
+    return;
+  }
+  el.style.display = "block";
+  el.textContent = message;
+  const colours = {
+    error: { bg: "#fff1f0", color: "#912018", border: "#fecaca" },
+    success: { bg: "#f0fdf4", color: "#166534", border: "#bbf7d0" },
+    warning: { bg: "#fffbeb", color: "#92400e", border: "#fde68a" },
+  };
+  const c = colours[type] || colours.error;
+  el.style.background = c.bg;
+  el.style.color = c.color;
+  el.style.border = `1px solid ${c.border}`;
+  el.style.borderRadius = "8px";
+  el.style.padding = "12px 14px";
+  el.style.fontSize = "0.88rem";
+}
+
+// Make showAlert and showToast globally available
+window.showAlert = showAlert;
+window.showToast = showToast;
+
 // Named API Helper Functions
 const Api = {
   getCsrfToken,
