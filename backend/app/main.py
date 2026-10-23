@@ -50,7 +50,7 @@ def home():
 @app.get("/login.html", include_in_schema=False)
 def login_page():
     """Serve the MrShine login page."""
-    return FileResponse(FRONTEND_DIR / "login.html")
+    return FileResponse(FRONTEND_DIR / "pages" / "login.html")
 
 
 @app.get("/health", tags=["Health"])
