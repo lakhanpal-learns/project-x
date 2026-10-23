@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Operations & Service Manager | MrShine Car Wash</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #101010;
+      --ink: #181818;
+      --muted: #666;
+      --line: #e5e7eb;
+      --soft: #f8fafc;
+      --white: #fff;
+      --radius: 12px;
+      --primary: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #f1f5f9;
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    .container { width: min(1280px, calc(100% - 32px)); margin-inline: auto; }
+
+    /* Header */
+    .header {
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .nav {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; }
+    .brand-mark { width: 42px; height: 28px; }
+    .brand-name {
+      font-family: "Manrope", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -.06em;
+      line-height: 1;
+    }
+    .brand-sub {
+      font-size: .48rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      display: block;
+      margin-top: 4px;
+    }
+    .admin-pill {
+      font-size: .72rem;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-left: 10px;
+    }
+
+    main { flex: 1; padding: 32px 0 60px; }
+
+    /* Tabs */
+    .tabs-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 2px;
+    }
+    .tab-btn {
+      padding: 10px 22px;
+      border: none;
+      background: none;
+      font-family: "Manrope", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      position: relative;
+      transition: color .2s;
+    }
+    .tab-btn.active {
+      color: #0f172a;
+    }
+    .tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #0f172a;
+      border-radius: 3px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .stat-label {
+      font-size: .75rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 6px;
+    }
+    .stat-val {
+      font-family: "Manrope", sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    /* Table & Cards */
+    .panel-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      overflow: hidden;
+    }
+    .panel-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .panel-header h2 {
+      font-family: "Manrope", sans-serif;
+      font-size: 1.25rem;
+      margin: 0;
+      letter-spacing: -.02em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    th {
+      padding: 14px 18px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--line);
+      color: #475569;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: 16px 18px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+    tr:hover td { background: #fbfcfe; }
+
+    /* Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .status-pending { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .status-approved { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .status-in-progress { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .status-completed { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .status-rejected { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+    /* Action Buttons */
+    .flow-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .act-btn {
+      padding: 6px 11px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .btn-approve { background: #2563eb; color: white; }
+    .btn-approve:hover { background: #1d4ed8; }
+    .btn-progress { background: #7c3aed; color: white; }
+    .btn-progress:hover { background: #6d28d9; }
+    .btn-complete { background: #10b981; color: white; }
+    .btn-complete:hover { background: #059669; }
+    .btn-reject { background: #f1f5f9; color: #991b1b; border-color: #fecaca; }
+    .btn-reject:hover { background: #fee2e2; }
+
+    .btn-dark {
+      background: #0f172a;
+      color: white;
+      padding: 9px 18px;
+      border-radius: 7px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .btn-dark:hover { background: #334155; }
+
+    /* Modal Form */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-box {
+      background: white;
+      border-radius: var(--radius);
+      width: min(520px, 94%);
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 5px; }
+    .form-control {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    textarea.form-control { height: 80px; padding: 10px 12px; resize: vertical; }
+
+    footer {
+      padding: 24px 0;
+      border-top: 1px solid #e2e8f0;
+      color: #64748b;
+      font-size: 0.82rem;
+      text-align: center;
+      background: white;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <div style="display:flex;align-items:center;">
+        <a class="brand" href="/">
+          <svg class="brand-mark" viewBox="0 0 90 42" fill="none" aria-hidden="true">
+            <path d="M7 27h7l5-11c1-3 4-5 8-5h31c5 0 8 2 12 7l8 9h5c3 0 5 2 5 5v3H6v-4c0-2 0-4 1-4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="m23 14-4 13h48L56 14M14 28h61" stroke="currentColor" stroke-width="2"/>
+            <circle cx="23" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/><circle cx="67" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/>
+          </svg>
+          <span><span class="brand-name">MrShine</span><span class="brand-sub">CAR WASH & DETAILING</span></span>
+        </a>
+        <span class="admin-pill">Admin Management</span>
+      </div>
+      <div id="headerAuthActions" style="display:flex;align-items:center;gap:10px;"></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- Tabs Bar -->
+      <div class="tabs-bar">
+        <button class="tab-btn active" id="tabRequestsBtn" onclick="switchTab('requests')">
+          &#128663; Customer Requests &amp; Live Tracking Flow
+        </button>
+        <button class="tab-btn" id="tabServicesBtn" onclick="switchTab('services')">
+          &#9881; Manage Service Packages &amp; Dropdown
+        </button>
+      </div>
+
+      <!-- Tab 1: Requests & Order Flow -->
+      <div id="tabRequests">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Requests</div>
+            <div id="statTotal" class="stat-val">-</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #f59e0b;">
+            <div class="stat-label">1. Pending</div>
+            <div id="statPending" class="stat-val" style="color: #d97706;">-</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #2563eb;">
+            <div class="stat-label">2. Scheduled</div>
+            <div id="statApproved" class="stat-val" style="color: #1d4ed8;">-</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #7c3aed;">
+            <div class="stat-label">3. In Bay Washing</div>
+            <div id="statInProgress" class="stat-val" style="color: #6d28d9;">-</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #10b981;">
+            <div class="stat-label">4. Completed</div>
+            <div id="statCompleted" class="stat-val" style="color: #059669;">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Registered Customers</div>
+            <div id="statCustomers" class="stat-val">-</div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2>Live Booking Requests</h2>
+              <span style="font-size:0.8rem;color:#64748b;">Advance customer requests through stages to trigger live customer updates and emails.</span>
+            </div>
+            <button class="btn-dark" onclick="initDashboard()">&#x21bb; Refresh Data</button>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Customer Info</th>
+                  <th>Service / Treatment</th>
+                  <th>Vehicle Details</th>
+                  <th>Scheduled Time</th>
+                  <th>Current Stage</th>
+                  <th>Control Order Flow</th>
+                </tr>
+              </thead>
+              <tbody id="requestsTableBody">
+                <tr><td colspan="7" style="text-align:center;padding:40px;color:#888;">Loading requests…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Service Packages Manager -->
+      <div id="tabServices" style="display:none;">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2>Service Packages &amp; Pricing Setup</h2>
+              <span style="font-size:0.8rem;color:#64748b;">Modify the care packages shown to customers in the dropdown and catalog.</span>
+            </div>
+            <button class="btn-dark" onclick="openServiceModal()">+ Add New Package</button>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Image</th>
+                  <th>Package Name</th>
+                  <th>Price ($)</th>
+                  <th>Duration</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="servicesTableBody">
+                <tr><td colspan="7" style="text-align:center;padding:40px;color:#888;">Loading service packages…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add/Edit Service Modal -->
+  <div id="serviceModal" class="modal-overlay">
+    <div class="modal-box">
+      <h2 id="modalTitle" style="font-family:'Manrope',sans-serif;margin:0 0 16px;font-size:1.3rem;">Add Service Package</h2>
+      <form id="serviceForm">
+        <input type="hidden" id="editServiceId" value="">
+        <div class="form-group">
+          <label>Package Name *</label>
+          <input id="svcName" class="form-control" type="text" placeholder="e.g. Ceramic Wax Protection" required>
+        </div>
+        <div class="form-group">
+          <label>Price ($) *</label>
+          <input id="svcPrice" class="form-control" type="number" step="0.01" placeholder="49.99" required>
+        </div>
+        <div class="form-group">
+          <label>Estimated Duration (Minutes) *</label>
+          <input id="svcDuration" class="form-control" type="number" placeholder="45" value="45" required>
+        </div>
+        <div class="form-group">
+          <label>Image URL</label>
+          <input id="svcImage" class="form-control" type="text" placeholder="/assets/images/exterior-wash.jpg" value="/assets/images/exterior-wash.jpg">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="svcDesc" class="form-control" placeholder="Describe the steps and care included in this treatment..."></textarea>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+          <button type="button" class="act-btn btn-reject" style="padding:10px 18px;" onclick="closeServiceModal()">Cancel</button>
+          <button type="submit" id="saveSvcBtn" class="btn-dark">Save Package</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">&copy; <span id="year"></span> MrShine Car Wash & Detailing. Administrator Control System.</div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    if (Auth.requireAdmin()) {
+      initDashboard();
+    }
+
+    function switchTab(tab) {
+      const tabReq = document.getElementById("tabRequests");
+      const tabSvc = document.getElementById("tabServices");
+      const btnReq = document.getElementById("tabRequestsBtn");
+      const btnSvc = document.getElementById("tabServicesBtn");
+
+      if (tab === 'services') {
+        tabReq.style.display = "none";
+        tabSvc.style.display = "block";
+        btnReq.classList.remove("active");
+        btnSvc.classList.add("active");
+        loadAdminServices();
+      } else {
+        tabReq.style.display = "block";
+        tabSvc.style.display = "none";
+        btnSvc.classList.remove("active");
+        btnReq.classList.add("active");
+        initDashboard();
+      }
+    }
+
+    async function initDashboard() {
+      await Promise.all([loadStats(), loadRequests()]);
+    }
+
+    async function loadStats() {
+      try {
+        const stats = await Api.getAdminStats();
+        document.getElementById("statTotal").textContent = stats.total_requests;
+        document.getElementById("statPending").textContent = stats.pending_requests;
+        document.getElementById("statApproved").textContent = stats.approved_requests;
+        document.getElementById("statInProgress").textContent = stats.in_progress_requests || 0;
+        document.getElementById("statCompleted").textContent = stats.completed_requests || 0;
+        document.getElementById("statCustomers").textContent = stats.total_customers;
+      } catch (e) {}
+    }
+
+    async function loadRequests() {
+      const tbody = document.getElementById("requestsTableBody");
+      try {
+        const requests = await Api.getAdminRequests();
+        if (!requests || requests.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#888;">No customer requests in database.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = requests.map(r => {
+          const status = r.status || "Pending";
+          const badgeClass = `status-${status.toLowerCase().replace(" ", "-")}`;
+
+          return `
+            <tr>
+              <td><strong>#${r.id}</strong></td>
+              <td>
+                <div style="font-weight:700;">${r.customer_name}</div>
+                <div style="font-size:0.78rem;color:#64748b;">${r.customer_email}</div>
+                ${r.customer_phone ? `<div style="font-size:0.75rem;color:#94a3b8;">${r.customer_phone}</div>` : ''}
+              </td>
+              <td>
+                <div style="font-weight:700;">${r.service_name}</div>
+                ${r.service_price ? `<div style="font-size:0.78rem;color:#64748b;">$${parseFloat(r.service_price).toFixed(2)}</div>` : '<div style="font-size:0.75rem;color:#2563eb;font-weight:700;">Custom Quote</div>'}
+              </td>
+              <td>
+                <div>${r.vehicle_details}</div>
+                ${r.message ? `<div style="font-size:0.76rem;color:#64748b;margin-top:2px;"><em>"${r.message}"</em></div>` : ''}
+              </td>
+              <td>
+                <div>${r.preferred_date}</div>
+                <div style="font-size:0.78rem;color:#64748b;">${r.preferred_time}</div>
+              </td>
+              <td>
+                <span class="status-badge ${badgeClass}">
+                  <span>&bull;</span> ${status}
+                </span>
+              </td>
+              <td>
+                <div class="flow-btns">
+                  ${status !== 'Approved' ? `<button class="act-btn btn-approve" onclick="updateStage(${r.id}, 'Approved')">Schedule</button>` : ''}
+                  ${status !== 'In Progress' ? `<button class="act-btn btn-progress" onclick="updateStage(${r.id}, 'In Progress')">Start Wash</button>` : ''}
+                  ${status !== 'Completed' ? `<button class="act-btn btn-complete" onclick="updateStage(${r.id}, 'Completed')">&#10003; Complete</button>` : ''}
+                  ${status !== 'Rejected' ? `<button class="act-btn btn-reject" onclick="updateStage(${r.id}, 'Rejected')">&times; Decline</button>` : ''}
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#912018;">Error loading requests.</td></tr>';
+      }
+    }
+
+    async function updateStage(requestId, newStage) {
+      try {
+        await Api.updateRequestStatus(requestId, newStage);
+        Api.showToast(`Request #${requestId} advanced to '${newStage}' & customer emailed.`, "success");
+        initDashboard();
+      } catch (e) {}
+    }
+
+    // Packages Management
+    let allServices = [];
+
+    async function loadAdminServices() {
+      const tbody = document.getElementById("servicesTableBody");
+      try {
+        allServices = await Api.getServices();
+        if (!allServices || allServices.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:#888;">No service packages configured. Click "+ Add New Package" to create one.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = allServices.map(s => `
+          <tr>
+            <td><strong>#${s.id}</strong></td>
+            <td>
+              <img src="${s.image_url || '/assets/images/exterior-wash.jpg'}" alt="" style="width:48px;height:36px;object-fit:cover;border-radius:4px;border:1px solid #ddd;" onerror="this.src='/assets/images/exterior-wash.jpg'">
+            </td>
+            <td><strong>${s.name}</strong></td>
+            <td>$${parseFloat(s.price).toFixed(2)}</td>
+            <td>${s.duration_minutes} mins</td>
+            <td style="max-width:280px;font-size:0.8rem;color:#64748b;">${s.description || '—'}</td>
+            <td>
+              <div style="display:flex;gap:6px;">
+                <button class="act-btn btn-approve" style="padding:4px 8px;" onclick="openEditModal(${s.id})">Edit</button>
+                <button class="act-btn btn-reject" style="padding:4px 8px;" onclick="deleteServicePkg(${s.id}, '${s.name.replace(/'/g, "\\'")}')">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `).join("");
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:#912018;">Could not load packages.</td></tr>';
+      }
+    }
+
+    function openServiceModal() {
+      document.getElementById("modalTitle").textContent = "Add Service Package";
+      document.getElementById("editServiceId").value = "";
+      document.getElementById("svcName").value = "";
+      document.getElementById("svcPrice").value = "";
+      document.getElementById("svcDuration").value = "45";
+      document.getElementById("svcImage").value = "/assets/images/exterior-wash.jpg";
+      document.getElementById("svcDesc").value = "";
+      document.getElementById("serviceModal").style.display = "flex";
+    }
+
+    function openEditModal(serviceId) {
+      const svc = allServices.find(s => s.id === serviceId);
+      if (!svc) return;
+
+      document.getElementById("modalTitle").textContent = "Edit Service Package";
+      document.getElementById("editServiceId").value = svc.id;
+      document.getElementById("svcName").value = svc.name;
+      document.getElementById("svcPrice").value = svc.price;
+      document.getElementById("svcDuration").value = svc.duration_minutes;
+      document.getElementById("svcImage").value = svc.image_url || "/assets/images/exterior-wash.jpg";
+      document.getElementById("svcDesc").value = svc.description || "";
+      document.getElementById("serviceModal").style.display = "flex";
+    }
+
+    function closeServiceModal() {
+      document.getElementById("serviceModal").style.display = "none";
+    }
+
+    document.getElementById("serviceForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const saveBtn = document.getElementById("saveSvcBtn");
+      saveBtn.disabled = true;
+
+      const editId = document.getElementById("editServiceId").value;
+      const payload = {
+        name: document.getElementById("svcName").value.trim(),
+        price: parseFloat(document.getElementById("svcPrice").value),
+        duration_minutes: parseInt(document.getElementById("svcDuration").value, 10),
+        image_url: document.getElementById("svcImage").value.trim() || null,
+        description: document.getElementById("svcDesc").value.trim() || null
+      };
+
+      try {
+        if (editId) {
+          await Api.updateService(editId, payload);
+          Api.showToast("Service package updated successfully", "success");
+        } else {
+          await Api.createService(payload);
+          Api.showToast("New service package created successfully", "success");
+        }
+        closeServiceModal();
+        loadAdminServices();
+      } catch (err) {
+        // Handled via toast
+      } finally {
+        saveBtn.disabled = false;
+      }
+    });
+
+    async function deleteServicePkg(id, name) {
+      if (!confirm(`Are you sure you want to delete the '${name}' package?`)) return;
+      try {
+        await Api.deleteService(id);
+        Api.showToast(`Package '${name}' deleted`, "success");
+        loadAdminServices();
+      } catch (err) {}
+    }
+  </script>
+</body>
+</html>

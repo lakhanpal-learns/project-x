@@ -1,0 +1,169 @@
+/* ==========================================================================
+   MrShine Car Wash & Detailing - Responsive Stylesheet
+   ========================================================================== */
+
+@media (max-width: 960px) {
+  .nav-links {
+    gap: 16px;
+  }
+
+  .nav-actions .btn {
+    padding-inline: 12px;
+  }
+
+  .form-grid-2,
+  .form-grid-3 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: min(100% - 32px, var(--max));
+  }
+
+  .nav {
+    min-height: 66px;
+  }
+
+  .mobile-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 66px;
+    right: 0;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 12px 18px 20px;
+    border-bottom: 1px solid var(--line);
+    background: var(--white);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 12px 6px;
+    border-bottom: 1px solid #f2f2f2;
+    font-size: 0.95rem;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .page-hero {
+    padding: 34px 0 24px;
+  }
+
+  .page-hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .card-header,
+  .card-body,
+  .card-footer {
+    padding: 18px 16px;
+  }
+
+  .tabs-nav {
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 4px;
+  }
+
+  .tab-btn {
+    padding: 10px 14px;
+    font-size: 0.86rem;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .toast-container {
+    top: auto;
+    bottom: 20px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+    width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-catalog {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-mark {
+    width: 32px;
+  }
+
+  .brand-name {
+    font-size: 1.05rem;
+  }
+
+  .user-badge {
+    padding: 4px 8px;
+    font-size: 0.76rem;
+  }
+
+  .user-badge span:not(.user-avatar) {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media print {
+  .site-header,
+  .site-footer,
+  .btn,
+  .mobile-toggle,
+  .toast-container {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .card, .table-wrap {
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+}

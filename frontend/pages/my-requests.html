@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Service Tracker | MrShine Car Wash</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #101010;
+      --ink: #181818;
+      --muted: #666;
+      --line: #e5e7eb;
+      --soft: #f9fafb;
+      --white: #fff;
+      --radius: 14px;
+      --primary: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #f8fafc;
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(1080px, calc(100% - 32px)); margin-inline: auto; }
+
+    /* Header */
+    .header {
+      border-bottom: 1px solid rgba(0,0,0,.07);
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; }
+    .brand-mark { width: 42px; height: 28px; }
+    .brand-name {
+      font-family: "Manrope", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -.06em;
+      line-height: 1;
+    }
+    .brand-sub {
+      font-size: .48rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      display: block;
+      margin-top: 4px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 20px; font-size: .88rem; }
+
+    main { flex: 1; padding: 36px 0 60px; }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .top-bar h1 {
+      font-family: "Manrope", sans-serif;
+      font-size: 2rem;
+      letter-spacing: -.03em;
+      margin: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 20px;
+      border: 1px solid var(--black);
+      border-radius: 8px;
+      background: var(--black);
+      color: white;
+      font-size: .88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+    .btn:hover { background: #333; transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--black); }
+    .btn-outline:hover { background: var(--black); color: white; }
+
+    /* Live Tracking Indicator */
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 12px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1d4ed8;
+    }
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2563eb;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(37, 99, 235, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+
+    /* Tracking Card */
+    .tracking-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      transition: border-color .2s;
+    }
+    .tracking-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .tracking-title h3 {
+      font-family: "Manrope", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin: 0 0 6px;
+      letter-spacing: -.02em;
+    }
+    .tracking-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.88rem;
+      color: #555;
+    }
+    .tracking-meta span strong { color: var(--ink); }
+
+    /* Stepper */
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      position: relative;
+      margin: 32px 0 20px;
+      gap: 8px;
+    }
+    .stepper::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: calc(12.5% + 10px);
+      right: calc(12.5% + 10px);
+      height: 3px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+    .step-item {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .step-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid #cbd5e1;
+      color: #64748b;
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 10px;
+      transition: all .3s;
+    }
+    .step-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #64748b;
+      line-height: 1.3;
+    }
+    .step-time {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      margin-top: 3px;
+    }
+
+    /* Completed / Active Step States */
+    .step-item.completed .step-circle {
+      background: #10b981;
+      border-color: #10b981;
+      color: white;
+    }
+    .step-item.completed .step-label { color: #047857; }
+
+    .step-item.active .step-circle {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: white;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+    }
+    .step-item.active .step-label { color: #1d4ed8; }
+
+    /* Rejected Banner */
+    .rejected-banner {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-top: 18px;
+      color: #991b1b;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+    }
+
+    /* Status Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .status-pending { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .status-approved { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .status-in-progress { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .status-completed { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .status-rejected { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+    .empty-state {
+      text-align: center;
+      padding: 64px 24px;
+      background: white;
+      border: 1px dashed #cbd5e1;
+      border-radius: var(--radius);
+    }
+
+    footer {
+      padding: 24px 0;
+      border-top: 1px solid var(--line);
+      color: #777;
+      font-size: 0.82rem;
+      text-align: center;
+      background: white;
+    }
+
+    @media (max-width: 680px) {
+      .stepper { grid-template-columns: 1fr; gap: 20px; text-align: left; }
+      .stepper::before { display: none; }
+      .step-item { display: flex; align-items: center; gap: 14px; }
+      .step-circle { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="/">
+        <svg class="brand-mark" viewBox="0 0 90 42" fill="none" aria-hidden="true">
+          <path d="M7 27h7l5-11c1-3 4-5 8-5h31c5 0 8 2 12 7l8 9h5c3 0 5 2 5 5v3H6v-4c0-2 0-4 1-4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="m23 14-4 13h48L56 14M14 28h61" stroke="currentColor" stroke-width="2"/>
+          <circle cx="23" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/><circle cx="67" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/>
+        </svg>
+        <span><span class="brand-name">MrShine</span><span class="brand-sub">CAR WASH & DETAILING</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/pages/services.html">Services</a>
+        <a href="/pages/request-service.html">Book Service</a>
+      </div>
+      <div id="headerAuthActions" style="display:flex;align-items:center;gap:10px;"></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="top-bar">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <h1>My Service Requests</h1>
+            <span class="live-indicator"><span class="live-dot"></span> Live Tracking</span>
+          </div>
+          <p style="margin:0;color:var(--muted);font-size:.9rem;">
+            Follow your vehicle's live appointment status from arrival to completed shine.
+          </p>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button id="manualRefreshBtn" class="btn btn-outline" style="min-height:38px;padding:0 14px;font-size:0.82rem;">&#x21bb; Refresh</button>
+          <a href="/pages/request-service.html" class="btn" style="min-height:38px;padding:0 18px;font-size:0.85rem;">+ New Request</a>
+        </div>
+      </div>
+
+      <div id="loading" style="text-align:center;padding:60px 20px;color:#64748b;">
+        Connecting to live service tracker…
+      </div>
+
+      <div id="trackingContainer" style="display:none;"></div>
+
+      <div id="emptyState" class="empty-state" style="display:none;">
+        <h2 style="font-family:'Manrope',sans-serif;margin:0 0 8px;">No Active Requests</h2>
+        <p style="color:var(--muted);margin:0 0 20px;font-size:0.95rem;">You haven't booked any car wash or custom detailing appointments yet.</p>
+        <a href="/pages/request-service.html" class="btn">Book Your First Service &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">&copy; <span id="year"></span> MrShine Car Wash & Detailing. Live Service Tracking System.</div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    if (Auth.requireAuth()) {
+      loadRequests();
+      // Auto-poll live status every 10 seconds so customer sees real-time changes
+      setInterval(loadRequests, 10000);
+    }
+
+    document.getElementById("manualRefreshBtn").addEventListener("click", () => {
+      loadRequests();
+      Api.showToast("Tracking status refreshed", "success");
+    });
+
+    async function loadRequests() {
+      const loading = document.getElementById("loading");
+      const container = document.getElementById("trackingContainer");
+      const empty = document.getElementById("emptyState");
+
+      try {
+        const requests = await Api.getMyRequests();
+        loading.style.display = "none";
+
+        if (!requests || requests.length === 0) {
+          container.style.display = "none";
+          empty.style.display = "block";
+          return;
+        }
+
+        empty.style.display = "none";
+        container.style.display = "block";
+
+        container.innerHTML = requests.map(r => renderTrackingCard(r)).join("");
+      } catch (err) {
+        loading.textContent = "Could not connect to tracking system. Retrying…";
+      }
+    }
+
+    function renderTrackingCard(r) {
+      const status = r.status || "Pending";
+      const isRejected = status === "Rejected";
+
+      // Stages: 1=Pending, 2=Approved, 3=In Progress, 4=Completed
+      let currentStage = 1;
+      if (status === "Approved") currentStage = 2;
+      else if (status === "In Progress") currentStage = 3;
+      else if (status === "Completed") currentStage = 4;
+
+      const formattedCreated = new Date(r.created_at).toLocaleDateString("en-US", {
+        month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"
+      });
+
+      const badgeClass = `status-${status.toLowerCase().replace(" ", "-")}`;
+
+      return `
+        <div class="tracking-card">
+          <div class="tracking-header">
+            <div class="tracking-title">
+              <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">
+                Request #${r.id} &bull; Booked ${formattedCreated}
+              </div>
+              <h3>${r.service_name || 'Car Care Package'}</h3>
+              <div class="tracking-meta">
+                <span>Vehicle: <strong>${r.vehicle_details}</strong></span>
+                <span>Scheduled Date: <strong>${r.preferred_date}</strong></span>
+                <span>Time Slot: <strong>${r.preferred_time}</strong></span>
+                ${r.service_price ? `<span>Price: <strong>$${parseFloat(r.service_price).toFixed(2)}</strong></span>` : '<span>Price: <strong>Custom Quote</strong></span>'}
+              </div>
+            </div>
+            <div>
+              <span class="status-badge ${badgeClass}">
+                <span>&bull;</span> ${status}
+              </span>
+            </div>
+          </div>
+
+          ${isRejected ? `
+            <div class="rejected-banner">
+              <span style="font-size:1.3rem;">&#9888;</span>
+              <div>
+                <strong>Appointment Request Declined</strong>
+                <div style="font-size:0.84rem;margin-top:2px;">Our team was unable to accommodate this schedule slot. Please contact our support team or book an alternative date.</div>
+              </div>
+            </div>
+          ` : `
+            <!-- Live Progress Stepper -->
+            <div class="stepper">
+              <div class="step-item ${currentStage > 1 ? 'completed' : (currentStage === 1 ? 'active' : '')}">
+                <div class="step-circle">${currentStage > 1 ? '&#10003;' : '1'}</div>
+                <div class="step-label">1. Request Received</div>
+                <div class="step-time">Awaiting Shop Review</div>
+              </div>
+              <div class="step-item ${currentStage > 2 ? 'completed' : (currentStage === 2 ? 'active' : '')}">
+                <div class="step-circle">${currentStage > 2 ? '&#10003;' : '2'}</div>
+                <div class="step-label">2. Bay Reserved</div>
+                <div class="step-time">Confirmed &amp; Scheduled</div>
+              </div>
+              <div class="step-item ${currentStage > 3 ? 'completed' : (currentStage === 3 ? 'active' : '')}">
+                <div class="step-circle">${currentStage > 3 ? '&#10003;' : '3'}</div>
+                <div class="step-label">3. In Bay / Washing</div>
+                <div class="step-time">Detailing In Progress</div>
+              </div>
+              <div class="step-item ${currentStage === 4 ? 'completed active' : ''}">
+                <div class="step-circle">${currentStage === 4 ? '&#10003;' : '4'}</div>
+                <div class="step-label">4. Quality Finished</div>
+                <div class="step-time">Ready for Pickup</div>
+              </div>
+            </div>
+          `}
+
+          ${r.message ? `
+            <div style="margin-top:16px;padding:12px 16px;background:#f8fafc;border-radius:8px;font-size:0.84rem;color:#475569;">
+              <strong style="color:#1e293b;">Special Instructions:</strong> ${r.message}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
