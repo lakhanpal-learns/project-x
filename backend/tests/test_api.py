@@ -6,11 +6,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from fastapi.testclient import TestClient
 from app.main import app
+from app.db.init_db import init_database
 
 client = TestClient(app)
 
 
 def test_full_workflow():
+    # Tests use an isolated CI database; initialize schema and seed required fixtures.
+    init_database()
     print("--- 1. Testing Health Check ---")
     res = client.get("/health")
     assert res.status_code == 200, f"Health check failed: {res.text}"
