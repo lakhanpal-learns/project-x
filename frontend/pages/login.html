@@ -170,9 +170,21 @@
         }
         showMessage("Signed in successfully.", "success");
         const next = new URLSearchParams(window.location.search).get("next");
+        let safeNext = null;
+        if (next) {
+          try {
+            const candidate = new URL(next, window.location.origin);
+            if (candidate.origin === window.location.origin) {
+              safeNext = `${candidate.pathname}${candidate.search}${candidate.hash}`;
+            }
+          } catch {
+            // Ignore malformed redirect targets and use the default destination.
+          }
+        }
+
         window.setTimeout(() => {
           if (data.role === "admin") { window.location.href = "/pages/admin.html"; }
-          else if (next) { window.location.href = next; }
+          else if (safeNext) { window.location.href = safeNext; }
           else { window.location.href = "/pages/my-requests.html"; }
         }, 600);
       } catch (error) {
