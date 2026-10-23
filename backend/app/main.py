@@ -47,6 +47,12 @@ def home():
     return FileResponse(FRONTEND_DIR / "index.html")
 
 
+@app.get("/login.html", include_in_schema=False)
+def login_page():
+    """Serve the MrShine login page."""
+    return FileResponse(FRONTEND_DIR / "login.html")
+
+
 @app.get("/health", tags=["Health"])
 def health_check():
     return {"status": "healthy"}
