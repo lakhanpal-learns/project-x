@@ -124,8 +124,11 @@ uv run uvicorn app.main:app --reload --port 8000
 - Open browser at `http://localhost:8000` to view the website.
 - Interactive API Docs: `http://localhost:8000/docs`.
 
-### 4. Default Seeded Accounts
-- **Admin**: `admin@mrshine.com` / `Admin@123456`
+### 4. Seeded Accounts and Production Admin Setup
+
+Default admin and demo-customer accounts are created only when `APP_ENV` is not `production`. For production, configure a strong `ADMIN_INITIAL_PASSWORD` deployment secret (at least 12 characters) and `ADMIN_EMAIL` before the first startup. The app will use these to bootstrap the administrator and rotate a legacy account only when it still has the published development password. If the initial password is not configured, a legacy account still using the development password is disabled rather than left exposed.
+- **Development admin only**: `admin@mrshine.com` / `Admin@123456` (never use these credentials in production).
+- **Development demo customer**: `customer@mrshine.com` / `Customer@123456` (development only).
 - **Customer**: Register any new account through `/register.html`.
 
 ### 5. Running Tests
