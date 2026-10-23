@@ -138,11 +138,15 @@ Example:
 ```env
 DATABASE_URL=postgresql://USER:PASSWORD@INTERNAL_HOST/DATABASE
 SECRET_KEY=your-secure-secret
+CSRF_SECRET_KEY=your-secure-csrf-secret
+APP_ENV=production
+ADMIN_EMAIL=admin@your-domain.example
+ADMIN_INITIAL_PASSWORD=<strong secret of at least 12 characters>
 ```
 
 These values are examples only. Use the actual connection URL provided by Render and generate a strong secret for the application.
 
-Additional variables will be added when notification providers are configured.
+Configure `ADMIN_INITIAL_PASSWORD` as a deployment secret (at least 12 characters) to bootstrap the first production administrator. Do not use the development credentials listed in the README. On startup, the application disables a legacy administrator account if it still uses the published development password and no secure replacement is configured.
 
 Important rules:
 - Do not hard-code credentials in Python files.
