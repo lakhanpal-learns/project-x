@@ -710,5 +710,9 @@
         .replace(/'/g, "&#039;");
     }
   </script>
+
+<script>
+(()=>{const t=document.getElementById("mobileMenuToggle"),x=document.getElementById("mobileMenuClose"),d=document.getElementById("mobileNavDrawer"),b=document.getElementById("mobileNavBackdrop"),l=document.getElementById("mobileLogoutBtn");function setOpen(open){d.classList.toggle("is-open",open);b.hidden=!open;d.setAttribute("aria-hidden",String(!open));t.setAttribute("aria-expanded",String(open));document.body.classList.toggle("mobile-menu-open",open)}t.addEventListener("click",()=>setOpen(!d.classList.contains("is-open")));x.addEventListener("click",()=>setOpen(false));b.addEventListener("click",()=>setOpen(false));d.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>setOpen(false)));document.addEventListener("keydown",e=>{if(e.key==="Escape")setOpen(false)});l.addEventListener("click",()=>{if(window.Auth&&typeof Auth.logout==="function")Auth.logout();else window.location.href="/login"})})();
+</script>
 </body>
 </html>
