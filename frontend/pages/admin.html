@@ -999,7 +999,7 @@
                   <th style="width:60px;">ID</th>
                   <th style="width:80px;">Preview</th>
                   <th>Package Name</th>
-                  <th>Price ($)</th>
+                  <th>Price (£)</th>
                   <th>Est. Duration</th>
                   <th>Package Description</th>
                   <th style="text-align:right;">Actions</th>
@@ -1112,8 +1112,8 @@
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div class="form-group">
-              <label class="form-label">Price ($) *</label>
-              <input id="svcPrice" class="form-control" type="number" step="0.01" placeholder="49.99" required />
+              <label class="form-label">Price (£) *</label>
+              <input id="svcPrice" class="form-control" type="number" step="0.01" placeholder="15.00" required />
             </div>
             <div class="form-group">
               <label class="form-label">Duration (Minutes) *</label>
@@ -1915,7 +1915,7 @@
                 <div>Vehicle: <strong>${escapeHtml(r.vehicle_details)}</strong></div>
                 <div>Scheduled Date: <strong>${r.preferred_date}</strong></div>
                 <div>Time Slot: <strong>${r.preferred_time}</strong></div>
-                <div>Price: <strong>${r.service_price ? '$' + parseFloat(r.service_price).toFixed(2) : 'Custom Quote'}</strong></div>
+                <div>Price: <strong>${r.service_price ? '£' + parseFloat(r.service_price).toFixed(2) : 'Custom Quote'}</strong></div>
               </div>
 
               ${r.message ? `
