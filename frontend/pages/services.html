@@ -50,6 +50,33 @@
     .mobile-nav-drawer:not(.is-open) { display: none !important; visibility: hidden !important; pointer-events: none !important; }
     .mobile-nav-drawer.is-open { display: block !important; visibility: visible !important; pointer-events: auto !important; }
 </style>
+
+  <style id="mrshine-pricing-menu">
+    .mrshine-pricing-section{padding:42px 0 64px;background:#f7f7f7}
+    .mrshine-pricing-heading{max-width:720px;margin:0 auto 30px;text-align:center}
+    .mrshine-pricing-heading .eyebrow{color:#b91c1c;font-weight:800;letter-spacing:.14em;font-size:.74rem}
+    .mrshine-pricing-heading h2{margin:8px 0 10px;font-size:clamp(1.8rem,3.6vw,2.65rem);line-height:1.12;color:#171717}
+    .mrshine-pricing-note{margin:0;color:#626262;font-size:.92rem}
+    .mrshine-pricing-category{max-width:980px;margin:0 auto 24px;padding:clamp(18px,3vw,30px);background:#fff;border:1px solid #e5e5e5;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.035)}
+    .mrshine-category-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:18px;border-bottom:1px solid #e8e8e8}
+    .mrshine-category-kicker{color:#b91c1c;font-size:.68rem;letter-spacing:.13em;font-weight:800}
+    .mrshine-category-heading h3{margin:5px 0 0;color:#171717;font-size:1.55rem}
+    .mrshine-category-icon{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border-radius:12px;background:#fff1f1;color:#b91c1c;font-size:1.3rem}
+    .mrshine-availability{margin:16px 0 4px;padding:11px 13px;border-radius:9px;background:#fff7f7;color:#7f1d1d;font-size:.83rem}
+    .mrshine-availability span{margin-right:7px;color:#b91c1c;font-size:.65rem}
+    .mrshine-price-row{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:17px 0;border-bottom:1px solid #eee}
+    .mrshine-price-row:last-child{border-bottom:0;padding-bottom:0}
+    .mrshine-price-row h4{margin:0;color:#202020;font-size:.98rem;font-weight:700;line-height:1.4}
+    .mrshine-price-row p{margin:4px 0 0;color:#777;font-size:.8rem;line-height:1.45}
+    .mrshine-price-action{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:0 0 auto}
+    .mrshine-price-action strong{font-size:1.25rem;color:#171717;white-space:nowrap}
+    .mrshine-book-link{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:8px;background:#b91c1c;color:#fff;text-decoration:none;font-size:.76rem;font-weight:700;white-space:nowrap;transition:background .15s ease}
+    .mrshine-book-link:hover{background:#991b1b}
+    .mrshine-detailing-subtitle{margin:4px 0 0;color:#777;font-size:.84rem}
+    @media(min-width:900px){.mrshine-price-row{gap:24px}.mrshine-price-row h4{font-size:1rem}.mrshine-price-action{flex-direction:row;align-items:center;gap:18px}.mrshine-price-action strong{min-width:64px;text-align:right}.mrshine-book-link{min-width:140px;justify-content:center}}
+    @media(max-width:520px){.mrshine-pricing-section{padding:28px 0 42px}.mrshine-pricing-heading{margin-bottom:22px;text-align:left}.mrshine-pricing-category{padding:17px 15px;border-radius:13px;margin-bottom:17px}.mrshine-category-heading h3{font-size:1.35rem}.mrshine-price-row{align-items:flex-start;gap:8px;padding:15px 0}.mrshine-price-row h4{font-size:.88rem}.mrshine-price-row p{font-size:.75rem}.mrshine-price-action{gap:8px}.mrshine-price-action strong{font-size:1.12rem}.mrshine-book-link{padding:8px 9px;font-size:.69rem}.mrshine-availability{font-size:.78rem}}
+  </style>
+
 </head>
 <body>
   <!-- Global Header -->
@@ -96,53 +123,52 @@
       </div>
     </section>
 
-    <!-- Services Grid Section -->
-    <section style="padding: 56px 0 64px;">
-      <div class="container">
-        <!-- In-page alert for errors or offline state -->
-        <div id="serviceAlert" class="alert-banner" role="alert"></div>
 
-        <div id="servicesContainer" class="services-catalog">
-          <!-- Loading Skeletons -->
-          <div class="card" style="height: 380px;">
-            <div class="skeleton" style="height: 180px;"></div>
-            <div style="padding: 22px;">
-              <div class="skeleton" style="height: 14px; width: 35%; margin-bottom: 12px;"></div>
-              <div class="skeleton" style="height: 24px; width: 70%; margin-bottom: 14px;"></div>
-              <div class="skeleton" style="height: 14px; width: 90%; margin-bottom: 8px;"></div>
-              <div class="skeleton" style="height: 14px; width: 60%; margin-bottom: 24px;"></div>
-              <div class="skeleton" style="height: 40px; width: 100%;"></div>
+    <!-- Official MrShine price list -->
+    <section class="mrshine-pricing-section" aria-labelledby="pricingTitle">
+      <div class="container">
+        <div class="mrshine-pricing-heading">
+          <p class="eyebrow">MRSHINE · PRICE LIST</p>
+          <h2 id="pricingTitle">Car Wash &amp; Detailing Prices</h2>
+          <p class="mrshine-pricing-note">All prices are in pounds (£) and include VAT.</p>
+        </div>
+
+        <div class="mrshine-pricing-category">
+          <div class="mrshine-category-heading">
+            <div>
+              <span class="mrshine-category-kicker">EVERYDAY CARE</span>
+              <h3>Car Wash</h3>
             </div>
+            <span class="mrshine-category-icon" aria-hidden="true">✦</span>
           </div>
-          <div class="card" style="height: 380px;">
-            <div class="skeleton" style="height: 180px;"></div>
-            <div style="padding: 22px;">
-              <div class="skeleton" style="height: 14px; width: 35%; margin-bottom: 12px;"></div>
-              <div class="skeleton" style="height: 24px; width: 70%; margin-bottom: 14px;"></div>
-              <div class="skeleton" style="height: 14px; width: 90%; margin-bottom: 8px;"></div>
-              <div class="skeleton" style="height: 14px; width: 60%; margin-bottom: 24px;"></div>
-              <div class="skeleton" style="height: 40px; width: 100%;"></div>
-            </div>
+          <p class="mrshine-availability"><span aria-hidden="true">●</span> Hand-wash services are available Monday to Thursday.</p>
+          <div class="mrshine-price-list">
+            <article class="mrshine-price-row"><div><h4>Saloon Car Wash Interior–Exterior</h4><p>Interior and exterior wash</p></div><div class="mrshine-price-action"><strong>£15</strong><a href="/request-service?service_name=Saloon%20Car%20Wash%20Interior%E2%80%93Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Saloon Car Hand Wash Interior–Exterior</h4><p>Hand wash for interior and exterior</p></div><div class="mrshine-price-action"><strong>£20</strong><a href="/request-service?service_name=Saloon%20Car%20Hand%20Wash%20Interior%E2%80%93Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Saloon Car Wash Exterior</h4><p>Exterior wash</p></div><div class="mrshine-price-action"><strong>£11</strong><a href="/request-service?service_name=Saloon%20Car%20Wash%20Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Saloon Car Hand Wash Exterior</h4><p>Exterior hand wash</p></div><div class="mrshine-price-action"><strong>£16</strong><a href="/request-service?service_name=Saloon%20Car%20Hand%20Wash%20Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Van Car Wash Interior–Exterior</h4><p>Interior and exterior wash</p></div><div class="mrshine-price-action"><strong>£17</strong><a href="/request-service?service_name=Van%20Car%20Wash%20Interior%E2%80%93Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Van Car Wash Exterior</h4><p>Exterior wash</p></div><div class="mrshine-price-action"><strong>£12</strong><a href="/request-service?service_name=Van%20Car%20Wash%20Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Taxi Interior–Exterior</h4><p>Interior and exterior wash</p></div><div class="mrshine-price-action"><strong>£11</strong><a href="/request-service?service_name=Taxi%20Interior%E2%80%93Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Taxi Exterior</h4><p>Exterior wash</p></div><div class="mrshine-price-action"><strong>£9</strong><a href="/request-service?service_name=Taxi%20Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
           </div>
-          <div class="card" style="height: 380px;">
-            <div class="skeleton" style="height: 180px;"></div>
-            <div style="padding: 22px;">
-              <div class="skeleton" style="height: 14px; width: 35%; margin-bottom: 12px;"></div>
-              <div class="skeleton" style="height: 24px; width: 70%; margin-bottom: 14px;"></div>
-              <div class="skeleton" style="height: 14px; width: 90%; margin-bottom: 8px;"></div>
-              <div class="skeleton" style="height: 14px; width: 60%; margin-bottom: 24px;"></div>
-              <div class="skeleton" style="height: 40px; width: 100%;"></div>
+        </div>
+
+        <div class="mrshine-pricing-category mrshine-detailing-category">
+          <div class="mrshine-category-heading">
+            <div>
+              <span class="mrshine-category-kicker">EXTRA CARE</span>
+              <h3>Car Detailing</h3>
+              <p class="mrshine-detailing-subtitle">Available upon appointment.</p>
             </div>
+            <span class="mrshine-category-icon" aria-hidden="true">✧</span>
           </div>
-          <div class="card" style="height: 380px;">
-            <div class="skeleton" style="height: 180px;"></div>
-            <div style="padding: 22px;">
-              <div class="skeleton" style="height: 14px; width: 35%; margin-bottom: 12px;"></div>
-              <div class="skeleton" style="height: 24px; width: 70%; margin-bottom: 14px;"></div>
-              <div class="skeleton" style="height: 14px; width: 90%; margin-bottom: 8px;"></div>
-              <div class="skeleton" style="height: 14px; width: 60%; margin-bottom: 24px;"></div>
-              <div class="skeleton" style="height: 40px; width: 100%;"></div>
-            </div>
+          <div class="mrshine-price-list">
+            <article class="mrshine-price-row"><div><h4>Interior Detailing SUV</h4><p>Detailed interior treatment for SUVs</p></div><div class="mrshine-price-action"><strong>£140</strong><a href="/request-service?service_name=Interior%20Detailing%20SUV" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Interior Detailing Saloon</h4><p>Detailed interior treatment for saloon cars</p></div><div class="mrshine-price-action"><strong>£120</strong><a href="/request-service?service_name=Interior%20Detailing%20Saloon" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Car Seats Cleaning</h4><p>Deep clean for vehicle seats</p></div><div class="mrshine-price-action"><strong>£50</strong><a href="/request-service?service_name=Car%20Seats%20Cleaning" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Headlights Restoration</h4><p>Restore clarity to vehicle headlights</p></div><div class="mrshine-price-action"><strong>£30</strong><a href="/request-service?service_name=Headlights%20Restoration" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
+            <article class="mrshine-price-row"><div><h4>Exterior Detailing</h4><p>Detailed exterior treatment</p></div><div class="mrshine-price-action"><strong>£160</strong><a href="/request-service?service_name=Exterior%20Detailing" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
           </div>
         </div>
       </div>
