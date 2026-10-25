@@ -13,5 +13,14 @@ router = APIRouter(prefix="/services", tags=["Services"])
 @router.get("", response_model=List[ServiceResponse])
 def get_services(db: Session = Depends(get_db)):
     """Retrieve all available car wash and detailing services."""
+    # These four names were placeholder demo packages from the original seed.
+    # Keep their database rows intact for any historical requests, but do not
+    # offer them to customers now that the official MrShine price list is seeded.
+    legacy_demo_names = {
+        "Exterior Car Wash",
+        "Interior Cleaning",
+        "Complete Cleaning",
+        "Premium Detailing",
+    }
     services = db.scalars(select(Service).order_by(Service.price.asc())).all()
-    return services
+    return [service for service in services if service.name not in legacy_demo_names]
