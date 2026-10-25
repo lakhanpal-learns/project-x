@@ -257,6 +257,8 @@
     .mobile-nav-drawer:not(.is-open) { display: none !important; visibility: hidden !important; pointer-events: none !important; }
     .mobile-nav-drawer.is-open { display: block !important; visibility: visible !important; pointer-events: auto !important; }
 </style>
+
+<style id="booking-back-link-responsive">.booking-back-to-services:hover{background:#f8fafc;border-color:#b91c1c;color:#b91c1c}@media(max-width:520px){.booking-services-heading{gap:12px!important}.booking-back-to-services{min-height:38px;font-size:.8rem!important}}</style>
 </head>
 <body>
   <!-- Header -->
@@ -324,13 +326,16 @@
         <div class="booking-grid">
           <!-- Main Form Card -->
           <div class="card">
-            <div class="card-header">
+            <div class="card-header booking-services-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;">
               <div>
                 <h2 style="font-size: 1.3rem; margin: 0; font-weight: 700;">1. Choose Services &amp; Packages</h2>
                 <p style="color: #64748b; font-size: 0.82rem; margin: 4px 0 0;">
                   Click any card to select one or combine multiple services (exterior, interior, detailing).
                 </p>
               </div>
+              <a href="/services" class="booking-back-to-services" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid #dbe2ea;border-radius:9px;background:#fff;color:#172033;font-size:.84rem;font-weight:700;text-decoration:none;white-space:nowrap;">
+                <span aria-hidden="true">←</span> Back to Services
+              </a>
             </div>
 
             <div class="card-body">
