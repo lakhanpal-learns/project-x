@@ -77,6 +77,18 @@
     @media(max-width:520px){.mrshine-pricing-section{padding:28px 0 42px}.mrshine-pricing-heading{margin-bottom:22px;text-align:left}.mrshine-pricing-category{padding:17px 15px;border-radius:13px;margin-bottom:17px}.mrshine-category-heading h3{font-size:1.35rem}.mrshine-price-row{align-items:flex-start;gap:8px;padding:15px 0}.mrshine-price-row h4{font-size:.88rem}.mrshine-price-row p{font-size:.75rem}.mrshine-price-action{gap:8px}.mrshine-price-action strong{font-size:1.12rem}.mrshine-book-link{padding:8px 9px;font-size:.69rem}.mrshine-availability{font-size:.78rem}}
   </style>
 
+
+<style id="mrshine-pricing-menu-admin-managed">
+.mrshine-pricing-status{max-width:980px;margin:0 auto 22px;padding:14px 16px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;color:#525252;font-size:.9rem}
+.mrshine-pricing-status:empty{display:none}.mrshine-pricing-status.is-error{color:#991b1b;background:#fff7f7;border-color:#fecaca}
+.mrshine-price-row{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:17px 0;border-bottom:1px solid #eee}
+.mrshine-price-row:last-child{border-bottom:0;padding-bottom:0}.mrshine-price-row h4{margin:0;color:#202020;font-size:.98rem;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
+.mrshine-price-row p{margin:4px 0 0;color:#777;font-size:.8rem;line-height:1.45}.mrshine-price-action{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:0 0 auto}
+.mrshine-price-action strong{font-size:1.25rem;color:#171717;white-space:nowrap}.mrshine-book-link{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:8px;background:#b91c1c;color:#fff;text-decoration:none;font-size:.76rem;font-weight:700;white-space:nowrap}
+.mrshine-book-link:hover{background:#991b1b}.mrshine-empty{padding:20px 0;color:#666;font-size:.9rem}
+@media(min-width:900px){.mrshine-price-row{gap:24px}.mrshine-price-row h4{font-size:1rem}.mrshine-price-action{flex-direction:row;align-items:center;gap:18px}.mrshine-price-action strong{min-width:64px;text-align:right}.mrshine-book-link{min-width:140px;justify-content:center}}
+@media(max-width:520px){.mrshine-pricing-section{padding:28px 0 42px}.mrshine-pricing-heading{margin-bottom:22px;text-align:left}.mrshine-pricing-category{padding:17px 15px;border-radius:13px;margin-bottom:17px}.mrshine-category-heading h3{font-size:1.35rem}.mrshine-price-row{align-items:flex-start;gap:8px;padding:15px 0}.mrshine-price-row h4{font-size:.88rem}.mrshine-price-row p{font-size:.75rem}.mrshine-price-action{gap:8px}.mrshine-price-action strong{font-size:1.12rem}.mrshine-book-link{padding:8px 9px;font-size:.69rem}}
+</style>
 </head>
 <body>
   <!-- Global Header -->
@@ -124,52 +136,23 @@
     </section>
 
 
-    <!-- Official MrShine price list -->
+    <!-- Admin-managed MrShine price list -->
     <section class="mrshine-pricing-section" aria-labelledby="pricingTitle">
       <div class="container">
         <div class="mrshine-pricing-heading">
           <p class="eyebrow">MRSHINE · PRICE LIST</p>
           <h2 id="pricingTitle">Car Wash &amp; Detailing Prices</h2>
           <p class="mrshine-pricing-note">All prices are in pounds (£) and include VAT.</p>
+          <p class="mrshine-pricing-note">Hand-wash services are available Monday to Thursday. Detailing is by appointment.</p>
         </div>
-
-        <div class="mrshine-pricing-category">
-          <div class="mrshine-category-heading">
-            <div>
-              <span class="mrshine-category-kicker">EVERYDAY CARE</span>
-              <h3>Car Wash</h3>
-            </div>
-            <span class="mrshine-category-icon" aria-hidden="true">✦</span>
-          </div>
-          <p class="mrshine-availability"><span aria-hidden="true">●</span> Hand-wash services are available Monday to Thursday.</p>
-          <div class="mrshine-price-list">
-            <article class="mrshine-price-row"><div><h4>Saloon Car Wash Interior–Exterior</h4><p>Interior and exterior wash</p></div><div class="mrshine-price-action"><strong>£15</strong><a href="/request-service?service_name=Saloon%20Car%20Wash%20Interior%E2%80%93Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Saloon Car Hand Wash Interior–Exterior</h4><p>Hand wash for interior and exterior</p></div><div class="mrshine-price-action"><strong>£20</strong><a href="/request-service?service_name=Saloon%20Car%20Hand%20Wash%20Interior%E2%80%93Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Saloon Car Wash Exterior</h4><p>Exterior wash</p></div><div class="mrshine-price-action"><strong>£11</strong><a href="/request-service?service_name=Saloon%20Car%20Wash%20Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Saloon Car Hand Wash Exterior</h4><p>Exterior hand wash</p></div><div class="mrshine-price-action"><strong>£16</strong><a href="/request-service?service_name=Saloon%20Car%20Hand%20Wash%20Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Van Car Wash Interior–Exterior</h4><p>Interior and exterior wash</p></div><div class="mrshine-price-action"><strong>£17</strong><a href="/request-service?service_name=Van%20Car%20Wash%20Interior%E2%80%93Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Van Car Wash Exterior</h4><p>Exterior wash</p></div><div class="mrshine-price-action"><strong>£12</strong><a href="/request-service?service_name=Van%20Car%20Wash%20Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Taxi Interior–Exterior</h4><p>Interior and exterior wash</p></div><div class="mrshine-price-action"><strong>£11</strong><a href="/request-service?service_name=Taxi%20Interior%E2%80%93Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Taxi Exterior</h4><p>Exterior wash</p></div><div class="mrshine-price-action"><strong>£9</strong><a href="/request-service?service_name=Taxi%20Exterior" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-          </div>
+        <div id="pricingMenuStatus" role="status" class="mrshine-pricing-status">Loading available services…</div>
+        <div class="mrshine-pricing-category" id="washPricingCategory" hidden>
+          <div class="mrshine-category-heading"><div><span class="mrshine-category-kicker">EVERYDAY CARE</span><h3>Car Wash</h3></div><span class="mrshine-category-icon" aria-hidden="true">✦</span></div>
+          <div class="mrshine-price-list" id="washPricingList"></div>
         </div>
-
-        <div class="mrshine-pricing-category mrshine-detailing-category">
-          <div class="mrshine-category-heading">
-            <div>
-              <span class="mrshine-category-kicker">EXTRA CARE</span>
-              <h3>Car Detailing</h3>
-              <p class="mrshine-detailing-subtitle">Available upon appointment.</p>
-            </div>
-            <span class="mrshine-category-icon" aria-hidden="true">✧</span>
-          </div>
-          <div class="mrshine-price-list">
-            <article class="mrshine-price-row"><div><h4>Interior Detailing SUV</h4><p>Detailed interior treatment for SUVs</p></div><div class="mrshine-price-action"><strong>£140</strong><a href="/request-service?service_name=Interior%20Detailing%20SUV" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Interior Detailing Saloon</h4><p>Detailed interior treatment for saloon cars</p></div><div class="mrshine-price-action"><strong>£120</strong><a href="/request-service?service_name=Interior%20Detailing%20Saloon" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Car Seats Cleaning</h4><p>Deep clean for vehicle seats</p></div><div class="mrshine-price-action"><strong>£50</strong><a href="/request-service?service_name=Car%20Seats%20Cleaning" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Headlights Restoration</h4><p>Restore clarity to vehicle headlights</p></div><div class="mrshine-price-action"><strong>£30</strong><a href="/request-service?service_name=Headlights%20Restoration" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-            <article class="mrshine-price-row"><div><h4>Exterior Detailing</h4><p>Detailed exterior treatment</p></div><div class="mrshine-price-action"><strong>£160</strong><a href="/request-service?service_name=Exterior%20Detailing" class="mrshine-book-link">Book this service <span aria-hidden="true">→</span></a></div></article>
-          </div>
+        <div class="mrshine-pricing-category mrshine-detailing-category" id="detailPricingCategory" hidden>
+          <div class="mrshine-category-heading"><div><span class="mrshine-category-kicker">EXTRA CARE</span><h3>Car Detailing</h3><p class="mrshine-detailing-subtitle">Available upon appointment.</p></div><span class="mrshine-category-icon" aria-hidden="true">✧</span></div>
+          <div class="mrshine-price-list" id="detailPricingList"></div>
         </div>
       </div>
     </section>
@@ -246,10 +229,7 @@
         <div>
           <h4>Services</h4>
           <div class="footer-links">
-            <a href="/request-service?service_id=1">Exterior Car Wash</a>
-            <a href="/request-service?service_id=2">Interior Cleaning</a>
-            <a href="/request-service?service_id=3">Complete Cleaning</a>
-            <a href="/request-service?service_id=4">Premium Detailing</a>
+            <a href="/services">View available services</a>
           </div>
         </div>
         <div>
@@ -282,124 +262,55 @@
     });
 
     async function loadServices() {
-      const container = document.getElementById("servicesContainer");
-      const alertEl = document.getElementById("serviceAlert");
-
+      const status = document.getElementById("pricingMenuStatus");
+      const washList = document.getElementById("washPricingList");
+      const detailList = document.getElementById("detailPricingList");
+      const washCategory = document.getElementById("washPricingCategory");
+      const detailCategory = document.getElementById("detailPricingCategory");
       try {
         const services = await window.api.get("/services");
-
-        if (!services || services.length === 0) {
-          container.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-              <div class="empty-state-icon">&#128712;</div>
-              <h3>No Services Available</h3>
-              <p>Services are currently being updated. Please check back shortly or submit a custom inquiry.</p>
-              <a href="/request-service" class="btn btn-outline">Submit Custom Request</a>
-            </div>
-          `;
+        if (!Array.isArray(services)) throw new Error("Unexpected services response.");
+        const available = services.filter(service => service && service.id != null && service.name);
+        if (!available.length) {
+          status.textContent = "No services are currently available. Please check back later.";
           return;
         }
+        const isDetailing = service => /detail|headlight|seat|ceramic|restoration|polish/i.test(service.name);
+        const washServices = available.filter(service => !isDetailing(service));
+        const detailServices = available.filter(isDetailing);
+        const token = localStorage.getItem("mrshine_access_token") || sessionStorage.getItem("mrshine_access_token");
+        const renderRow = service => {
+          const price = Number(service.price);
+          const priceText = Number.isFinite(price) ? "£" + price.toFixed(2).replace(/\.00$/, "") : "Price on request";
+          const description = escapeHtml(service.description || "Professional car care service.");
+          const name = escapeHtml(service.name);
+          const duration = Number(service.duration_minutes) > 0 ? Number(service.duration_minutes) + " mins" : "Duration varies";
+          const href = "/request-service?service_id=" + encodeURIComponent(service.id);
+          return `<article class="mrshine-price-row"><div><h4>${name}</h4><p>${description} · ${duration}</p></div><div class="mrshine-price-action"><strong>${priceText}</strong><a href="${href}" class="mrshine-book-link" data-book-service-id="${escapeHtml(String(service.id))}" aria-label="Book ${name}">Book this service <span aria-hidden="true">→</span></a></div></article>`;
+        };
+        washList.innerHTML = washServices.map(renderRow).join("") || '<p class="mrshine-empty">No car wash services are currently available.</p>';
+        detailList.innerHTML = detailServices.map(renderRow).join("") || '<p class="mrshine-empty">No detailing services are currently available.</p>';
+        washCategory.hidden = washServices.length === 0;
+        detailCategory.hidden = detailServices.length === 0;
+        status.textContent = "";
+        status.hidden = true;
 
-        container.innerHTML = services.map(service => {
-          const priceFormatted = "$" + parseFloat(service.price).toFixed(2);
-          const durationFormatted = service.duration_minutes
-            ? (service.duration_minutes >= 60
-                ? `${Math.floor(service.duration_minutes / 60)}h ${service.duration_minutes % 60 ? (service.duration_minutes % 60) + "m" : ""}`
-                : `${service.duration_minutes} mins`)
-            : "Varies";
-
-          // Fallback image handling
-          const imageUrl = service.image_url || "/assets/images/hero-black-car.jpg";
-
-          return `
-            <article class="service-item-card" data-service-id="${service.id}">
-              <img
-                src="${imageUrl}"
-                alt="${service.name}"
-                class="service-item-img"
-                loading="lazy"
-                onerror="this.onerror=null; this.src='/assets/images/hero-black-car.jpg';"
-              />
-              <div class="service-item-body">
-                <span class="service-item-duration">&#9201; ${durationFormatted}</span>
-                <h3 class="service-item-title">${escapeHtml(service.name)}</h3>
-                <p class="service-item-desc">${escapeHtml(service.description || "Comprehensive professional automotive treatment.")}</p>
-                <div class="service-item-bottom">
-                  <div>
-                    <span style="display: block; font-size: 0.72rem; color: #777; text-transform: uppercase; font-weight: 700;">Price</span>
-                    <span class="service-item-price">${priceFormatted}</span>
-                  </div>
-                  <a
-                    href="/request-service?service_id=${service.id}"
-                    class="btn btn-sm"
-                    aria-label="Book ${escapeHtml(service.name)}"
-                  >
-                    Book Service &rarr;
-                  </a>
-                </div>
-              </div>
-            </article>
-          `;
-        }).join("");
-
-      } catch (err) {
-        window.showAlert(
-          alertEl,
-          "Unable to load latest packages from server. Showing available standard services below.",
-          "error"
-        );
-
-        // Fallback default catalog if server temporarily unreachable
-        container.innerHTML = `
-          <article class="service-item-card">
-            <img src="/assets/images/exterior-wash.jpg" alt="Exterior Car Wash" class="service-item-img" onerror="this.src='/assets/images/hero-black-car.jpg';" />
-            <div class="service-item-body">
-              <span class="service-item-duration">&#9201; 30 mins</span>
-              <h3 class="service-item-title">Exterior Car Wash</h3>
-              <p class="service-item-desc">Thorough hand wash, wheel shine, rinse, and microfiber drying for a crystal clear finish.</p>
-              <div class="service-item-bottom">
-                <span class="service-item-price">$25.00</span>
-                <a href="/request-service?service_id=1" class="btn btn-sm">Book Service &rarr;</a>
-              </div>
-            </div>
-          </article>
-          <article class="service-item-card">
-            <img src="/assets/images/interior-cleaning.jpg" alt="Interior Cleaning" class="service-item-img" onerror="this.src='/assets/images/hero-black-car.jpg';" />
-            <div class="service-item-body">
-              <span class="service-item-duration">&#9201; 45 mins</span>
-              <h3 class="service-item-title">Interior Cleaning</h3>
-              <p class="service-item-desc">Deep vacuuming, dashboard restoration, window streak cleaning, and fabric upholstery refresh.</p>
-              <div class="service-item-bottom">
-                <span class="service-item-price">$45.00</span>
-                <a href="/request-service?service_id=2" class="btn btn-sm">Book Service &rarr;</a>
-              </div>
-            </div>
-          </article>
-          <article class="service-item-card">
-            <img src="/assets/images/complete-cleaning.jpg" alt="Complete Cleaning" class="service-item-img" onerror="this.src='/assets/images/hero-black-car.jpg';" />
-            <div class="service-item-body">
-              <span class="service-item-duration">&#9201; 75 mins</span>
-              <h3 class="service-item-title">Complete Cleaning</h3>
-              <p class="service-item-desc">Full exterior wash combined with complete interior detailing for comprehensive care.</p>
-              <div class="service-item-bottom">
-                <span class="service-item-price">$65.00</span>
-                <a href="/request-service?service_id=3" class="btn btn-sm">Book Service &rarr;</a>
-              </div>
-            </div>
-          </article>
-          <article class="service-item-card">
-            <img src="/assets/images/premium-detailing.jpg" alt="Premium Detailing" class="service-item-img" onerror="this.src='/assets/images/hero-black-car.jpg';" />
-            <div class="service-item-body">
-              <span class="service-item-duration">&#9201; 120 mins</span>
-              <h3 class="service-item-title">Premium Detailing</h3>
-              <p class="service-item-desc">Paint decontamination, hand paste wax, ceramic protection spray, and leather conditioning.</p>
-              <div class="service-item-bottom">
-                <span class="service-item-price">$110.00</span>
-                <a href="/request-service?service_id=4" class="btn btn-sm">Book Service &rarr;</a>
-              </div>
-            </div>
-          </article>
-        `;
+        document.querySelectorAll("[data-book-service-id]").forEach(link => {
+          link.addEventListener("click", event => {
+            const id = String(link.dataset.bookServiceId);
+            sessionStorage.setItem("mrshine_selected_service_id", id);
+            const target = link.getAttribute("href");
+            if (!token) {
+              event.preventDefault();
+              window.location.href = "/login?next=" + encodeURIComponent(target);
+            }
+          });
+        });
+      } catch (error) {
+        status.hidden = false;
+        status.classList.add("is-error");
+        status.textContent = "We couldn't load the current service list. Please refresh or try again shortly. Services shown here are managed in the Admin Panel.";
+        console.error("Failed to load admin-managed services:", error);
       }
     }
 
