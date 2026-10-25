@@ -455,7 +455,7 @@
 
             <div class="summary-item total">
               <span>Estimated Total:</span>
-              <span id="summaryTotalPrice" style="color: #0f172a;">$0.00</span>
+              <span id="summaryTotalPrice" style="color: #0f172a;">£0.00</span>
             </div>
 
             <div style="margin-top: 22px; padding-top: 18px; border-top: 1px dashed #e2e8f0; font-size: 0.8rem; color: #64748b; line-height: 1.5;">
@@ -569,19 +569,24 @@
     document.addEventListener("DOMContentLoaded", async () => {
       // Booking must originate from a service selected in the Services menu.
       const entryParams = new URLSearchParams(window.location.search);
-      const requestedServiceId = entryParams.get("service_id");
-      const selectedIntentId = sessionStorage.getItem("mrshine_selected_service_id");
-      if (!requestedServiceId || !selectedIntentId || String(requestedServiceId) !== String(selectedIntentId)) {
-        window.location.replace("/services");
-        return;
-      }
+      const feedbackOnly = window.location.hash === "#feedbackTab" || entryParams.get("tab") === "feedback";
+      if (!feedbackOnly) {
+        const requestedServiceId = entryParams.get("service_id");
+        const selectedIntentId = sessionStorage.getItem("mrshine_selected_service_id");
+        if (!requestedServiceId || !selectedIntentId || String(requestedServiceId) !== String(selectedIntentId)) {
+          window.location.replace("/services");
+          return;
+        }
 
-      // Require sign-in before opening the booking form; keep the selected service through login.
-      currentUser = await window.auth.getCurrentUser();
-      if (!currentUser) {
-        const next = window.location.pathname + window.location.search;
-        window.location.replace("/login?next=" + encodeURIComponent(next));
-        return;
+        // Require sign-in before opening the booking form; keep the selected service through login.
+        currentUser = await window.auth.getCurrentUser();
+        if (!currentUser) {
+          const next = window.location.pathname + window.location.search + window.location.hash;
+          window.location.replace("/login?next=" + encodeURIComponent(next));
+          return;
+        }
+      } else {
+        currentUser = await window.auth.getCurrentUser();
       }
 
       // 1. Min date for booking = today
@@ -657,6 +662,8 @@
     }
 
     async function loadServicesList() {
+      const entryParams = new URLSearchParams(window.location.search);
+      if (window.location.hash === "#feedbackTab" || entryParams.get("tab") === "feedback") return;
       const shimmer = document.getElementById("servicesShimmer");
       const container = document.getElementById("servicesListContainer");
       const urlParams = new URLSearchParams(window.location.search);
@@ -823,7 +830,7 @@
                 <div style="font-size: 0.74rem; color: #64748b;">${s.duration_minutes}m</div>
               </div>
               <div style="display:flex;align-items:center;">
-                <span style="font-weight:700;">$${parseFloat(s.price).toFixed(2)}</span>
+                <span style="font-weight:700;">£${parseFloat(s.price).toFixed(2)}</span>
                 <button type="button" class="item-remove" onclick="toggleService(${s.id})" title="Remove item">&times;</button>
               </div>
             </div>
@@ -853,7 +860,7 @@
         `;
         countBadge.textContent = "0 selected";
         durationEl.textContent = "0 mins";
-        priceEl.textContent = "$0.00";
+        priceEl.textContent = "£0.00";
       } else {
         itemsContainer.innerHTML = rowsHtml;
         countBadge.textContent = `${count} selected`;
@@ -869,7 +876,7 @@
         if (isCustomSelected) durStr += " + inspection";
         durationEl.textContent = durStr;
 
-        let prStr = `$${totalPrice.toFixed(2)}`;
+        let prStr = `£${totalPrice.toFixed(2)}`;
         if (isCustomSelected && totalPrice > 0) prStr += " + Custom Quote";
         else if (isCustomSelected) prStr = "Custom Quote";
         priceEl.textContent = prStr;
@@ -955,7 +962,7 @@
           finalServiceId = selectedServices[0].id;
           const names = selectedServices.map(s => s.name).join(" + ");
           const totalCost = selectedServices.reduce((acc, s) => acc + parseFloat(s.price), 0);
-          finalCustomService = `Multi-Service (${selectedServices.length}): ${names} [Total: $${totalCost.toFixed(2)}]`;
+          finalCustomService = `Multi-Service (${selectedServices.length}): ${names} [Total: £${totalCost.toFixed(2)}]`;
         } else if (isCustomSelected && selectedServices.length > 0) {
           finalServiceId = selectedServices[0].id;
           const names = selectedServices.map(s => s.name).join(" + ");
