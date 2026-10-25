@@ -44,6 +44,12 @@
       .site-header #headerAuthActions #headerProfileBtn{max-width:112px;padding:0 7px!important;font-size:.7rem!important}
     }
   </style>
+<style>
+    /* Ensure closed mobile drawer is fully removed from view */
+    .mobile-nav-backdrop[hidden] { display: none !important; }
+    .mobile-nav-drawer:not(.is-open) { display: none !important; visibility: hidden !important; pointer-events: none !important; }
+    .mobile-nav-drawer.is-open { display: block !important; visibility: visible !important; pointer-events: auto !important; }
+</style>
 </head>
 <body>
   <!-- Global Header -->
