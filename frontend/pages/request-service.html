@@ -259,6 +259,8 @@
 </style>
 
 <style id="booking-back-link-responsive">.booking-back-to-services:hover{background:#f8fafc;border-color:#b91c1c;color:#b91c1c}@media(max-width:520px){.booking-services-heading{gap:12px!important}.booking-back-to-services{min-height:38px;font-size:.8rem!important}}</style>
+
+<style id="single-service-selection-fix">.selected-service-toolbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 0 8px;color:#334155;font-size:.9rem;font-weight:700}.selected-service-toolbar button{border:1px solid #d7dee8;border-radius:9px;background:#fff;padding:9px 13px;color:#172033;font-weight:700;cursor:pointer}.selected-service-toolbar button:hover{border-color:#b91c1c;color:#b91c1c}.service-selection-hint{grid-column:1/-1;color:#64748b;font-size:.85rem;padding-bottom:4px}@media(max-width:520px){.selected-service-toolbar button{padding:8px 10px;font-size:.8rem}}</style>
 </head>
 <body>
   <!-- Header -->
@@ -667,8 +669,6 @@
         if (servicesCache.some(s => s.id === numId)) {
           selectedServiceIds.add(numId);
         }
-      } else if (servicesCache.length > 0 && selectedServiceIds.size === 0) {
-        selectedServiceIds.add(servicesCache[0].id);
       }
 
       renderServicesCards();
@@ -679,7 +679,14 @@
       const container = document.getElementById("servicesListContainer");
       if (!container) return;
 
-      let html = servicesCache.map(s => {
+      const hasSelectedService = selectedServiceIds.size > 0;
+      const visibleServices = hasSelectedService
+        ? servicesCache.filter(s => selectedServiceIds.has(s.id))
+        : servicesCache;
+      let html = hasSelectedService
+        ? '<div class="selected-service-toolbar"><span>Selected service</span><button type="button" onclick="clearServiceSelection()">Change service</button></div>'
+        : '<div class="service-selection-hint">Choose a service below. After selection, only that service will remain visible.</div>';
+      html += visibleServices.map(s => {
         const isChecked = selectedServiceIds.has(s.id);
         return `
           <div class="service-card-select ${isChecked ? 'selected' : ''}" data-id="${s.id}" onclick="toggleService(${s.id})">
@@ -728,10 +735,17 @@
 
     function toggleService(id) {
       if (selectedServiceIds.has(id)) {
-        selectedServiceIds.delete(id);
+        selectedServiceIds.clear();
       } else {
+        selectedServiceIds.clear();
         selectedServiceIds.add(id);
       }
+      renderServicesCards();
+      updateSummary();
+    }
+
+    function clearServiceSelection() {
+      selectedServiceIds.clear();
       renderServicesCards();
       updateSummary();
     }
