@@ -440,6 +440,35 @@
 
   
     .nav-right{display:flex;align-items:center;gap:10px}.mobile-menu-toggle,.mobile-drawer-heading button{display:none}.mobile-nav-backdrop{position:fixed;inset:0;z-index:200;background:rgba(15,23,42,.42)}.mobile-nav-drawer{position:fixed;top:0;right:0;bottom:0;z-index:201;width:min(320px,86vw);padding:22px 18px;background:#fff;box-shadow:-12px 0 40px rgba(15,23,42,.16);transform:translateX(105%);visibility:hidden;transition:transform .25s ease,visibility .25s ease}.mobile-nav-drawer.is-open{transform:translateX(0);visibility:visible}.mobile-drawer-heading{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--line);font-size:1.15rem}.mobile-drawer-links{display:flex;flex-direction:column;gap:6px;padding-top:16px}.mobile-drawer-links a,.mobile-drawer-links button{display:flex;align-items:center;width:100%;min-height:46px;padding:0 12px;border:0;border-radius:9px;background:#fff;color:var(--ink);font-size:.94rem;font-weight:600;text-align:left;cursor:pointer}.mobile-drawer-links a:hover,.mobile-drawer-links button:hover{background:#f1f5f9}.mobile-drawer-links button{color:#b42318}
+
+    /* Force the intended compact mobile header */
+    @media (max-width: 768px) {
+      .header .container.nav {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 8px !important;
+        min-height: 76px !important;
+        padding: 12px 0 !important;
+      }
+      .header .nav-links { display: none !important; }
+      .header .brand { flex: 1 1 auto !important; min-width: 0 !important; }
+      .header .nav-right { display: flex !important; flex: 0 0 auto !important; align-items: center !important; gap: 8px !important; }
+      .header #headerAuthActions { display: flex !important; flex: 0 0 auto !important; }
+      .header #headerAuthActions > :not(#headerProfileBtn) { display: none !important; }
+      .header #headerAuthActions #headerProfileBtn { display: inline-flex !important; max-width: 145px; min-height: 40px !important; padding: 0 10px !important; font-size: .8rem !important; white-space: nowrap !important; }
+      .header .mobile-menu-toggle { display: flex !important; flex: 0 0 40px !important; width: 40px !important; height: 40px !important; padding: 0 !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; gap: 5px !important; border: 1px solid var(--line) !important; border-radius: 9px !important; background: #fff !important; visibility: visible !important; opacity: 1 !important; }
+      .header .mobile-menu-toggle span { display: block !important; width: 18px !important; height: 2px !important; background: var(--ink) !important; border-radius: 2px !important; }
+    }
+    @media (max-width: 380px) {
+      .header .container.nav { min-height: 70px !important; }
+      .header .brand-mark { width: 28px !important; }
+      .header .brand-name { font-size: 1rem !important; }
+      .header .brand-sub { font-size: .36rem !important; letter-spacing: .03em !important; }
+      .header #headerAuthActions #headerProfileBtn { max-width: 120px; padding: 0 7px !important; font-size: .72rem !important; }
+    }
+
 </style>
 </head>
 <body>
