@@ -12,6 +12,38 @@
   <style>* { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important; }</style>
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/responsive.css" />
+
+  <style id="services-mobile-nav-fix">
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .mobile-nav-backdrop{position:fixed;inset:0;z-index:200;background:rgba(15,23,42,.42)}
+    .mobile-nav-drawer{position:fixed;top:0;right:0;bottom:0;z-index:201;width:min(320px,86vw);padding:22px 18px;background:#fff;box-shadow:-12px 0 40px rgba(15,23,42,.16);transform:translateX(105%);visibility:hidden;transition:transform .25s ease,visibility .25s ease}
+    .mobile-nav-drawer.is-open{transform:translateX(0);visibility:visible}
+    .mobile-drawer-heading{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid #e2e8f0;font-size:1.15rem}
+    .mobile-drawer-heading button{display:inline-grid;place-items:center;width:38px;height:38px;border:1px solid #e2e8f0;border-radius:9px;background:#fff;color:#181818;font-size:1.6rem;cursor:pointer}
+    .mobile-drawer-links{display:flex;flex-direction:column;gap:6px;padding-top:16px}
+    .mobile-drawer-links a,.mobile-drawer-links button{display:flex;align-items:center;width:100%;min-height:46px;padding:0 12px;border:0;border-radius:9px;background:#fff;color:#181818;font-size:.94rem;font-weight:600;text-align:left;cursor:pointer;text-decoration:none}
+    .mobile-drawer-links a:hover,.mobile-drawer-links button:hover{background:#f1f5f9}
+    .mobile-drawer-links button{color:#b42318}
+    .mobile-toggle{display:none}
+    @media(max-width:768px){
+      .site-header .nav.container{display:flex!important;flex-wrap:nowrap!important;justify-content:space-between!important;align-items:center!important;gap:8px!important;min-height:76px!important;padding-top:12px!important;padding-bottom:12px!important}
+      .site-header .brand{flex:1 1 auto!important;min-width:0!important}
+      .site-header .nav-links{display:none!important}
+      .site-header .nav-right{display:flex!important;flex:0 0 auto!important;align-items:center!important;gap:8px!important}
+      .site-header #headerAuthActions{display:flex!important;align-items:center!important;gap:6px!important}
+      .site-header #headerAuthActions>*:not(#headerProfileBtn){display:none!important}
+      .site-header #headerAuthActions #headerProfileBtn{display:inline-flex!important;max-width:130px;min-height:38px!important;padding:0 10px!important;font-size:.78rem!important;white-space:nowrap!important}
+      .site-header .mobile-toggle{display:flex!important;flex:0 0 40px!important;width:40px!important;height:40px!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;gap:5px!important;padding:0!important;border:1px solid #e2e8f0!important;border-radius:9px!important;background:#fff!important;color:#181818!important;cursor:pointer!important}
+      .site-header .mobile-toggle span{display:block!important;width:18px!important;height:2px!important;border-radius:2px!important;background:#181818!important}
+      body.mobile-menu-open{overflow:hidden}
+    }
+    @media(max-width:380px){
+      .site-header .brand-mark{width:28px!important}
+      .site-header .brand-name{font-size:1rem!important}
+      .site-header .brand-sub{font-size:.36rem!important;letter-spacing:.03em!important}
+      .site-header #headerAuthActions #headerProfileBtn{max-width:112px;padding:0 7px!important;font-size:.7rem!important}
+    }
+  </style>
 </head>
 <body>
   <!-- Global Header -->
@@ -25,7 +57,6 @@
         </svg>
         <span><span class="brand-name">MrShine</span><span class="brand-sub">CAR WASH &amp; DETAILING</span></span>
       </a>
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
       <div class="nav-links" id="navLinks">
         <a href="/">Home</a>
         <a href="/services" class="active">Services</a>
@@ -33,12 +64,15 @@
         <a href="/#about">About</a>
         <a href="/#contact">Contact</a>
       </div>
-      <div class="nav-actions">
-        <a class="btn btn-outline" href="/login">Login</a>
-        <a class="btn" href="/register">Sign Up</a>
+      <div class="nav-right">
+        <div id="headerAuthActions" class="nav-actions"></div>
+        <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </nav>
   </header>
+  <div id="mobileNavBackdrop" class="mobile-nav-backdrop" hidden></div>
+  <aside id="mobileNavDrawer" class="mobile-nav-drawer" aria-hidden="true"><div class="mobile-drawer-heading"><strong>Menu</strong><button id="mobileMenuClose" type="button" aria-label="Close menu">&times;</button></div><nav class="mobile-drawer-links"><a href="/">Home</a><a href="/services">Services</a><a href="/request-service">Book Service</a><a href="/my-requests">Track Requests</a><a href="/login" id="mobileLoginLink">Login</a><a href="/register" id="mobileRegisterLink">Sign Up</a><button id="mobileLogoutBtn" type="button" hidden>Logout</button></nav></aside>
+
 
   <main>
     <!-- Page Hero -->
@@ -348,5 +382,9 @@
         .replace(/'/g, "&#039;");
     }
   </script>
+
+<script>
+(()=>{const t=document.getElementById("mobileToggle"),x=document.getElementById("mobileMenuClose"),d=document.getElementById("mobileNavDrawer"),b=document.getElementById("mobileNavBackdrop"),l=document.getElementById("mobileLogoutBtn"),login=document.getElementById("mobileLoginLink"),register=document.getElementById("mobileRegisterLink");function setOpen(open){d.classList.toggle("is-open",open);b.hidden=!open;d.setAttribute("aria-hidden",String(!open));t.setAttribute("aria-expanded",String(open));document.body.classList.toggle("mobile-menu-open",open)}function syncAuth(){const token=localStorage.getItem("mrshine_access_token")||sessionStorage.getItem("mrshine_access_token");if(token){login.hidden=true;register.hidden=true;l.hidden=false}else{login.hidden=false;register.hidden=false;l.hidden=true}}t.addEventListener("click",()=>setOpen(!d.classList.contains("is-open")));x.addEventListener("click",()=>setOpen(false));b.addEventListener("click",()=>setOpen(false));d.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>setOpen(false)));document.addEventListener("keydown",e=>{if(e.key==="Escape")setOpen(false)});l.addEventListener("click",()=>{if(window.Auth&&typeof Auth.logout==="function")Auth.logout();else{localStorage.removeItem("mrshine_access_token");localStorage.removeItem("mrshine_user");sessionStorage.removeItem("mrshine_access_token");sessionStorage.removeItem("mrshine_user");window.location.href="/login"}});syncAuth();})();
+</script>
 </body>
 </html>
