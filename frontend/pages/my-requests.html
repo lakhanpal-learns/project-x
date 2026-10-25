@@ -371,7 +371,73 @@
       border-radius: 6px;
       display: inline-block;
     }
-</style>
+
+    
+    /* Responsive mobile navigation */
+    @media (max-width: 768px) {
+      .container { width: calc(100% - 28px); }
+      .nav {
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto;
+        align-items: center;
+        column-gap: 10px;
+        row-gap: 14px;
+        padding: 13px 0 12px;
+      }
+      .brand {
+        grid-column: 1;
+        grid-row: 1;
+        min-width: 0;
+        gap: 7px;
+      }
+      .brand-mark { width: 34px; height: 25px; flex-shrink: 0; }
+      .brand-name { font-size: 1.1rem; }
+      .brand-sub { font-size: .41rem; letter-spacing: .07em; }
+      #headerAuthActions {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        gap: 6px !important;
+        min-width: 0;
+      }
+      #headerAuthActions .btn,
+      #headerAuthActions a,
+      #headerAuthActions button {
+        min-height: 35px !important;
+        padding: 0 9px !important;
+        font-size: .72rem !important;
+        white-space: nowrap;
+      }
+      .nav-links {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: clamp(.72rem, 2.8vw, .84rem);
+        white-space: nowrap;
+      }
+    }
+    @media (max-width: 380px) {
+      .container { width: calc(100% - 20px); }
+      .nav { column-gap: 6px; row-gap: 11px; }
+      .brand { gap: 5px; }
+      .brand-mark { width: 28px; }
+      .brand-name { font-size: 1rem; }
+      .brand-sub { font-size: .37rem; letter-spacing: .04em; }
+      #headerAuthActions { gap: 4px !important; }
+      #headerAuthActions .btn,
+      #headerAuthActions a,
+      #headerAuthActions button {
+        padding: 0 7px !important;
+        font-size: .67rem !important;
+      }
+      .nav-links { gap: 5px; font-size: .69rem; }
+    }
+
+  </style>
 </head>
 <body>
   <header class="header">
