@@ -567,6 +567,23 @@
     let currentUser = null;
 
     document.addEventListener("DOMContentLoaded", async () => {
+      // Booking must originate from a service selected in the Services menu.
+      const entryParams = new URLSearchParams(window.location.search);
+      const requestedServiceId = entryParams.get("service_id");
+      const selectedIntentId = sessionStorage.getItem("mrshine_selected_service_id");
+      if (!requestedServiceId || !selectedIntentId || String(requestedServiceId) !== String(selectedIntentId)) {
+        window.location.replace("/services");
+        return;
+      }
+
+      // Require sign-in before opening the booking form; keep the selected service through login.
+      currentUser = await window.auth.getCurrentUser();
+      if (!currentUser) {
+        const next = window.location.pathname + window.location.search;
+        window.location.replace("/login?next=" + encodeURIComponent(next));
+        return;
+      }
+
       // 1. Min date for booking = today
       const todayStr = new Date().toISOString().split("T")[0];
       const dateInput = document.getElementById("preferredDate");
@@ -575,27 +592,24 @@
         dateInput.value = todayStr;
       }
 
-      // 2. Auth state check
-      currentUser = await window.auth.getCurrentUser();
+      // 2. Authenticated header and prefilled feedback
       const authBanner = document.getElementById("authPromptBanner");
-      const authNav = document.getElementById("headerAuthNav");
-      if (!currentUser && authBanner) {
-        authBanner.style.display = "flex";
-      } else if (currentUser) {
-        if (authNav) {
-          authNav.innerHTML = `
-            <a href="/my-requests" class="btn btn-outline" style="font-size:0.82rem;padding:6px 14px;">My Tracker</a>
-            <button onclick="window.auth.logout()" class="btn btn-outline" style="font-size:0.82rem;padding:6px 12px;">Sign Out</button>
-          `;
-        }
-        // Pre-fill feedback
-        const fbName = document.getElementById("fbName");
-        const fbEmail = document.getElementById("fbEmail");
-        const fbPhone = document.getElementById("fbPhone");
-        if (fbName && !fbName.value) fbName.value = currentUser.name || "";
-        if (fbEmail && !fbEmail.value) fbEmail.value = currentUser.email || "";
-        if (fbPhone && !fbPhone.value) fbPhone.value = currentUser.phone || "";
+      if (authBanner) authBanner.style.display = "none";
+      const authNav = document.getElementById("headerAuthActions");
+      if (authNav) {
+        authNav.innerHTML = `
+          <button id="headerProfileBtn" class="btn btn-outline" style="font-size:0.82rem;padding:6px 12px;display:inline-flex;align-items:center;gap:6px;">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;"></span>
+            ${escapeHtml((currentUser.name || "Account").split(" ")[0])}
+          </button>
+        `;
       }
+      const fbName = document.getElementById("fbName");
+      const fbEmail = document.getElementById("fbEmail");
+      const fbPhone = document.getElementById("fbPhone");
+      if (fbName && !fbName.value) fbName.value = currentUser.name || "";
+      if (fbEmail && !fbEmail.value) fbEmail.value = currentUser.email || "";
+      if (fbPhone && !fbPhone.value) fbPhone.value = currentUser.phone || "";
 
       // 3. Tab switching
       initTabs();
@@ -650,26 +664,27 @@
 
       try {
         const services = await window.api.get("/services");
-        servicesCache = services || [];
+        if (!Array.isArray(services)) throw new Error("Unexpected services response.");
+        servicesCache = services;
       } catch (err) {
-        servicesCache = [
-          { id: 1, name: "Exterior Car Wash", price: 25.00, duration_minutes: 30, description: "Foam cannon soak, two-bucket gentle hand wash, spot-free rinse, wheel cleaning & tire dressing." },
-          { id: 2, name: "Interior Deep Clean", price: 45.00, duration_minutes: 45, description: "Complete vacuuming, steam disinfection, interior windows, dash & console detailing." },
-          { id: 3, name: "Complete Wash & Interior", price: 65.00, duration_minutes: 75, description: "Our most popular combo: comprehensive exterior hand wash + complete interior detailing." },
-          { id: 4, name: "Showroom Detailing & Wax", price: 110.00, duration_minutes: 120, description: "Clay bar treatment, synthetic sealant polish, leather conditioning & engine bay wipe-down." }
-        ];
+        const status = document.getElementById("servicesShimmer");
+        if (status) status.textContent = "Unable to load available services. Please return to the Services menu and try again.";
+        console.error("Failed to load services for booking:", err);
+        return;
       }
 
       if (shimmer) shimmer.style.display = "none";
       if (container) container.style.display = "grid";
 
-      // Pre-select service if passed in URL
-      if (preselectedId) {
-        const numId = parseInt(preselectedId, 10);
-        if (servicesCache.some(s => s.id === numId)) {
-          selectedServiceIds.add(numId);
-        }
+      // Only allow a service that still exists in the admin-managed catalogue.
+      const numId = Number(preselectedId);
+      if (!servicesCache.some(s => String(s.id) === String(preselectedId))) {
+        sessionStorage.removeItem("mrshine_selected_service_id");
+        window.location.replace("/services");
+        return;
       }
+      selectedServiceIds.clear();
+      selectedServiceIds.add(numId);
 
       renderServicesCards();
       updateSummary();
@@ -699,7 +714,7 @@
             </div>
             <div class="svc-bottom">
               <div class="svc-dur">&#x23F1; ${s.duration_minutes} mins</div>
-              <div class="svc-price">$${parseFloat(s.price).toFixed(2)}</div>
+              <div class="svc-price">£${parseFloat(s.price).toFixed(2)}</div>
             </div>
           </div>
         `;
