@@ -957,22 +957,9 @@
         try {
           const result = await window.api.post("/requests", payload);
 
-          window.showAlert(
-            bookingAlert,
-            `Booking confirmed! Reference #${result.id} for ${result.service_name || "service"}. Our detailing team has reserved your bay.`,
-            "success"
-          );
-          if (window.showToast) window.showToast("Service request confirmed!", "success");
-
-          bookingForm.reset();
-          selectedServiceIds.clear();
-          isCustomSelected = false;
-          renderServicesCards();
-          updateSummary();
-
-          window.setTimeout(() => {
-            window.location.href = "/my-requests";
-          }, 1500);
+          // The backend has accepted the request. Go straight to Track Requests;
+          // don't reset the form and briefly show an empty booking page first.
+          window.location.replace("/my-requests");
 
         } catch (err) {
           window.showAlert(
@@ -983,7 +970,7 @@
           if (window.showToast) window.showToast(err.message || "Booking failed.", "error");
         } finally {
           submitBookingBtn.disabled = false;
-          submitBookingBtn.innerHTML = "Confirm Multi-Service Booking &rarr;";
+          submitBookingBtn.innerHTML = "Confirm Booking &rarr;";
         }
       });
 
