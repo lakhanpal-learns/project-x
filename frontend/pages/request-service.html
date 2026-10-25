@@ -705,9 +705,7 @@
       const visibleServices = hasSelectedService
         ? servicesCache.filter(s => selectedServiceIds.has(s.id))
         : servicesCache;
-      let html = hasSelectedService
-        ? '<div class="selected-service-toolbar"><span>Selected service</span><button type="button" onclick="clearServiceSelection()">Change service</button></div>'
-        : '<div class="service-selection-hint">Choose a service below. After selection, only that service will remain visible.</div>';
+      let html = hasSelectedService ? "" : '<div class="service-selection-hint">Choose a service below. After selection, only that service will remain visible.</div>';
       html += visibleServices.map(s => {
         const isChecked = selectedServiceIds.has(s.id);
         return `
@@ -727,41 +725,14 @@
         `;
       }).join("");
 
-      // Add Custom Service card
-      html += `
-        <div class="custom-service-card ${isCustomSelected ? 'active' : ''}" id="customCard">
-          <div class="svc-check-row">
-            <input type="checkbox" id="customCheck" class="svc-checkbox" ${isCustomSelected ? 'checked' : ''} onclick="toggleCustomService(this.checked)" />
-            <div class="svc-info">
-              <div class="svc-name">&#10024; Custom Treatment / Specialized Request</div>
-              <div class="svc-desc">Need headlight restoration, ceramic coating, leather recoloring, or custom care?</div>
-            </div>
-          </div>
-          <div id="customInputWrap" style="display: ${isCustomSelected ? 'block' : 'none'}; margin-top: 12px;">
-            <input
-              id="customServiceText"
-              type="text"
-              class="input-control"
-              placeholder="e.g. Paint Correction + Scratch Buffing + Engine Bay Clean"
-              oninput="updateSummary()"
-            />
-            <div class="hint" style="margin-top: 4px; font-size: 0.74rem; color: #64748b;">
-              Our master detailer will inspect and provide an itemized quote upon arrival.
-            </div>
-          </div>
-        </div>
-      `;
-
       container.innerHTML = html;
     }
 
     function toggleService(id) {
-      if (selectedServiceIds.has(id)) {
-        selectedServiceIds.clear();
-      } else {
-        selectedServiceIds.clear();
-        selectedServiceIds.add(id);
-      }
+      // Use Back to Services to change the selected service.
+      if (selectedServiceIds.has(id)) return;
+      selectedServiceIds.clear();
+      selectedServiceIds.add(id);
       renderServicesCards();
       updateSummary();
     }
