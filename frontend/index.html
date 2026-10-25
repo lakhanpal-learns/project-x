@@ -451,6 +451,302 @@
       gap: 24px;
     }
     .footer-links a:hover { color: #0f172a; }
+  
+    
+    /* Mobile navigation improvements */
+    @media (max-width: 768px) {
+      .nav {
+        height: auto;
+        min-height: 74px;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 0;
+      }
+
+      .brand {
+        gap: 8px;
+        min-width: 0;
+      }
+
+      .brand-mark {
+        width: 36px;
+        flex-shrink: 0;
+      }
+
+      .brand-name {
+        font-size: 1.15rem;
+      }
+
+      .brand-sub {
+        font-size: 0.45rem;
+        letter-spacing: 0.08em;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px 16px;
+        font-size: 0.8rem;
+      }
+
+      .nav-actions {
+        gap: 6px;
+      }
+
+      .nav-actions .btn {
+        height: 38px;
+        padding: 0 10px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+      }
+
+      .hero {
+        padding: 36px 0;
+      }
+
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+      }
+
+      .hero-image img {
+        height: clamp(190px, 55vw, 300px);
+      }
+
+      .hero h1 {
+        font-size: clamp(1.9rem, 7vw, 2.5rem);
+        line-height: 1.12;
+        margin-bottom: 14px;
+        overflow-wrap: break-word;
+      }
+
+      .hero p {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+      }
+
+      .hero-badge {
+        max-width: 100%;
+        white-space: normal;
+        font-size: 0.7rem;
+        padding: 5px 10px;
+      }
+
+      .hero-actions {
+        gap: 10px;
+      }
+
+      .hero-actions .btn {
+        max-width: 100%;
+        white-space: normal;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .container {
+        width: calc(100% - 24px);
+      }
+
+      .nav {
+        justify-content: center;
+      }
+
+      .brand {
+        margin-right: auto;
+      }
+
+      .nav-links {
+        column-gap: 12px;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Reduce spacing and typography on phones */
+    @media (max-width: 600px) {
+      .stats-banner {
+        padding: 22px 0;
+      }
+
+      .stats-banner-grid {
+        gap: 20px 12px;
+      }
+
+      .stat-metric {
+        font-size: 1.65rem;
+      }
+
+      .stat-text {
+        font-size: 0.75rem;
+      }
+
+      .services-section,
+      .flow-section,
+      .gallery-section,
+      .cta-section {
+        padding: 44px 0;
+      }
+
+      .section-header {
+        margin-bottom: 28px;
+      }
+
+      .section-title {
+        font-size: 1.65rem;
+        line-height: 1.2;
+      }
+
+      .section-desc {
+        font-size: 0.88rem;
+      }
+
+      .cta-box h2 {
+        font-size: 1.8rem;
+        line-height: 1.2;
+      }
+
+      .cta-box p {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Narrow phone gallery and footer */
+    @media (max-width: 480px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .gallery-img {
+        height: 220px;
+      }
+
+      .footer-grid {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .footer-links {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 12px 18px;
+      }
+    }
+
+  
+    
+    /* Final mobile header layout fix */
+    @media (max-width: 768px) {
+      .nav {
+        height: auto;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto;
+        align-items: center;
+        column-gap: 10px;
+        row-gap: 14px;
+        padding: 14px 0 12px;
+      }
+      .brand {
+        grid-column: 1;
+        grid-row: 1;
+        min-width: 0;
+        gap: 8px;
+      }
+      .brand-mark { width: 36px; height: 26px; flex-shrink: 0; }
+      .brand-name { font-size: 1.15rem; }
+      .brand-sub { font-size: 0.43rem; letter-spacing: 0.08em; }
+      .nav-actions {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        gap: 6px;
+      }
+      .nav-actions .btn {
+        height: 36px;
+        padding: 0 11px;
+        font-size: 0.76rem;
+        white-space: nowrap;
+      }
+      .nav-links {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        white-space: nowrap;
+        font-size: clamp(0.68rem, 2.7vw, 0.82rem);
+      }
+    }
+    @media (max-width: 380px) {
+      .container { width: calc(100% - 24px); }
+      .nav { column-gap: 6px; row-gap: 12px; }
+      .brand { gap: 6px; }
+      .brand-mark { width: 30px; }
+      .brand-name { font-size: 1.05rem; }
+      .nav-actions .btn { padding: 0 8px; font-size: 0.7rem; }
+      .nav-links { gap: 5px; font-size: 0.66rem; }
+    }
+
+  
+    /* Responsive, backend-driven services carousel */
+    .services-carousel-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 16px}
+    .services-count{margin:0;color:var(--text-muted);font-size:.88rem}
+    .services-carousel-controls{display:flex;gap:8px}
+    .carousel-arrow{width:42px;height:42px;border:1px solid var(--border);border-radius:50%;background:#fff;color:#111827;font-size:1.35rem;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+    .carousel-arrow:hover:not(:disabled){background:#111827;color:#fff;border-color:#111827}
+    .carousel-arrow:disabled{opacity:.35;cursor:not-allowed}
+    .services-carousel-viewport{overflow:hidden;width:100%;touch-action:pan-y}
+    .services-carousel-track{display:flex;gap:20px;transition:transform .35s ease;will-change:transform}
+    .services-carousel-track .service-card{flex:0 0 calc((100% - 60px)/4);min-width:0;height:auto}
+    .services-carousel-track .service-card img{height:160px}
+    .services-carousel-track .service-body{padding:18px}
+    .services-carousel-track .service-name{overflow-wrap:anywhere;min-height:2.5em}
+    .services-carousel-track .service-desc{flex:1}
+    .services-carousel-track .service-price{display:block;font-size:1.1rem;font-weight:800;color:#111827}
+    .services-carousel-track .service-duration{display:block;margin-top:4px}
+    .services-carousel-track .service-footer{gap:10px;align-items:flex-end}
+    .services-carousel-track .service-footer .btn{white-space:nowrap}
+    .services-carousel-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:24px}
+    .services-carousel-dots{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+    .services-carousel-dots button{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:#cbd5e1;cursor:pointer}
+    .services-carousel-dots button[aria-current="true"]{background:#111827;width:22px;border-radius:8px}
+    .services-view-all{min-height:42px;gap:8px}
+    .services-loading,.services-load-error{padding:24px;border:1px solid var(--border);border-radius:12px;color:var(--text-muted);background:#fff}
+    .services-load-error{margin-top:14px}
+    @media(max-width:1100px){.services-carousel-track .service-card{flex-basis:calc((100% - 40px)/3)}}
+    @media(max-width:760px){
+      .services-section{padding:48px 0}
+      .services-carousel-track{gap:14px}
+      .services-carousel-track .service-card{flex:0 0 calc((100% - 14px)/2)}
+      .services-carousel-track .service-card img{height:140px}
+      .services-carousel-track .service-body{padding:14px}
+      .services-carousel-track .service-name{font-size:1rem}
+      .services-carousel-track .service-desc{font-size:.84rem}
+      .services-carousel-track .service-footer{flex-wrap:wrap;align-items:flex-start}
+      .services-carousel-track .service-footer .btn{width:100%;justify-content:center}
+    }
+    @media(max-width:520px){
+      .services-section{padding:42px 0}
+      .services-carousel-toolbar{margin-bottom:12px}
+      .carousel-arrow{width:38px;height:38px}
+      .services-carousel-track{gap:12px}
+      .services-carousel-track .service-card{flex:0 0 84%;border-radius:14px}
+      .services-carousel-track .service-card img{height:170px}
+      .services-carousel-track .service-body{padding:16px}
+      .services-carousel-track .service-name{font-size:1.05rem;min-height:0}
+      .services-carousel-track .service-desc{font-size:.9rem}
+      .services-carousel-track .service-footer{flex-wrap:nowrap;align-items:flex-end}
+      .services-carousel-track .service-footer .btn{width:auto}
+      .services-carousel-bottom{align-items:flex-start;flex-direction:column}
+      .services-view-all{width:100%;justify-content:center}
+    }
+    @media(prefers-reduced-motion:reduce){.services-carousel-track{transition:none}}
+
   </style>
 </head>
 <body>
@@ -479,7 +775,7 @@
 
       <div id="headerAuthActions" class="nav-actions">
         <a href="/login" class="btn btn-outline">Sign In</a>
-        <a href="/request-service" class="btn btn-primary">Book Wash</a>
+        <a href="/login" class="btn btn-primary">Book Wash</a>
       </div>
     </div>
   </header>
@@ -496,7 +792,7 @@
           Experience handcrafted exterior washing, interior sanitation, paint correction, and ceramic protection. Reserve your slot online with real-time bay tracking.
         </p>
         <div class="hero-actions">
-          <a href="/request-service" class="btn btn-accent" style="height:48px;padding:0 24px;font-size:0.92rem;">
+          <a href="/login" class="btn btn-accent" style="height:48px;padding:0 24px;font-size:0.92rem;">
             Book an Appointment &rarr;
           </a>
           <a href="#services" class="btn btn-outline" style="height:48px;padding:0 20px;">
@@ -533,80 +829,31 @@
     </div>
   </section>
 
-  <!-- Service Treatments Section -->
+  <!-- Admin-managed Service Carousel -->
   <section class="services-section" id="services">
     <div class="container">
       <div class="section-header">
         <span class="section-tag">Care Packages</span>
-        <h2 class="section-title">Designed for Every Vehicle</h2>
-        <p class="section-desc">Choose from our specialized wash and detailing packages or customize your treatment.</p>
+        <h2 class="section-title">Services for Every Vehicle</h2>
+        <p class="section-desc">Explore our car wash and detailing services. All prices include VAT.</p>
       </div>
-
-      <div class="services-grid">
-        <!-- Package 1 -->
-        <div class="service-card">
-          <img src="/assets/images/exterior-wash.jpg" alt="Exterior Car Wash" />
-          <div class="service-body">
-            <h3 class="service-name">Exterior Car Wash</h3>
-            <p class="service-desc">pH-neutral hand wash, wheel de-ironing, tire gloss, and spot-free microfiber air dry.</p>
-            <div class="service-footer">
-              <div>
-                <span class="service-price">$25.00</span>
-                <span class="service-duration">30 minutes</span>
-              </div>
-              <a href="/request-service?service_id=1" class="btn btn-primary" style="height:36px;padding:0 14px;font-size:0.8rem;">Book</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Package 2 -->
-        <div class="service-card">
-          <img src="/assets/images/interior-cleaning.jpg" alt="Interior Deep Cleaning" />
-          <div class="service-body">
-            <h3 class="service-name">Interior Cleaning</h3>
-            <p class="service-desc">Complete vacuum, dashboard conditioning, glass purification, and leather disinfection.</p>
-            <div class="service-footer">
-              <div>
-                <span class="service-price">$45.00</span>
-                <span class="service-duration">45 minutes</span>
-              </div>
-              <a href="/request-service?service_id=2" class="btn btn-primary" style="height:36px;padding:0 14px;font-size:0.8rem;">Book</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Package 3 -->
-        <div class="service-card">
-          <img src="/assets/images/complete-cleaning.jpg" alt="Complete Exterior & Interior Care" />
-          <div class="service-body">
-            <h3 class="service-name">Complete Cleaning</h3>
-            <p class="service-desc">Our most popular package: Full exterior decontamination combined with interior steam sanitization.</p>
-            <div class="service-footer">
-              <div>
-                <span class="service-price">$65.00</span>
-                <span class="service-duration">75 minutes</span>
-              </div>
-              <a href="/request-service?service_id=3" class="btn btn-primary" style="height:36px;padding:0 14px;font-size:0.8rem;">Book</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Package 4 -->
-        <div class="service-card">
-          <img src="/assets/images/premium-detailing.jpg" alt="Premium Showroom Detailing" />
-          <div class="service-body">
-            <h3 class="service-name">Premium Detailing</h3>
-            <p class="service-desc">Multi-stage machine paint polish, ceramic sealant, engine bay degrease, and fabric protection.</p>
-            <div class="service-footer">
-              <div>
-                <span class="service-price">$110.00</span>
-                <span class="service-duration">120 minutes</span>
-              </div>
-              <a href="/request-service?service_id=4" class="btn btn-primary" style="height:36px;padding:0 14px;font-size:0.8rem;">Book</a>
-            </div>
-          </div>
+      <div class="services-carousel-toolbar">
+        <p id="homepageServicesCount" class="services-count" aria-live="polite">Loading services…</p>
+        <div class="services-carousel-controls">
+          <button type="button" id="servicesPrev" class="carousel-arrow" aria-label="Previous services" disabled>←</button>
+          <button type="button" id="servicesNext" class="carousel-arrow" aria-label="Next services" disabled>→</button>
         </div>
       </div>
+      <div id="homepageServicesViewport" class="services-carousel-viewport">
+        <div id="homepageServicesTrack" class="services-carousel-track">
+          <div class="services-loading">Loading available services…</div>
+        </div>
+      </div>
+      <div class="services-carousel-bottom">
+        <div id="homepageServicesDots" class="services-carousel-dots" aria-label="Service carousel pages"></div>
+        <a href="/services" class="btn btn-outline services-view-all">View All Services <span aria-hidden="true">→</span></a>
+      </div>
+      <p id="homepageServicesError" class="services-load-error" role="status" hidden></p>
     </div>
   </section>
 
@@ -678,7 +925,7 @@
     <div class="container cta-box">
       <h2>Give Your Car The Shine It Deserves</h2>
       <p>Reserve your appointment now in under 60 seconds with instant confirmation.</p>
-      <a href="/request-service" class="btn btn-accent" style="height:50px;padding:0 28px;font-size:0.95rem;">
+      <a href="/login" class="btn btn-accent" style="height:50px;padding:0 28px;font-size:0.95rem;">
         Book Service Appointment &rarr;
       </a>
     </div>
@@ -692,7 +939,7 @@
       </div>
       <div class="footer-links">
         <a href="#services">Services</a>
-        <a href="/request-service">Book Now</a>
+        <a href="/login">Book Now</a>
         <a href="/my-requests">Live Tracker</a>
         <a href="/admin">Admin Hub</a>
       </div>
@@ -703,6 +950,124 @@
   <script src="/js/auth.js"></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    (function initHomepageServicesCarousel() {
+      const track = document.getElementById("homepageServicesTrack");
+      const viewport = document.getElementById("homepageServicesViewport");
+      const prev = document.getElementById("servicesPrev");
+      const next = document.getElementById("servicesNext");
+      const count = document.getElementById("homepageServicesCount");
+      const dots = document.getElementById("homepageServicesDots");
+      const error = document.getElementById("homepageServicesError");
+      if (!track || !viewport || !prev || !next) return;
+
+      let services = [];
+      let index = 0;
+      let perView = 4;
+      let startX = 0;
+      let currentX = 0;
+
+      const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, ch => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[ch]));
+
+      function getPerView() {
+        if (window.matchMedia("(max-width: 520px)").matches) return 1;
+        if (window.matchMedia("(max-width: 760px)").matches) return 2;
+        if (window.matchMedia("(max-width: 1100px)").matches) return 3;
+        return 4;
+      }
+
+      function renderCards() {
+        if (!services.length) {
+          track.innerHTML = '<div class="services-loading">No services are currently available. Please check back soon.</div>';
+          count.textContent = "0 services";
+          prev.disabled = next.disabled = true;
+          dots.innerHTML = "";
+          return;
+        }
+        track.innerHTML = services.map(service => {
+          const price = Number(service.price);
+          const priceText = Number.isFinite(price) ? "£" + price.toFixed(2).replace(/\\.00$/, "") : "Price on request";
+          const name = escapeHtml(service.name);
+          const description = escapeHtml(service.description || "Professional car wash and detailing care.");
+          const duration = Number(service.duration_minutes) > 0 ? Number(service.duration_minutes) + " mins" : "Duration varies";
+          const image = /detail|seat|headlight|restoration|polish/i.test(service.name) ? "/assets/images/premium-detailing.jpg" :
+            (/interior/i.test(service.name) ? "/assets/images/interior-cleaning.jpg" : "/assets/images/exterior-wash.jpg");
+          return `<article class="service-card">
+            <img src="${image}" alt="${name}" loading="lazy">
+            <div class="service-body">
+              <h3 class="service-name">${name}</h3>
+              <p class="service-desc">${description}</p>
+              <div class="service-footer">
+                <div><span class="service-price">${priceText}</span><span class="service-duration">${duration}</span></div>
+                <a href="/services" class="btn btn-primary" style="height:36px;padding:0 14px;font-size:.8rem;">Book</a>
+              </div>
+            </div>
+          </article>`;
+        }).join("");
+        renderControls();
+      }
+
+      function renderControls() {
+        perView = getPerView();
+        const maxIndex = Math.max(0, services.length - perView);
+        index = Math.min(index, maxIndex);
+        const gap = parseFloat(getComputedStyle(track).gap) || 0;
+        const firstCard = track.querySelector(".service-card");
+        const cardWidth = firstCard ? firstCard.getBoundingClientRect().width : 0;
+        track.style.transform = `translateX(-${index * (cardWidth + gap)}px)`;
+        prev.disabled = index <= 0;
+        next.disabled = index >= maxIndex;
+        count.textContent = services.length ? `${Math.min(index + 1, services.length)}–${Math.min(index + perView, services.length)} of ${services.length} services` : "0 services";
+        const pageCount = Math.max(1, Math.ceil(services.length / perView));
+        const activePage = Math.floor(index / perView);
+        dots.innerHTML = Array.from({length:pageCount},(_,i)=>`<button type="button" aria-label="Show service group ${i+1}" aria-current="${i===activePage}" data-page="${i}"></button>`).join("");
+      }
+
+      prev.addEventListener("click", () => { index = Math.max(0, index - perView); renderControls(); });
+      next.addEventListener("click", () => { index = Math.min(Math.max(0, services.length - perView), index + perView); renderControls(); });
+      dots.addEventListener("click", event => {
+        const button = event.target.closest("button[data-page]");
+        if (!button) return;
+        index = Math.min(Number(button.dataset.page) * perView, Math.max(0, services.length - perView));
+        renderControls();
+      });
+      viewport.addEventListener("touchstart", event => { startX = event.touches[0].clientX; currentX = startX; }, {passive:true});
+      viewport.addEventListener("touchmove", event => { currentX = event.touches[0].clientX; }, {passive:true});
+      viewport.addEventListener("touchend", () => {
+        const delta = currentX - startX;
+        if (Math.abs(delta) > 45) {
+          index = delta < 0 ? Math.min(Math.max(0, services.length - perView), index + 1) : Math.max(0, index - 1);
+          renderControls();
+        }
+      }, {passive:true});
+      window.addEventListener("resize", renderControls);
+
+      (async function loadServices() {
+        try {
+          if (!window.api || typeof window.api.get !== "function") throw new Error("API client unavailable");
+          const response = await window.api.get("/services");
+          if (!Array.isArray(response)) throw new Error("Unexpected services response");
+          services = response.filter(service => service && service.id != null && service.name);
+          if (!services.length) {
+            track.innerHTML = '<div class="services-loading">No services are currently available.</div>';
+            count.textContent = "0 services";
+            prev.disabled = next.disabled = true;
+            return;
+          }
+          error.hidden = true;
+          renderCards();
+        } catch (err) {
+          track.innerHTML = '<div class="services-loading">We could not load services right now. Please try again later.</div>';
+          count.textContent = "Services unavailable";
+          error.hidden = false;
+          error.textContent = "Service prices are managed by MrShine. Refresh the page to try loading the latest list.";
+          prev.disabled = next.disabled = true;
+          console.error("Homepage services could not be loaded:", err);
+        }
+      })();
+    })();
   </script>
 </body>
 </html>

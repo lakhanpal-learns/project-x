@@ -12,33 +12,109 @@
   <style>* { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important; }</style>
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/responsive.css" />
+
+  <style id="services-mobile-nav-fix">
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .mobile-nav-backdrop{position:fixed;inset:0;z-index:200;background:rgba(15,23,42,.42)}
+    .mobile-nav-drawer{position:fixed;top:0;right:0;bottom:0;z-index:201;width:min(320px,86vw);padding:22px 18px;background:#fff;box-shadow:-12px 0 40px rgba(15,23,42,.16);transform:translateX(105%);visibility:hidden;transition:transform .25s ease,visibility .25s ease}
+    .mobile-nav-drawer.is-open{transform:translateX(0);visibility:visible}
+    .mobile-drawer-heading{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid #e2e8f0;font-size:1.15rem}
+    .mobile-drawer-heading button{display:inline-grid;place-items:center;width:38px;height:38px;border:1px solid #e2e8f0;border-radius:9px;background:#fff;color:#181818;font-size:1.6rem;cursor:pointer}
+    .mobile-drawer-links{display:flex;flex-direction:column;gap:6px;padding-top:16px}
+    .mobile-drawer-links a,.mobile-drawer-links button{display:flex;align-items:center;width:100%;min-height:46px;padding:0 12px;border:0;border-radius:9px;background:#fff;color:#181818;font-size:.94rem;font-weight:600;text-align:left;cursor:pointer;text-decoration:none}
+    .mobile-drawer-links a:hover,.mobile-drawer-links button:hover{background:#f1f5f9}
+    .mobile-drawer-links button{color:#b42318}
+    .mobile-toggle{display:none}
+    @media(max-width:768px){
+      .site-header .nav.container{display:flex!important;flex-wrap:nowrap!important;justify-content:space-between!important;align-items:center!important;gap:8px!important;min-height:76px!important;padding-top:12px!important;padding-bottom:12px!important}
+      .site-header .brand{flex:1 1 auto!important;min-width:0!important}
+      .site-header .nav-links{display:none!important}
+      .site-header .nav-right{display:flex!important;flex:0 0 auto!important;align-items:center!important;gap:8px!important}
+      .site-header #headerAuthActions{display:flex!important;align-items:center!important;gap:6px!important}
+      .site-header #headerAuthActions>*:not(#headerProfileBtn){display:none!important}
+      .site-header #headerAuthActions #headerProfileBtn{display:inline-flex!important;max-width:130px;min-height:38px!important;padding:0 10px!important;font-size:.78rem!important;white-space:nowrap!important}
+      .site-header .mobile-toggle{display:flex!important;flex:0 0 40px!important;width:40px!important;height:40px!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;gap:5px!important;padding:0!important;border:1px solid #e2e8f0!important;border-radius:9px!important;background:#fff!important;color:#181818!important;cursor:pointer!important}
+      .site-header .mobile-toggle span{display:block!important;width:18px!important;height:2px!important;border-radius:2px!important;background:#181818!important}
+      body.mobile-menu-open{overflow:hidden}
+    }
+    @media(max-width:380px){
+      .site-header .brand-mark{width:28px!important}
+      .site-header .brand-name{font-size:1rem!important}
+      .site-header .brand-sub{font-size:.36rem!important;letter-spacing:.03em!important}
+      .site-header #headerAuthActions #headerProfileBtn{max-width:112px;padding:0 7px!important;font-size:.7rem!important}
+    }
+  </style>
+<style>
+    /* Ensure closed mobile drawer is fully removed from view */
+    .mobile-nav-backdrop[hidden] { display: none !important; }
+    .mobile-nav-drawer:not(.is-open) { display: none !important; visibility: hidden !important; pointer-events: none !important; }
+    .mobile-nav-drawer.is-open { display: block !important; visibility: visible !important; pointer-events: auto !important; }
+</style>
+
+  <style id="mrshine-pricing-menu">
+    .mrshine-pricing-section{padding:42px 0 64px;background:#f7f7f7}
+    .mrshine-pricing-heading{max-width:720px;margin:0 auto 30px;text-align:center}
+    .mrshine-pricing-heading .eyebrow{color:#b91c1c;font-weight:800;letter-spacing:.14em;font-size:.74rem}
+    .mrshine-pricing-heading h2{margin:8px 0 10px;font-size:clamp(1.8rem,3.6vw,2.65rem);line-height:1.12;color:#171717}
+    .mrshine-pricing-note{margin:0;color:#626262;font-size:.92rem}
+    .mrshine-pricing-category{max-width:980px;margin:0 auto 24px;padding:clamp(18px,3vw,30px);background:#fff;border:1px solid #e5e5e5;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.035)}
+    .mrshine-category-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:18px;border-bottom:1px solid #e8e8e8}
+    .mrshine-category-kicker{color:#b91c1c;font-size:.68rem;letter-spacing:.13em;font-weight:800}
+    .mrshine-category-heading h3{margin:5px 0 0;color:#171717;font-size:1.55rem}
+    .mrshine-category-icon{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border-radius:12px;background:#fff1f1;color:#b91c1c;font-size:1.3rem}
+    .mrshine-availability{margin:16px 0 4px;padding:11px 13px;border-radius:9px;background:#fff7f7;color:#7f1d1d;font-size:.83rem}
+    .mrshine-availability span{margin-right:7px;color:#b91c1c;font-size:.65rem}
+    .mrshine-price-row{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:17px 0;border-bottom:1px solid #eee}
+    .mrshine-price-row:last-child{border-bottom:0;padding-bottom:0}
+    .mrshine-price-row h4{margin:0;color:#202020;font-size:.98rem;font-weight:700;line-height:1.4}
+    .mrshine-price-row p{margin:4px 0 0;color:#777;font-size:.8rem;line-height:1.45}
+    .mrshine-price-action{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:0 0 auto}
+    .mrshine-price-action strong{font-size:1.25rem;color:#171717;white-space:nowrap}
+    .mrshine-book-link{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:8px;background:#b91c1c;color:#fff;text-decoration:none;font-size:.76rem;font-weight:700;white-space:nowrap;transition:background .15s ease}
+    .mrshine-book-link:hover{background:#991b1b}
+    .mrshine-detailing-subtitle{margin:4px 0 0;color:#777;font-size:.84rem}
+    @media(min-width:900px){.mrshine-price-row{gap:24px}.mrshine-price-row h4{font-size:1rem}.mrshine-price-action{flex-direction:row;align-items:center;gap:18px}.mrshine-price-action strong{min-width:64px;text-align:right}.mrshine-book-link{min-width:140px;justify-content:center}}
+    @media(max-width:520px){.mrshine-pricing-section{padding:28px 0 42px}.mrshine-pricing-heading{margin-bottom:22px;text-align:left}.mrshine-pricing-category{padding:17px 15px;border-radius:13px;margin-bottom:17px}.mrshine-category-heading h3{font-size:1.35rem}.mrshine-price-row{align-items:flex-start;gap:8px;padding:15px 0}.mrshine-price-row h4{font-size:.88rem}.mrshine-price-row p{font-size:.75rem}.mrshine-price-action{gap:8px}.mrshine-price-action strong{font-size:1.12rem}.mrshine-book-link{padding:8px 9px;font-size:.69rem}.mrshine-availability{font-size:.78rem}}
+  </style>
+
+
+<style id="mrshine-pricing-menu-admin-managed">
+.mrshine-pricing-status{max-width:980px;margin:0 auto 22px;padding:14px 16px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;color:#525252;font-size:.9rem}
+.mrshine-pricing-status:empty{display:none}.mrshine-pricing-status.is-error{color:#991b1b;background:#fff7f7;border-color:#fecaca}
+.mrshine-price-row{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:17px 0;border-bottom:1px solid #eee}
+.mrshine-price-row:last-child{border-bottom:0;padding-bottom:0}.mrshine-price-row h4{margin:0;color:#202020;font-size:.98rem;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
+.mrshine-price-row p{margin:4px 0 0;color:#777;font-size:.8rem;line-height:1.45}.mrshine-price-action{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:0 0 auto}
+.mrshine-price-action strong{font-size:1.25rem;color:#171717;white-space:nowrap}.mrshine-book-link{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:8px;background:#b91c1c;color:#fff;text-decoration:none;font-size:.76rem;font-weight:700;white-space:nowrap}
+.mrshine-book-link:hover{background:#991b1b}.mrshine-empty{padding:20px 0;color:#666;font-size:.9rem}
+@media(min-width:900px){.mrshine-price-row{gap:24px}.mrshine-price-row h4{font-size:1rem}.mrshine-price-action{flex-direction:row;align-items:center;gap:18px}.mrshine-price-action strong{min-width:64px;text-align:right}.mrshine-book-link{min-width:140px;justify-content:center}}
+@media(max-width:520px){.mrshine-pricing-section{padding:28px 0 42px}.mrshine-pricing-heading{margin-bottom:22px;text-align:left}.mrshine-pricing-category{padding:17px 15px;border-radius:13px;margin-bottom:17px}.mrshine-category-heading h3{font-size:1.35rem}.mrshine-price-row{align-items:flex-start;gap:8px;padding:15px 0}.mrshine-price-row h4{font-size:.88rem}.mrshine-price-row p{font-size:.75rem}.mrshine-price-action{gap:8px}.mrshine-price-action strong{font-size:1.12rem}.mrshine-book-link{padding:8px 9px;font-size:.69rem}}
+</style>
 </head>
 <body>
   <!-- Global Header -->
   <header class="site-header">
     <nav class="nav container" aria-label="Main navigation">
-      <a class="brand" href="/" aria-label="MrShine home">
+      <div class="brand">
         <svg class="brand-mark" viewBox="0 0 90 42" fill="none" aria-hidden="true">
           <path d="M7 27h7l5-11c1-3 4-5 8-5h31c5 0 8 2 12 7l8 9h5c3 0 5 2 5 5v3H6v-4c0-2 0-4 1-4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
           <path d="m23 14-4 13h48L56 14M14 28h61" stroke="currentColor" stroke-width="2"/>
           <circle cx="23" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/><circle cx="67" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/>
         </svg>
         <span><span class="brand-name">MrShine</span><span class="brand-sub">CAR WASH &amp; DETAILING</span></span>
-      </a>
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
-      <div class="nav-links" id="navLinks">
-        <a href="/">Home</a>
-        <a href="/services" class="active">Services</a>
-        <a href="/request-service">Request Service</a>
-        <a href="/#about">About</a>
-        <a href="/#contact">Contact</a>
       </div>
-      <div class="nav-actions">
-        <a class="btn btn-outline" href="/login">Login</a>
-        <a class="btn" href="/register">Sign Up</a>
+      <div class="nav-links" id="navLinks">
+        <a href="/services">Choose a Service</a>
+        <a href="/my-requests">Track Requests</a>
+      </div>
+      <div class="nav-right">
+        <div id="headerAuthActions" class="nav-actions"></div>
+        <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </nav>
   </header>
+  <div id="mobileNavBackdrop" class="mobile-nav-backdrop" hidden></div>
+  <aside id="mobileNavDrawer" class="mobile-nav-drawer" aria-hidden="true"><div class="mobile-drawer-heading"><strong>Menu</strong><button id="mobileMenuClose" type="button" aria-label="Close menu">&times;</button></div><nav class="mobile-drawer-links"><a href="/services">Choose a Service</a><a href="/my-requests">Track Requests</a><button id="mobileLogoutBtn" type="button" hidden>Logout</button></nav></aside>
+
 
   <main>
     <!-- Page Hero -->
@@ -49,62 +125,27 @@
           <h1>Services &amp; Pricing</h1>
           <p>Carefully formulated treatments designed to clean, restore, and protect every surface of your vehicle.</p>
         </div>
-        <div>
-          <a href="/request-service" class="btn">
-            Custom Booking Request &rarr;
-          </a>
-        </div>
       </div>
     </section>
 
-    <!-- Services Grid Section -->
-    <section style="padding: 56px 0 64px;">
-      <div class="container">
-        <!-- In-page alert for errors or offline state -->
-        <div id="serviceAlert" class="alert-banner" role="alert"></div>
 
-        <div id="servicesContainer" class="services-catalog">
-          <!-- Loading Skeletons -->
-          <div class="card" style="height: 380px;">
-            <div class="skeleton" style="height: 180px;"></div>
-            <div style="padding: 22px;">
-              <div class="skeleton" style="height: 14px; width: 35%; margin-bottom: 12px;"></div>
-              <div class="skeleton" style="height: 24px; width: 70%; margin-bottom: 14px;"></div>
-              <div class="skeleton" style="height: 14px; width: 90%; margin-bottom: 8px;"></div>
-              <div class="skeleton" style="height: 14px; width: 60%; margin-bottom: 24px;"></div>
-              <div class="skeleton" style="height: 40px; width: 100%;"></div>
-            </div>
-          </div>
-          <div class="card" style="height: 380px;">
-            <div class="skeleton" style="height: 180px;"></div>
-            <div style="padding: 22px;">
-              <div class="skeleton" style="height: 14px; width: 35%; margin-bottom: 12px;"></div>
-              <div class="skeleton" style="height: 24px; width: 70%; margin-bottom: 14px;"></div>
-              <div class="skeleton" style="height: 14px; width: 90%; margin-bottom: 8px;"></div>
-              <div class="skeleton" style="height: 14px; width: 60%; margin-bottom: 24px;"></div>
-              <div class="skeleton" style="height: 40px; width: 100%;"></div>
-            </div>
-          </div>
-          <div class="card" style="height: 380px;">
-            <div class="skeleton" style="height: 180px;"></div>
-            <div style="padding: 22px;">
-              <div class="skeleton" style="height: 14px; width: 35%; margin-bottom: 12px;"></div>
-              <div class="skeleton" style="height: 24px; width: 70%; margin-bottom: 14px;"></div>
-              <div class="skeleton" style="height: 14px; width: 90%; margin-bottom: 8px;"></div>
-              <div class="skeleton" style="height: 14px; width: 60%; margin-bottom: 24px;"></div>
-              <div class="skeleton" style="height: 40px; width: 100%;"></div>
-            </div>
-          </div>
-          <div class="card" style="height: 380px;">
-            <div class="skeleton" style="height: 180px;"></div>
-            <div style="padding: 22px;">
-              <div class="skeleton" style="height: 14px; width: 35%; margin-bottom: 12px;"></div>
-              <div class="skeleton" style="height: 24px; width: 70%; margin-bottom: 14px;"></div>
-              <div class="skeleton" style="height: 14px; width: 90%; margin-bottom: 8px;"></div>
-              <div class="skeleton" style="height: 14px; width: 60%; margin-bottom: 24px;"></div>
-              <div class="skeleton" style="height: 40px; width: 100%;"></div>
-            </div>
-          </div>
+    <!-- Admin-managed MrShine price list -->
+    <section class="mrshine-pricing-section" aria-labelledby="pricingTitle">
+      <div class="container">
+        <div class="mrshine-pricing-heading">
+          <p class="eyebrow">MRSHINE · PRICE LIST</p>
+          <h2 id="pricingTitle">Car Wash &amp; Detailing Prices</h2>
+          <p class="mrshine-pricing-note">All prices are in pounds (£) and include VAT.</p>
+          <p class="mrshine-pricing-note">Hand-wash services are available Monday to Thursday. Detailing is by appointment.</p>
+        </div>
+        <div id="pricingMenuStatus" role="status" class="mrshine-pricing-status">Loading available services…</div>
+        <div class="mrshine-pricing-category" id="washPricingCategory" hidden>
+          <div class="mrshine-category-heading"><div><span class="mrshine-category-kicker">EVERYDAY CARE</span><h3>Car Wash</h3></div><span class="mrshine-category-icon" aria-hidden="true">✦</span></div>
+          <div class="mrshine-price-list" id="washPricingList"></div>
+        </div>
+        <div class="mrshine-pricing-category mrshine-detailing-category" id="detailPricingCategory" hidden>
+          <div class="mrshine-category-heading"><div><span class="mrshine-category-kicker">EXTRA CARE</span><h3>Car Detailing</h3><p class="mrshine-detailing-subtitle">Available upon appointment.</p></div><span class="mrshine-category-icon" aria-hidden="true">✧</span></div>
+          <div class="mrshine-price-list" id="detailPricingList"></div>
         </div>
       </div>
     </section>
@@ -172,7 +213,7 @@
         <div>
           <h4>Navigation</h4>
           <div class="footer-links">
-            <a href="/">Home</a>
+            
             <a href="/services">Services</a>
             <a href="/request-service">Book Service</a>
             <a href="/my-requests">My Requests</a>
@@ -181,10 +222,7 @@
         <div>
           <h4>Services</h4>
           <div class="footer-links">
-            <a href="/request-service?service_id=1">Exterior Car Wash</a>
-            <a href="/request-service?service_id=2">Interior Cleaning</a>
-            <a href="/request-service?service_id=3">Complete Cleaning</a>
-            <a href="/request-service?service_id=4">Premium Detailing</a>
+            <a href="/services">View available services</a>
           </div>
         </div>
         <div>
@@ -217,124 +255,55 @@
     });
 
     async function loadServices() {
-      const container = document.getElementById("servicesContainer");
-      const alertEl = document.getElementById("serviceAlert");
-
+      const status = document.getElementById("pricingMenuStatus");
+      const washList = document.getElementById("washPricingList");
+      const detailList = document.getElementById("detailPricingList");
+      const washCategory = document.getElementById("washPricingCategory");
+      const detailCategory = document.getElementById("detailPricingCategory");
       try {
         const services = await window.api.get("/services");
-
-        if (!services || services.length === 0) {
-          container.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-              <div class="empty-state-icon">&#128712;</div>
-              <h3>No Services Available</h3>
-              <p>Services are currently being updated. Please check back shortly or submit a custom inquiry.</p>
-              <a href="/request-service" class="btn btn-outline">Submit Custom Request</a>
-            </div>
-          `;
+        if (!Array.isArray(services)) throw new Error("Unexpected services response.");
+        const available = services.filter(service => service && service.id != null && service.name);
+        if (!available.length) {
+          status.textContent = "No services are currently available. Please check back later.";
           return;
         }
+        const isDetailing = service => /detail|headlight|seat|ceramic|restoration|polish/i.test(service.name);
+        const washServices = available.filter(service => !isDetailing(service));
+        const detailServices = available.filter(isDetailing);
+        const token = localStorage.getItem("mrshine_access_token") || sessionStorage.getItem("mrshine_access_token");
+        const renderRow = service => {
+          const price = Number(service.price);
+          const priceText = Number.isFinite(price) ? "£" + price.toFixed(2).replace(/\.00$/, "") : "Price on request";
+          const description = escapeHtml(service.description || "Professional car care service.");
+          const name = escapeHtml(service.name);
+          const duration = Number(service.duration_minutes) > 0 ? Number(service.duration_minutes) + " mins" : "Duration varies";
+          const href = "/request-service?service_id=" + encodeURIComponent(service.id);
+          return `<article class="mrshine-price-row"><div><h4>${name}</h4><p>${description} · ${duration}</p></div><div class="mrshine-price-action"><strong>${priceText}</strong><a href="${href}" class="mrshine-book-link" data-book-service-id="${escapeHtml(String(service.id))}" aria-label="Book ${name}">Book this service <span aria-hidden="true">→</span></a></div></article>`;
+        };
+        washList.innerHTML = washServices.map(renderRow).join("") || '<p class="mrshine-empty">No car wash services are currently available.</p>';
+        detailList.innerHTML = detailServices.map(renderRow).join("") || '<p class="mrshine-empty">No detailing services are currently available.</p>';
+        washCategory.hidden = washServices.length === 0;
+        detailCategory.hidden = detailServices.length === 0;
+        status.textContent = "";
+        status.hidden = true;
 
-        container.innerHTML = services.map(service => {
-          const priceFormatted = "$" + parseFloat(service.price).toFixed(2);
-          const durationFormatted = service.duration_minutes
-            ? (service.duration_minutes >= 60
-                ? `${Math.floor(service.duration_minutes / 60)}h ${service.duration_minutes % 60 ? (service.duration_minutes % 60) + "m" : ""}`
-                : `${service.duration_minutes} mins`)
-            : "Varies";
-
-          // Fallback image handling
-          const imageUrl = service.image_url || "/assets/images/hero-black-car.jpg";
-
-          return `
-            <article class="service-item-card" data-service-id="${service.id}">
-              <img
-                src="${imageUrl}"
-                alt="${service.name}"
-                class="service-item-img"
-                loading="lazy"
-                onerror="this.onerror=null; this.src='/assets/images/hero-black-car.jpg';"
-              />
-              <div class="service-item-body">
-                <span class="service-item-duration">&#9201; ${durationFormatted}</span>
-                <h3 class="service-item-title">${escapeHtml(service.name)}</h3>
-                <p class="service-item-desc">${escapeHtml(service.description || "Comprehensive professional automotive treatment.")}</p>
-                <div class="service-item-bottom">
-                  <div>
-                    <span style="display: block; font-size: 0.72rem; color: #777; text-transform: uppercase; font-weight: 700;">Price</span>
-                    <span class="service-item-price">${priceFormatted}</span>
-                  </div>
-                  <a
-                    href="/request-service?service_id=${service.id}"
-                    class="btn btn-sm"
-                    aria-label="Book ${escapeHtml(service.name)}"
-                  >
-                    Book Service &rarr;
-                  </a>
-                </div>
-              </div>
-            </article>
-          `;
-        }).join("");
-
-      } catch (err) {
-        window.showAlert(
-          alertEl,
-          "Unable to load latest packages from server. Showing available standard services below.",
-          "error"
-        );
-
-        // Fallback default catalog if server temporarily unreachable
-        container.innerHTML = `
-          <article class="service-item-card">
-            <img src="/assets/images/exterior-wash.jpg" alt="Exterior Car Wash" class="service-item-img" onerror="this.src='/assets/images/hero-black-car.jpg';" />
-            <div class="service-item-body">
-              <span class="service-item-duration">&#9201; 30 mins</span>
-              <h3 class="service-item-title">Exterior Car Wash</h3>
-              <p class="service-item-desc">Thorough hand wash, wheel shine, rinse, and microfiber drying for a crystal clear finish.</p>
-              <div class="service-item-bottom">
-                <span class="service-item-price">$25.00</span>
-                <a href="/request-service?service_id=1" class="btn btn-sm">Book Service &rarr;</a>
-              </div>
-            </div>
-          </article>
-          <article class="service-item-card">
-            <img src="/assets/images/interior-cleaning.jpg" alt="Interior Cleaning" class="service-item-img" onerror="this.src='/assets/images/hero-black-car.jpg';" />
-            <div class="service-item-body">
-              <span class="service-item-duration">&#9201; 45 mins</span>
-              <h3 class="service-item-title">Interior Cleaning</h3>
-              <p class="service-item-desc">Deep vacuuming, dashboard restoration, window streak cleaning, and fabric upholstery refresh.</p>
-              <div class="service-item-bottom">
-                <span class="service-item-price">$45.00</span>
-                <a href="/request-service?service_id=2" class="btn btn-sm">Book Service &rarr;</a>
-              </div>
-            </div>
-          </article>
-          <article class="service-item-card">
-            <img src="/assets/images/complete-cleaning.jpg" alt="Complete Cleaning" class="service-item-img" onerror="this.src='/assets/images/hero-black-car.jpg';" />
-            <div class="service-item-body">
-              <span class="service-item-duration">&#9201; 75 mins</span>
-              <h3 class="service-item-title">Complete Cleaning</h3>
-              <p class="service-item-desc">Full exterior wash combined with complete interior detailing for comprehensive care.</p>
-              <div class="service-item-bottom">
-                <span class="service-item-price">$65.00</span>
-                <a href="/request-service?service_id=3" class="btn btn-sm">Book Service &rarr;</a>
-              </div>
-            </div>
-          </article>
-          <article class="service-item-card">
-            <img src="/assets/images/premium-detailing.jpg" alt="Premium Detailing" class="service-item-img" onerror="this.src='/assets/images/hero-black-car.jpg';" />
-            <div class="service-item-body">
-              <span class="service-item-duration">&#9201; 120 mins</span>
-              <h3 class="service-item-title">Premium Detailing</h3>
-              <p class="service-item-desc">Paint decontamination, hand paste wax, ceramic protection spray, and leather conditioning.</p>
-              <div class="service-item-bottom">
-                <span class="service-item-price">$110.00</span>
-                <a href="/request-service?service_id=4" class="btn btn-sm">Book Service &rarr;</a>
-              </div>
-            </div>
-          </article>
-        `;
+        document.querySelectorAll("[data-book-service-id]").forEach(link => {
+          link.addEventListener("click", event => {
+            const id = String(link.dataset.bookServiceId);
+            sessionStorage.setItem("mrshine_selected_service_id", id);
+            const target = link.getAttribute("href");
+            if (!token) {
+              event.preventDefault();
+              window.location.href = "/login?next=" + encodeURIComponent(target);
+            }
+          });
+        });
+      } catch (error) {
+        status.hidden = false;
+        status.classList.add("is-error");
+        status.textContent = "We couldn't load the current service list. Please refresh or try again shortly. Services shown here are managed in the Admin Panel.";
+        console.error("Failed to load admin-managed services:", error);
       }
     }
 
@@ -348,5 +317,40 @@
         .replace(/'/g, "&#039;");
     }
   </script>
+
+<script>
+(()=>{const t=document.getElementById("mobileToggle"),x=document.getElementById("mobileMenuClose"),d=document.getElementById("mobileNavDrawer"),b=document.getElementById("mobileNavBackdrop"),l=document.getElementById("mobileLogoutBtn");function setOpen(open){d.classList.toggle("is-open",open);b.hidden=!open;d.setAttribute("aria-hidden",String(!open));t.setAttribute("aria-expanded",String(open));document.body.classList.toggle("mobile-menu-open",open)}function syncAuth(){const token=localStorage.getItem("mrshine_access_token")||sessionStorage.getItem("mrshine_access_token");l.hidden=!token;}t.addEventListener("click",()=>setOpen(!d.classList.contains("is-open")));x.addEventListener("click",()=>setOpen(false));b.addEventListener("click",()=>setOpen(false));d.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>setOpen(false)));document.addEventListener("keydown",e=>{if(e.key==="Escape")setOpen(false)});l.addEventListener("click",()=>{if(window.Auth&&typeof Auth.logout==="function")Auth.logout();else{localStorage.removeItem("mrshine_access_token");localStorage.removeItem("mrshine_user");sessionStorage.removeItem("mrshine_access_token");sessionStorage.removeItem("mrshine_user");window.location.href="/login"}});syncAuth();})();
+</script>
+
+<script>
+/* Ensure signed-in profile pill is rendered on every client page */
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const user = window.auth && typeof window.auth.getCurrentUser === "function"
+      ? await window.auth.getCurrentUser()
+      : (window.Auth && Auth.getUser ? Auth.getUser() : null);
+    const container = document.getElementById("headerAuthActions");
+    if (!user || !container || container.querySelector("#headerProfileBtn")) return;
+    container.innerHTML = `
+      <button id="headerProfileBtn" class="btn btn-outline" style="min-height:36px;padding:0 12px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px;">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;"></span>
+        ${String(user.name || "Account").split(" ")[0]}
+      </button>
+      <button id="logoutBtn" class="btn btn-outline desktop-logout-link" style="min-height:36px;padding:0 12px;font-size:0.82rem;">Logout</button>
+    `;
+    const profileBtn = document.getElementById("headerProfileBtn");
+    if (profileBtn && window.Auth && typeof Auth.openProfileModal === "function") {
+      profileBtn.addEventListener("click", () => Auth.openProfileModal());
+    }
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn && window.Auth && typeof Auth.logout === "function") {
+      logoutBtn.addEventListener("click", () => Auth.logout());
+    }
+  } catch (error) {
+    console.error("Unable to render the signed-in header profile.", error);
+  }
+});
+</script>
+
 </body>
 </html>

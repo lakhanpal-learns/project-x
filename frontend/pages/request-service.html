@@ -245,32 +245,48 @@
       }
     }
   </style>
+
+  <style id="consistent-mobile-nav">
+    .nav-right{display:flex;align-items:center;gap:10px}.mobile-nav-backdrop{position:fixed;inset:0;z-index:200;background:rgba(15,23,42,.42)}.mobile-nav-drawer{position:fixed;top:0;right:0;bottom:0;z-index:201;width:min(320px,86vw);padding:22px 18px;background:#fff;box-shadow:-12px 0 40px rgba(15,23,42,.16);transform:translateX(105%);visibility:hidden;transition:transform .25s ease,visibility .25s ease}.mobile-nav-drawer.is-open{transform:translateX(0);visibility:visible}.mobile-drawer-heading{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid #e2e8f0;font-size:1.15rem}.mobile-drawer-heading button{display:inline-grid;place-items:center;width:38px;height:38px;border:1px solid #e2e8f0;border-radius:9px;background:#fff;font-size:1.6rem;cursor:pointer}.mobile-drawer-links{display:flex;flex-direction:column;gap:6px;padding-top:16px}.mobile-drawer-links a,.mobile-drawer-links button{display:flex;align-items:center;width:100%;min-height:46px;padding:0 12px;border:0;border-radius:9px;background:#fff;color:#181818;font-size:.94rem;font-weight:600;text-align:left;text-decoration:none;cursor:pointer}.mobile-drawer-links a:hover,.mobile-drawer-links button:hover{background:#f1f5f9}.mobile-drawer-links button{color:#b42318}.mobile-toggle{display:none}
+    @media(max-width:768px){.site-header .nav.container{display:flex!important;flex-wrap:nowrap!important;justify-content:space-between!important;align-items:center!important;gap:8px!important;min-height:76px!important;padding-top:12px!important;padding-bottom:12px!important}.site-header .brand{flex:1 1 auto!important;min-width:0!important}.site-header .nav-links{display:none!important}.site-header .nav-right{display:flex!important;flex:0 0 auto!important;gap:8px!important}.site-header #headerAuthActions{display:flex!important;align-items:center!important;gap:6px!important}.site-header #headerAuthActions>*:not(#headerProfileBtn){display:none!important}.site-header #headerAuthActions #headerProfileBtn{display:inline-flex!important;max-width:130px;min-height:38px!important;padding:0 10px!important;font-size:.78rem!important;white-space:nowrap!important}.site-header .mobile-toggle{display:flex!important;flex:0 0 40px!important;width:40px!important;height:40px!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;gap:5px!important;padding:0!important;border:1px solid #e2e8f0!important;border-radius:9px!important;background:#fff!important;cursor:pointer!important}.site-header .mobile-toggle span{display:block!important;width:18px!important;height:2px!important;background:#181818!important;border-radius:2px!important}body.mobile-menu-open{overflow:hidden}}
+    @media(max-width:380px){.site-header .brand-mark{width:28px!important}.site-header .brand-name{font-size:1rem!important}.site-header .brand-sub{font-size:.36rem!important;letter-spacing:.03em!important}.site-header #headerAuthActions #headerProfileBtn{max-width:112px;padding:0 7px!important;font-size:.7rem!important}}
+  </style>
+<style>
+    /* Ensure closed mobile drawer is fully removed from view */
+    .mobile-nav-backdrop[hidden] { display: none !important; }
+    .mobile-nav-drawer:not(.is-open) { display: none !important; visibility: hidden !important; pointer-events: none !important; }
+    .mobile-nav-drawer.is-open { display: block !important; visibility: visible !important; pointer-events: auto !important; }
+</style>
+
+<style id="booking-back-link-responsive">.booking-back-to-services:hover{background:#f8fafc;border-color:#b91c1c;color:#b91c1c}@media(max-width:520px){.booking-services-heading{gap:12px!important}.booking-back-to-services{min-height:38px;font-size:.8rem!important}}</style>
+
+<style id="single-service-selection-fix">.selected-service-toolbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 0 8px;color:#334155;font-size:.9rem;font-weight:700}.selected-service-toolbar button{border:1px solid #d7dee8;border-radius:9px;background:#fff;padding:9px 13px;color:#172033;font-weight:700;cursor:pointer}.selected-service-toolbar button:hover{border-color:#b91c1c;color:#b91c1c}.service-selection-hint{grid-column:1/-1;color:#64748b;font-size:.85rem;padding-bottom:4px}@media(max-width:520px){.selected-service-toolbar button{padding:8px 10px;font-size:.8rem}}</style>
 </head>
 <body>
   <!-- Header -->
   <header class="site-header">
     <nav class="nav container" aria-label="Main navigation">
-      <a class="brand" href="/" aria-label="MrShine home">
+      <div class="brand">
         <svg class="brand-mark" viewBox="0 0 90 42" fill="none" aria-hidden="true">
           <path d="M7 27h7l5-11c1-3 4-5 8-5h31c5 0 8 2 12 7l8 9h5c3 0 5 2 5 5v3H6v-4c0-2 0-4 1-4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
           <path d="m23 14-4 13h48L56 14M14 28h61" stroke="currentColor" stroke-width="2"/>
           <circle cx="23" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/><circle cx="67" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/>
         </svg>
         <span><span class="brand-name">MrShine</span><span class="brand-sub">CAR WASH &amp; DETAILING</span></span>
-      </a>
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
-      <div class="nav-links" id="navLinks">
-        <a href="/">Home</a>
-        <a href="/services">Services</a>
-        <a href="/request-service" class="active">Book Service</a>
-        <a href="/my-requests">My Requests</a>
       </div>
-      <div class="nav-actions" id="headerAuthNav">
-        <a class="btn btn-outline" href="/login">Login</a>
-        <a class="btn" href="/register">Sign Up</a>
+      <div class="nav-links" id="navLinks">
+        <a href="/services">Choose a Service</a>
+        <a href="/my-requests">Track Requests</a>
+      </div>
+      <div class="nav-right">
+        <div class="nav-actions" id="headerAuthActions"></div>
+        <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </nav>
   </header>
+  <div id="mobileNavBackdrop" class="mobile-nav-backdrop" hidden></div>
+  <aside id="mobileNavDrawer" class="mobile-nav-drawer" aria-hidden="true"><div class="mobile-drawer-heading"><strong>Menu</strong><button id="mobileMenuClose" type="button" aria-label="Close menu">&times;</button></div><nav class="mobile-drawer-links"><a href="/services">Choose a Service</a><a href="/my-requests">Track Requests</a><button id="mobileLogoutBtn" type="button">Logout</button></nav></aside>
+
 
   <main style="padding-bottom: 72px;">
     <!-- Page Hero -->
@@ -310,13 +326,16 @@
         <div class="booking-grid">
           <!-- Main Form Card -->
           <div class="card">
-            <div class="card-header">
+            <div class="card-header booking-services-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;">
               <div>
                 <h2 style="font-size: 1.3rem; margin: 0; font-weight: 700;">1. Choose Services &amp; Packages</h2>
                 <p style="color: #64748b; font-size: 0.82rem; margin: 4px 0 0;">
                   Click any card to select one or combine multiple services (exterior, interior, detailing).
                 </p>
               </div>
+              <a href="/services" class="booking-back-to-services" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid #dbe2ea;border-radius:9px;background:#fff;color:#172033;font-size:.84rem;font-weight:700;text-decoration:none;white-space:nowrap;">
+                <span aria-hidden="true">←</span> Back to Services
+              </a>
             </div>
 
             <div class="card-body">
@@ -396,7 +415,7 @@
                 </div>
 
                 <button type="submit" id="submitBookingBtn" class="btn" style="width: 100%; height: 50px; font-size: 0.95rem; font-weight: 700;">
-                  Confirm Multi-Service Booking &rarr;
+                  Confirm Booking &rarr;
                 </button>
               </form>
             </div>
@@ -434,7 +453,7 @@
 
             <div class="summary-item total">
               <span>Estimated Total:</span>
-              <span id="summaryTotalPrice" style="color: #0f172a;">$0.00</span>
+              <span id="summaryTotalPrice" style="color: #0f172a;">£0.00</span>
             </div>
 
             <div style="margin-top: 22px; padding-top: 18px; border-top: 1px dashed #e2e8f0; font-size: 0.8rem; color: #64748b; line-height: 1.5;">
@@ -546,6 +565,28 @@
     let currentUser = null;
 
     document.addEventListener("DOMContentLoaded", async () => {
+      // Booking must originate from a service selected in the Services menu.
+      const entryParams = new URLSearchParams(window.location.search);
+      const feedbackOnly = window.location.hash === "#feedbackTab" || entryParams.get("tab") === "feedback";
+      if (!feedbackOnly) {
+        const requestedServiceId = entryParams.get("service_id");
+        const selectedIntentId = sessionStorage.getItem("mrshine_selected_service_id");
+        if (!requestedServiceId || !selectedIntentId || String(requestedServiceId) !== String(selectedIntentId)) {
+          window.location.replace("/services");
+          return;
+        }
+
+        // Require sign-in before opening the booking form; keep the selected service through login.
+        currentUser = await window.auth.getCurrentUser();
+        if (!currentUser) {
+          const next = window.location.pathname + window.location.search + window.location.hash;
+          window.location.replace("/login?next=" + encodeURIComponent(next));
+          return;
+        }
+      } else {
+        currentUser = await window.auth.getCurrentUser();
+      }
+
       // 1. Min date for booking = today
       const todayStr = new Date().toISOString().split("T")[0];
       const dateInput = document.getElementById("preferredDate");
@@ -554,27 +595,24 @@
         dateInput.value = todayStr;
       }
 
-      // 2. Auth state check
-      currentUser = await window.auth.getCurrentUser();
+      // 2. Authenticated header and prefilled feedback
       const authBanner = document.getElementById("authPromptBanner");
-      const authNav = document.getElementById("headerAuthNav");
-      if (!currentUser && authBanner) {
-        authBanner.style.display = "flex";
-      } else if (currentUser) {
-        if (authNav) {
-          authNav.innerHTML = `
-            <a href="/my-requests" class="btn btn-outline" style="font-size:0.82rem;padding:6px 14px;">My Tracker</a>
-            <button onclick="window.auth.logout()" class="btn btn-outline" style="font-size:0.82rem;padding:6px 12px;">Sign Out</button>
-          `;
-        }
-        // Pre-fill feedback
-        const fbName = document.getElementById("fbName");
-        const fbEmail = document.getElementById("fbEmail");
-        const fbPhone = document.getElementById("fbPhone");
-        if (fbName && !fbName.value) fbName.value = currentUser.name || "";
-        if (fbEmail && !fbEmail.value) fbEmail.value = currentUser.email || "";
-        if (fbPhone && !fbPhone.value) fbPhone.value = currentUser.phone || "";
+      if (authBanner) authBanner.style.display = "none";
+      const authNav = document.getElementById("headerAuthActions");
+      if (authNav) {
+        authNav.innerHTML = `
+          <button id="headerProfileBtn" class="btn btn-outline" style="font-size:0.82rem;padding:6px 12px;display:inline-flex;align-items:center;gap:6px;">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;"></span>
+            ${escapeHtml((currentUser.name || "Account").split(" ")[0])}
+          </button>
+        `;
       }
+      const fbName = document.getElementById("fbName");
+      const fbEmail = document.getElementById("fbEmail");
+      const fbPhone = document.getElementById("fbPhone");
+      if (fbName && !fbName.value) fbName.value = currentUser.name || "";
+      if (fbEmail && !fbEmail.value) fbEmail.value = currentUser.email || "";
+      if (fbPhone && !fbPhone.value) fbPhone.value = currentUser.phone || "";
 
       // 3. Tab switching
       initTabs();
@@ -622,6 +660,8 @@
     }
 
     async function loadServicesList() {
+      const entryParams = new URLSearchParams(window.location.search);
+      if (window.location.hash === "#feedbackTab" || entryParams.get("tab") === "feedback") return;
       const shimmer = document.getElementById("servicesShimmer");
       const container = document.getElementById("servicesListContainer");
       const urlParams = new URLSearchParams(window.location.search);
@@ -629,28 +669,27 @@
 
       try {
         const services = await window.api.get("/services");
-        servicesCache = services || [];
+        if (!Array.isArray(services)) throw new Error("Unexpected services response.");
+        servicesCache = services;
       } catch (err) {
-        servicesCache = [
-          { id: 1, name: "Exterior Car Wash", price: 25.00, duration_minutes: 30, description: "Foam cannon soak, two-bucket gentle hand wash, spot-free rinse, wheel cleaning & tire dressing." },
-          { id: 2, name: "Interior Deep Clean", price: 45.00, duration_minutes: 45, description: "Complete vacuuming, steam disinfection, interior windows, dash & console detailing." },
-          { id: 3, name: "Complete Wash & Interior", price: 65.00, duration_minutes: 75, description: "Our most popular combo: comprehensive exterior hand wash + complete interior detailing." },
-          { id: 4, name: "Showroom Detailing & Wax", price: 110.00, duration_minutes: 120, description: "Clay bar treatment, synthetic sealant polish, leather conditioning & engine bay wipe-down." }
-        ];
+        const status = document.getElementById("servicesShimmer");
+        if (status) status.textContent = "Unable to load available services. Please return to the Services menu and try again.";
+        console.error("Failed to load services for booking:", err);
+        return;
       }
 
       if (shimmer) shimmer.style.display = "none";
       if (container) container.style.display = "grid";
 
-      // Pre-select service if passed in URL
-      if (preselectedId) {
-        const numId = parseInt(preselectedId, 10);
-        if (servicesCache.some(s => s.id === numId)) {
-          selectedServiceIds.add(numId);
-        }
-      } else if (servicesCache.length > 0 && selectedServiceIds.size === 0) {
-        selectedServiceIds.add(servicesCache[0].id);
+      // Only allow a service that still exists in the admin-managed catalogue.
+      const numId = Number(preselectedId);
+      if (!servicesCache.some(s => String(s.id) === String(preselectedId))) {
+        sessionStorage.removeItem("mrshine_selected_service_id");
+        window.location.replace("/services");
+        return;
       }
+      selectedServiceIds.clear();
+      selectedServiceIds.add(numId);
 
       renderServicesCards();
       updateSummary();
@@ -660,7 +699,12 @@
       const container = document.getElementById("servicesListContainer");
       if (!container) return;
 
-      let html = servicesCache.map(s => {
+      const hasSelectedService = selectedServiceIds.size > 0;
+      const visibleServices = hasSelectedService
+        ? servicesCache.filter(s => selectedServiceIds.has(s.id))
+        : servicesCache;
+      let html = hasSelectedService ? "" : '<div class="service-selection-hint">Choose a service below. After selection, only that service will remain visible.</div>';
+      html += visibleServices.map(s => {
         const isChecked = selectedServiceIds.has(s.id);
         return `
           <div class="service-card-select ${isChecked ? 'selected' : ''}" data-id="${s.id}" onclick="toggleService(${s.id})">
@@ -673,46 +717,26 @@
             </div>
             <div class="svc-bottom">
               <div class="svc-dur">&#x23F1; ${s.duration_minutes} mins</div>
-              <div class="svc-price">$${parseFloat(s.price).toFixed(2)}</div>
+              <div class="svc-price">£${parseFloat(s.price).toFixed(2)}</div>
             </div>
           </div>
         `;
       }).join("");
 
-      // Add Custom Service card
-      html += `
-        <div class="custom-service-card ${isCustomSelected ? 'active' : ''}" id="customCard">
-          <div class="svc-check-row">
-            <input type="checkbox" id="customCheck" class="svc-checkbox" ${isCustomSelected ? 'checked' : ''} onclick="toggleCustomService(this.checked)" />
-            <div class="svc-info">
-              <div class="svc-name">&#10024; Custom Treatment / Specialized Request</div>
-              <div class="svc-desc">Need headlight restoration, ceramic coating, leather recoloring, or custom care?</div>
-            </div>
-          </div>
-          <div id="customInputWrap" style="display: ${isCustomSelected ? 'block' : 'none'}; margin-top: 12px;">
-            <input
-              id="customServiceText"
-              type="text"
-              class="input-control"
-              placeholder="e.g. Paint Correction + Scratch Buffing + Engine Bay Clean"
-              oninput="updateSummary()"
-            />
-            <div class="hint" style="margin-top: 4px; font-size: 0.74rem; color: #64748b;">
-              Our master detailer will inspect and provide an itemized quote upon arrival.
-            </div>
-          </div>
-        </div>
-      `;
-
       container.innerHTML = html;
     }
 
     function toggleService(id) {
-      if (selectedServiceIds.has(id)) {
-        selectedServiceIds.delete(id);
-      } else {
-        selectedServiceIds.add(id);
-      }
+      // Use Back to Services to change the selected service.
+      if (selectedServiceIds.has(id)) return;
+      selectedServiceIds.clear();
+      selectedServiceIds.add(id);
+      renderServicesCards();
+      updateSummary();
+    }
+
+    function clearServiceSelection() {
+      selectedServiceIds.clear();
       renderServicesCards();
       updateSummary();
     }
@@ -775,7 +799,7 @@
                 <div style="font-size: 0.74rem; color: #64748b;">${s.duration_minutes}m</div>
               </div>
               <div style="display:flex;align-items:center;">
-                <span style="font-weight:700;">$${parseFloat(s.price).toFixed(2)}</span>
+                <span style="font-weight:700;">£${parseFloat(s.price).toFixed(2)}</span>
                 <button type="button" class="item-remove" onclick="toggleService(${s.id})" title="Remove item">&times;</button>
               </div>
             </div>
@@ -805,7 +829,7 @@
         `;
         countBadge.textContent = "0 selected";
         durationEl.textContent = "0 mins";
-        priceEl.textContent = "$0.00";
+        priceEl.textContent = "£0.00";
       } else {
         itemsContainer.innerHTML = rowsHtml;
         countBadge.textContent = `${count} selected`;
@@ -821,7 +845,7 @@
         if (isCustomSelected) durStr += " + inspection";
         durationEl.textContent = durStr;
 
-        let prStr = `$${totalPrice.toFixed(2)}`;
+        let prStr = `£${totalPrice.toFixed(2)}`;
         if (isCustomSelected && totalPrice > 0) prStr += " + Custom Quote";
         else if (isCustomSelected) prStr = "Custom Quote";
         priceEl.textContent = prStr;
@@ -907,7 +931,7 @@
           finalServiceId = selectedServices[0].id;
           const names = selectedServices.map(s => s.name).join(" + ");
           const totalCost = selectedServices.reduce((acc, s) => acc + parseFloat(s.price), 0);
-          finalCustomService = `Multi-Service (${selectedServices.length}): ${names} [Total: $${totalCost.toFixed(2)}]`;
+          finalCustomService = `Multi-Service (${selectedServices.length}): ${names} [Total: £${totalCost.toFixed(2)}]`;
         } else if (isCustomSelected && selectedServices.length > 0) {
           finalServiceId = selectedServices[0].id;
           const names = selectedServices.map(s => s.name).join(" + ");
@@ -926,27 +950,14 @@
         };
 
         submitBookingBtn.disabled = true;
-        submitBookingBtn.textContent = "Scheduling Multi-Service Request...";
+        submitBookingBtn.textContent = "Confirming Booking...";
 
         try {
           const result = await window.api.post("/requests", payload);
 
-          window.showAlert(
-            bookingAlert,
-            `Booking confirmed! Reference #${result.id} for ${result.service_name || "service"}. Our detailing team has reserved your bay.`,
-            "success"
-          );
-          if (window.showToast) window.showToast("Service request confirmed!", "success");
-
-          bookingForm.reset();
-          selectedServiceIds.clear();
-          isCustomSelected = false;
-          renderServicesCards();
-          updateSummary();
-
-          window.setTimeout(() => {
-            window.location.href = "/my-requests";
-          }, 1500);
+          // The backend has accepted the request. Go straight to Track Requests;
+          // don't reset the form and briefly show an empty booking page first.
+          window.location.replace("/my-requests");
 
         } catch (err) {
           window.showAlert(
@@ -957,7 +968,7 @@
           if (window.showToast) window.showToast(err.message || "Booking failed.", "error");
         } finally {
           submitBookingBtn.disabled = false;
-          submitBookingBtn.innerHTML = "Confirm Multi-Service Booking &rarr;";
+          submitBookingBtn.innerHTML = "Confirm Booking &rarr;";
         }
       });
 
@@ -1050,5 +1061,38 @@
         .replace(/'/g, "&#039;");
     }
   </script>
+
+<script>(()=>{const t=document.getElementById("mobileToggle"),x=document.getElementById("mobileMenuClose"),d=document.getElementById("mobileNavDrawer"),b=document.getElementById("mobileNavBackdrop"),l=document.getElementById("mobileLogoutBtn");function openMenu(open){d.classList.toggle("is-open",open);b.hidden=!open;d.setAttribute("aria-hidden",String(!open));t.setAttribute("aria-expanded",String(open));document.body.classList.toggle("mobile-menu-open",open)}t.addEventListener("click",()=>openMenu(!d.classList.contains("is-open")));x.addEventListener("click",()=>openMenu(false));b.addEventListener("click",()=>openMenu(false));d.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>openMenu(false)));document.addEventListener("keydown",e=>{if(e.key==="Escape")openMenu(false)});l.addEventListener("click",()=>{if(window.Auth&&typeof Auth.logout==="function")Auth.logout();else window.location.href="/login"});function sync(){l.hidden=!(localStorage.getItem("mrshine_access_token")||sessionStorage.getItem("mrshine_access_token"))}sync()})();</script>
+
+<script>
+/* Ensure signed-in profile pill is rendered on every client page */
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const user = window.auth && typeof window.auth.getCurrentUser === "function"
+      ? await window.auth.getCurrentUser()
+      : (window.Auth && Auth.getUser ? Auth.getUser() : null);
+    const container = document.getElementById("headerAuthActions");
+    if (!user || !container || container.querySelector("#headerProfileBtn")) return;
+    container.innerHTML = `
+      <button id="headerProfileBtn" class="btn btn-outline" style="min-height:36px;padding:0 12px;font-size:0.82rem;display:inline-flex;align-items:center;gap:6px;">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;"></span>
+        ${String(user.name || "Account").split(" ")[0]}
+      </button>
+      <button id="logoutBtn" class="btn btn-outline desktop-logout-link" style="min-height:36px;padding:0 12px;font-size:0.82rem;">Logout</button>
+    `;
+    const profileBtn = document.getElementById("headerProfileBtn");
+    if (profileBtn && window.Auth && typeof Auth.openProfileModal === "function") {
+      profileBtn.addEventListener("click", () => Auth.openProfileModal());
+    }
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn && window.Auth && typeof Auth.logout === "function") {
+      logoutBtn.addEventListener("click", () => Auth.logout());
+    }
+  } catch (error) {
+    console.error("Unable to render the signed-in header profile.", error);
+  }
+});
+</script>
+
 </body>
 </html>

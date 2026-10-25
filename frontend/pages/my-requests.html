@@ -371,27 +371,132 @@
       border-radius: 6px;
       display: inline-block;
     }
+
+    
+    /* Responsive mobile navigation */
+    @media (max-width: 768px) {
+      .container { width: calc(100% - 28px); }
+      #headerAuthActions > :not(#headerProfileBtn){display:none!important}#headerAuthActions #headerProfileBtn{min-height:38px!important;padding:0 11px!important;font-size:.8rem!important;white-space:nowrap}.mobile-menu-toggle{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;border:1px solid var(--line);border-radius:9px;background:#fff;cursor:pointer;flex-shrink:0}.mobile-menu-toggle span{display:block;width:18px;height:2px;border-radius:2px;background:var(--ink)}.mobile-drawer-heading button{display:inline-grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);font-size:1.6rem;cursor:pointer}body.mobile-menu-open{overflow:hidden}
+      .nav {
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto;
+        align-items: center;
+        column-gap: 10px;
+        row-gap: 14px;
+        padding: 13px 0 12px;
+      }
+      .brand {
+        grid-column: 1;
+        grid-row: 1;
+        min-width: 0;
+        gap: 7px;
+      }
+      .brand-mark { width: 34px; height: 25px; flex-shrink: 0; }
+      .brand-name { font-size: 1.1rem; }
+      .brand-sub { font-size: .41rem; letter-spacing: .07em; }
+      #headerAuthActions {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        gap: 6px !important;
+        min-width: 0;
+      }
+      #headerAuthActions .btn,
+      #headerAuthActions a,
+      #headerAuthActions button {
+        min-height: 35px !important;
+        padding: 0 9px !important;
+        font-size: .72rem !important;
+        white-space: nowrap;
+      }
+      .nav-links {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: clamp(.72rem, 2.8vw, .84rem);
+        white-space: nowrap;
+      }
+    }
+    @media (max-width: 380px) {
+      .container { width: calc(100% - 20px); }
+      .nav { column-gap: 6px; row-gap: 11px; }
+      .brand { gap: 5px; }
+      .brand-mark { width: 28px; }
+      .brand-name { font-size: 1rem; }
+      .brand-sub { font-size: .37rem; letter-spacing: .04em; }
+      #headerAuthActions { gap: 4px !important; }
+      #headerAuthActions .btn,
+      #headerAuthActions a,
+      #headerAuthActions button {
+        padding: 0 7px !important;
+        font-size: .67rem !important;
+      }
+      .nav-links { gap: 5px; font-size: .69rem; }
+    }
+
+  
+    .nav-right{display:flex;align-items:center;gap:10px}.mobile-menu-toggle,.mobile-drawer-heading button{display:none}.mobile-nav-backdrop{position:fixed;inset:0;z-index:200;background:rgba(15,23,42,.42)}.mobile-nav-drawer{position:fixed;top:0;right:0;bottom:0;z-index:201;width:min(320px,86vw);padding:22px 18px;background:#fff;box-shadow:-12px 0 40px rgba(15,23,42,.16);transform:translateX(105%);visibility:hidden;transition:transform .25s ease,visibility .25s ease}.mobile-nav-drawer.is-open{transform:translateX(0);visibility:visible}.mobile-drawer-heading{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--line);font-size:1.15rem}.mobile-drawer-links{display:flex;flex-direction:column;gap:6px;padding-top:16px}.mobile-drawer-links a,.mobile-drawer-links button{display:flex;align-items:center;width:100%;min-height:46px;padding:0 12px;border:0;border-radius:9px;background:#fff;color:var(--ink);font-size:.94rem;font-weight:600;text-align:left;cursor:pointer}.mobile-drawer-links a:hover,.mobile-drawer-links button:hover{background:#f1f5f9}.mobile-drawer-links button{color:#b42318}
+
+    /* Force the intended compact mobile header */
+    @media (max-width: 768px) {
+      .header .container.nav {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 8px !important;
+        min-height: 76px !important;
+        padding: 12px 0 !important;
+      }
+      .header .nav-links { display: none !important; }
+      .header .brand { flex: 1 1 auto !important; min-width: 0 !important; }
+      .header .nav-right { display: flex !important; flex: 0 0 auto !important; align-items: center !important; gap: 8px !important; }
+      .header #headerAuthActions { display: flex !important; flex: 0 0 auto !important; }
+      .header #headerAuthActions > :not(#headerProfileBtn) { display: none !important; }
+      .header #headerAuthActions #headerProfileBtn { display: inline-flex !important; max-width: 145px; min-height: 40px !important; padding: 0 10px !important; font-size: .8rem !important; white-space: nowrap !important; }
+      .header .mobile-menu-toggle { display: flex !important; flex: 0 0 40px !important; width: 40px !important; height: 40px !important; padding: 0 !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; gap: 5px !important; border: 1px solid var(--line) !important; border-radius: 9px !important; background: #fff !important; visibility: visible !important; opacity: 1 !important; }
+      .header .mobile-menu-toggle span { display: block !important; width: 18px !important; height: 2px !important; background: var(--ink) !important; border-radius: 2px !important; }
+    }
+    @media (max-width: 380px) {
+      .header .container.nav { min-height: 70px !important; }
+      .header .brand-mark { width: 28px !important; }
+      .header .brand-name { font-size: 1rem !important; }
+      .header .brand-sub { font-size: .36rem !important; letter-spacing: .03em !important; }
+      .header #headerAuthActions #headerProfileBtn { max-width: 120px; padding: 0 7px !important; font-size: .72rem !important; }
+    }
+
+</style>
+<style>
+    /* Ensure closed mobile drawer is fully removed from view */
+    .mobile-nav-backdrop[hidden] { display: none !important; }
+    .mobile-nav-drawer:not(.is-open) { display: none !important; visibility: hidden !important; pointer-events: none !important; }
+    .mobile-nav-drawer.is-open { display: block !important; visibility: visible !important; pointer-events: auto !important; }
 </style>
 </head>
 <body>
   <header class="header">
     <div class="container nav">
-      <a class="brand" href="/" aria-label="MrShine Home">
+      <div class="brand">
         <svg class="brand-mark" viewBox="0 0 90 42" fill="none" aria-hidden="true">
           <path d="M7 27h7l5-11c1-3 4-5 8-5h31c5 0 8 2 12 7l8 9h5c3 0 5 2 5 5v3H6v-4c0-2 0-4 1-4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
           <path d="m23 14-4 13h48L56 14M14 28h61" stroke="currentColor" stroke-width="2"/>
           <circle cx="23" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/><circle cx="67" cy="34" r="5" fill="white" stroke="currentColor" stroke-width="2.5"/>
         </svg>
         <span><span class="brand-name">MrShine</span><span class="brand-sub">CAR WASH &amp; DETAILING</span></span>
-      </a>
-      <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/services">Services</a>
-        <a href="/request-service">Book Service</a>
       </div>
-      <div id="headerAuthActions" style="display:flex;align-items:center;gap:10px;"></div>
+      <div class="nav-links">
+        <a href="/services">Choose a Service</a>
+        <a href="/my-requests" aria-current="page">Track Requests</a>
+      </div>
+      <div class="nav-right"><div id="headerAuthActions" style="display:flex;align-items:center;gap:10px;"></div><button id="mobileMenuToggle" class="mobile-menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
     </div>
   </header>
+  <div id="mobileNavBackdrop" class="mobile-nav-backdrop" hidden></div>
+  <aside id="mobileNavDrawer" class="mobile-nav-drawer" aria-hidden="true"><div class="mobile-drawer-heading"><strong>Menu</strong><button id="mobileMenuClose" type="button" aria-label="Close menu">&times;</button></div><nav class="mobile-drawer-links"><a href="/services">Choose a Service</a><a href="/my-requests">Track Requests</a><button id="mobileLogoutBtn" type="button">Logout</button></nav></aside>
 
   <main>
     <div class="container">
@@ -639,5 +744,9 @@
         .replace(/'/g, "&#039;");
     }
   </script>
+
+<script>
+(()=>{const t=document.getElementById("mobileMenuToggle"),x=document.getElementById("mobileMenuClose"),d=document.getElementById("mobileNavDrawer"),b=document.getElementById("mobileNavBackdrop"),l=document.getElementById("mobileLogoutBtn");function setOpen(open){d.classList.toggle("is-open",open);b.hidden=!open;d.setAttribute("aria-hidden",String(!open));t.setAttribute("aria-expanded",String(open));document.body.classList.toggle("mobile-menu-open",open)}t.addEventListener("click",()=>setOpen(!d.classList.contains("is-open")));x.addEventListener("click",()=>setOpen(false));b.addEventListener("click",()=>setOpen(false));d.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>setOpen(false)));document.addEventListener("keydown",e=>{if(e.key==="Escape")setOpen(false)});l.addEventListener("click",()=>{if(window.Auth&&typeof Auth.logout==="function")Auth.logout();else window.location.href="/login"})})();
+</script>
 </body>
 </html>
